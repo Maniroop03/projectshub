@@ -9,7 +9,7 @@ export default function GuideForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const [form, setForm] = useState({ name: '', phone: '', email: '', department: '' });
+    const [form, setForm] = useState({ name: '', phone: '', email: '', department: '', domain: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -66,6 +66,10 @@ export default function GuideForm() {
                                     <option value="">Select department</option>
                                     {DEPTS.map((d) => <option key={d} value={d}>{d}</option>)}
                                 </select>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Domain</label>
+                                <input className="form-input" placeholder="e.g. Cybersecurity, IoT" {...f('domain')} />
                             </div>
                         </div>
                         <div className="flex gap-3 mt-4">

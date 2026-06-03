@@ -10,7 +10,7 @@ export default function StudentForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const [form, setForm] = useState({ name: '', rollNo: '', year: 'III', section: '', department: '', email: '', phone: '' });
+    const [form, setForm] = useState({ name: '', rollNo: '', year: 'III', section: '', department: '', email: '', phone: '', domain: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -78,6 +78,10 @@ export default function StudentForm() {
                             <div className="form-group">
                                 <label className="form-label">Phone</label>
                                 <input className="form-input" type="tel" placeholder="10-digit mobile" {...f('phone')} />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Domain</label>
+                                <input className="form-input" placeholder="e.g. AI/ML, Web Dev" {...f('domain')} />
                             </div>
                         </div>
                         <div className="flex gap-3 mt-4">

@@ -56,4 +56,26 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// POST bulk add guides
+router.post('/bulk', async (req, res) => {
+    try {
+        const guides = req.body;
+        if (!Array.isArray(guides)) {
+            return res.status(400).json({ error: 'Input must be an array of guides' });
+        }
+        const result = await Guide.insertMany(guides, { ordered: false });
+        res.status(201).json({ message: `${result.length} guides added successfully`, count: result.length });
+    } catch (err) {
+        if (err.writeErrors) {
+            res.status(400).json({ 
+                error: 'Some records failed to import', 
+                details: err.writeErrors.map(e => e.errmsg),
+                insertedCount: err.result.nInserted
+            });
+        } else {
+            res.status(400).json({ error: err.message });
+        }
+    }
+});
+
 module.exports = router;

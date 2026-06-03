@@ -1,0 +1,62 @@
+﻿node : C:\Users\malla\D
+esktop\ReactSample\Proj
+ects\backend\scripts\te
+st_user_snippet.js:17
+At line:1 char:1
++ node scripts/test_use
+r_snippet.js 2>&1 | 
+Out-File -Encoding 
+utf8 test ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\mall   
+ a\...r_snippet.js:    
+17:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+    .done();
+     ^
+
+TypeError: client.messa
+ges.create(...).then(..
+.).catch(...).done is 
+not a function
+    at 
+Object.<anonymous> (C:\
+Users\malla\Desktop\Rea
+ctSample\Projects\backe
+nd\scripts\test_user_sn
+ippet.js:17:6)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1761:14)
+    at Object..js (node
+:internal/modules/cjs/l
+oader:1893:10)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1481:32)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1300:12)
+    at TracingChannel.t
+raceSync (node:diagnost
+ics_channel:328:14)
+    at wrapModuleLoad (
+node:internal/modules/c
+js/loader:245:24)
+    at Module.executeUs
+erEntryPoint [as 
+runMain] (node:internal
+/modules/run_main:154:5
+)
+    at node:internal/ma
+in/run_main_module:33:4
+7
+
+Node.js v24.13.0

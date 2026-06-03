@@ -9,6 +9,7 @@ const studentSchema = new mongoose.Schema(
         department: { type: String, trim: true },
         email: { type: String, trim: true },
         phone: { type: String, trim: true },
+        domain: { type: String, trim: true },
     },
     { timestamps: true }
 );

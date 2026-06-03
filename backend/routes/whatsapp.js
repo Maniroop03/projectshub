@@ -22,29 +22,20 @@ router.post('/notify/:projectId', async (req, res) => {
             ? new Date(project.submissionDate).toLocaleDateString('en-IN')
             : 'Not specified';
 
-        const message =
-            `📚 *Student Project Notification*\n\n` +
-            `Dear *${project.guide.name}*,\n\n` +
-            `A student project has been submitted and assigned to you.\n\n` +
-            `📌 *Type:* ${project.projectType} Project\n` +
-            `📝 *Title:* ${project.title}\n` +
-            `🔬 *Domain:* ${project.domain || 'N/A'}\n` +
-            `📅 *Submission Date:* ${submissionDate}\n` +
-            `🎓 *Students:* ${studentNames || 'N/A'}\n` +
-            `📊 *Status:* ${project.status}\n\n` +
-            `*Abstract:*\n${project.abstract || 'N/A'}\n\n` +
-            `Please review and provide your feedback.\n\n` +
-            `_— Student Project Management System_`;
-
         // Format guide phone as WhatsApp number
         let guidePhone = project.guide.phone.replace(/\D/g, '');
         if (!guidePhone.startsWith('91') && guidePhone.length === 10) {
             guidePhone = '91' + guidePhone;
         }
 
+        // Use Content Template instead of plain text body
         await client.messages.create({
-            body: message,
             from: process.env.TWILIO_WHATSAPP_FROM,
+            contentSid: 'HXb5b62575e6e4ff6129ad7c8efe1f983e',
+            contentVariables: JSON.stringify({
+                "1": project.title || "Project", 
+                "2": submissionDate
+            }),
             to: `whatsapp:+${guidePhone}`,
         });
 

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getGuides, deleteGuide } from '../api';
-import { MdAdd, MdEdit, MdDelete, MdWhatsapp } from 'react-icons/md';
+import { getGuides, deleteGuide, bulkCreateGuides } from '../api';
+import { MdAdd, MdEdit, MdDelete, MdWhatsapp, MdFileUpload } from 'react-icons/md';
+import BulkImportModal from '../components/BulkImportModal';
 
 export default function GuideList() {
     const [guides, setGuides] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
 
     const load = () => { setLoading(true); getGuides().then((r) => setGuides(r.data)).catch(console.error).finally(() => setLoading(false)); };
     useEffect(load, []);
@@ -14,6 +16,11 @@ export default function GuideList() {
     const handleDelete = async (id, name) => {
         if (!window.confirm(`Delete guide "${name}"?`)) return;
         await deleteGuide(id); load();
+    };
+
+    const handleBulkImport = async (data) => {
+        await bulkCreateGuides(data);
+        load();
     };
 
     const filtered = guides.filter((g) =>
@@ -27,8 +34,20 @@ export default function GuideList() {
                     <h1 className="page-title">Guides / Faculty</h1>
                     <p className="page-subtitle">{guides.length} guide(s) registered</p>
                 </div>
-                <Link to="/guides/new" className="btn btn-primary"><MdAdd /> Add Guide</Link>
+                <div className="flex gap-2">
+                    <button className="btn btn-outline" onClick={() => setIsBulkModalOpen(true)}><MdFileUpload /> Bulk Add</button>
+                    <Link to="/guides/new" className="btn btn-primary"><MdAdd /> Add Guide</Link>
+                </div>
             </div>
+
+            <BulkImportModal
+                isOpen={isBulkModalOpen}
+                onClose={() => setIsBulkModalOpen(false)}
+                onImport={handleBulkImport}
+                type="Guides"
+                fields={['name', 'phone', 'email', 'department', 'domain']}
+                sample="Dr. Smith, 1234567890, smith@example.com, Computer Science, AI/ML"
+            />
             <div className="filter-bar">
                 <input className="form-input" style={{ maxWidth: 300 }} placeholder="🔍 Search name or department..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
@@ -37,7 +56,7 @@ export default function GuideList() {
             ) : (
                 <div className="table-wrapper">
                     <table>
-                        <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Department</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Department</th><th>Domain</th><th>Actions</th></tr></thead>
                         <tbody>
                             {filtered.map((g, i) => (
                                 <tr key={g._id}>
@@ -59,6 +78,7 @@ export default function GuideList() {
                                     </td>
                                     <td>{g.email || '—'}</td>
                                     <td>{g.department || '—'}</td>
+                                    <td><span className="badge badge-mini">{g.domain || '—'}</span></td>
                                     <td>
                                         <div className="flex gap-2">
                                             <Link to={`/guides/${g._id}/edit`} className="btn btn-outline btn-sm"><MdEdit /></Link>

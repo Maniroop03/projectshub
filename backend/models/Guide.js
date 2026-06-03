@@ -6,6 +6,7 @@ const guideSchema = new mongoose.Schema(
         phone: { type: String, required: true, trim: true },
         email: { type: String, trim: true },
         department: { type: String, trim: true },
+        domain: { type: String, trim: true },
     },
     { timestamps: true }
 );

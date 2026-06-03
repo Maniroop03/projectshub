@@ -47,6 +47,21 @@ export default function ProjectForm() {
             }).catch(console.error);
         }
     }, [id, isEdit]);
+    
+    useEffect(() => {
+        if (students.length > 0) {
+            setForm(f => {
+                const eligibleSids = students.filter(s => {
+                    if (f.projectType === 'Major') return s.year === 'IV';
+                    if (f.projectType === 'Mini') return s.year === 'III';
+                    return true;
+                }).map(s => s._id);
+                const newStudents = f.students.filter(sid => eligibleSids.includes(sid));
+                if (newStudents.length !== f.students.length) return { ...f, students: newStudents };
+                return f;
+            });
+        }
+    }, [form.projectType, students]);
 
     const toggleStudent = (sid) => {
         setForm((f) => ({
@@ -181,7 +196,11 @@ export default function ProjectForm() {
                                 <div className="text-muted">No students found. <a href="/students/new" style={{ color: 'var(--accent-purple)' }}>Add students first →</a></div>
                             ) : (
                                 <div className="multi-select-list">
-                                    {students.map((s) => (
+                                    {students.filter(s => {
+                                        if (form.projectType === 'Major') return s.year === 'IV';
+                                        if (form.projectType === 'Mini') return s.year === 'III';
+                                        return true;
+                                    }).map((s) => (
                                         <label key={s._id} className="multi-select-item">
                                             <input type="checkbox" checked={form.students.includes(s._id)} onChange={() => toggleStudent(s._id)} />
                                             <span><strong>{s.name}</strong> &nbsp;|&nbsp; {s.rollNo} &nbsp;|&nbsp; {s.year} Year &nbsp;|&nbsp; {s.department || ''}</span>

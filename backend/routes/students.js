@@ -56,4 +56,27 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// POST bulk add students
+router.post('/bulk', async (req, res) => {
+    try {
+        const students = req.body;
+        if (!Array.isArray(students)) {
+            return res.status(400).json({ error: 'Input must be an array of students' });
+        }
+        const result = await Student.insertMany(students, { ordered: false });
+        res.status(201).json({ message: `${result.length} students added successfully`, count: result.length });
+    } catch (err) {
+        if (err.writeErrors) {
+            // Handle partial success/bulk write errors (e.g. duplicate rollNo)
+            res.status(400).json({ 
+                error: 'Some records failed to import', 
+                details: err.writeErrors.map(e => e.errmsg),
+                insertedCount: err.result.nInserted
+            });
+        } else {
+            res.status(400).json({ error: err.message });
+        }
+    }
+});
+
 module.exports = router;
