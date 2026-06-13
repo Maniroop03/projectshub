@@ -4,115 +4,59 @@ import { MdSearch } from 'react-icons/md';
 
 const DOMAINS = [
   {
-    id: 'rpa',
-    name: 'Robotic Process Automation (RPA)',
+    id: 'ai',
+    name: 'Artificial Intelligence',
     icon: '🤖',
     color: '#8B5CF6',
-    description: 'Automating repetitive digital tasks using software bots.',
-    applications: ['Workflow automation', 'Data entry bots', 'Process monitoring'],
-    projects: ['Invoice processing bot', 'Automated report generation', 'Task scheduling assistant'],
+    description: 'Building intelligent systems that can reason, learn, and make decisions.',
+    applications: [
+      'Chatbots',
+      'Virtual Assistants',
+      'Expert Systems'
+    ],
+    projects: [
+      'AI Career Guidance System',
+      'Smart Attendance System',
+      'Virtual Assistant'
+    ],
   },
-  {
-    id: 'assistive-tech',
-    name: 'Assistive Technologies',
-    icon: '♿',
-    color: '#6366F1',
-    description: 'Creating technology to improve accessibility and independence.',
-    applications: ['Speech assistance', 'Adaptive interfaces', 'Accessibility tools'],
-    projects: ['Voice navigation app', 'Screen reader enhancements', 'Gesture-controlled UI'],
-  },
-  {
-    id: 'fintech',
-    name: 'FinTech & Banking Systems',
-    icon: '💳',
-    color: '#14B8A6',
-    description: 'Innovating financial services with secure, modern technology.',
-    applications: ['Digital banking', 'Payment processing', 'Risk management'],
-    projects: ['Mobile wallet', 'Budgeting dashboard', 'Loan approval engine'],
-  },
-  {
-    id: 'e-governance',
-    name: 'E-Governance Systems',
-    icon: '🏛️',
-    color: '#F59E0B',
-    description: 'Enhancing public services and democratic processes through digital platforms.',
-    applications: ['Citizen portals', 'Service automation', 'Policy tracking'],
-    projects: ['Public service dashboard', 'Document verification system', 'Community feedback hub'],
-  },
-  {
-    id: 'bioinformatics',
-    name: 'Bioinformatics',
-    icon: '🧬',
-    color: '#22C55E',
-    description: 'Analyzing complex biological data using computational tools.',
-    applications: ['Genomic analysis', 'Protein modeling', 'Medical research'],
-    projects: ['DNA sequence analyzer', 'Protein structure predictor', 'Clinical data explorer'],
-  },
-  {
-    id: 'computational-biology',
-    name: 'Computational Biology',
-    icon: '⚛️',
-    color: '#F97316',
-    description: 'Developing models of biological systems to study life processes.',
-    applications: ['Systems biology', 'Simulation models', 'Bioinformatics analysis'],
-    projects: ['Cell behavior simulator', 'Ecological modeler', 'Pathway visualization tool'],
-  },
-  {
-    id: 'social-network-analysis',
-    name: 'Social Network Analysis',
-    icon: '🕸️',
-    color: '#A855F7',
-    description: 'Investigating social structures through network and graph theories.',
-    applications: ['Community detection', 'Influence mapping', 'Relationship analytics'],
-    projects: ['Social graph explorer', 'Trend propagation analyzer', 'Network cluster tool'],
-  },
-  {
-    id: 'scientific-computing',
-    name: 'Scientific Computing',
-    icon: '📐',
-    color: '#0EA5E9',
-    description: 'Solving mathematical models of scientific problems computationally.',
-    applications: ['Numerical simulation', 'Model optimization', 'Data visualization'],
-    projects: ['Physics solver', 'Climate model builder', 'High-performance analysis app'],
-  },
-  {
-    id: 'prompt-engineering',
-    name: 'Generative AI Prompt Engineering',
-    icon: '✨',
-    color: '#EC4899',
-    description: 'Structuring optimal inputs to get desired outputs from generative models.',
-    applications: ['Content generation', 'Chatbot prompts', 'Creative AI workflows'],
-    projects: ['Prompt library manager', 'AI response tuner', 'Creative prompt tool'],
-  },
-  {
-    id: 'llms',
-    name: 'Large Language Models (LLMs)',
-    icon: '💬',
-    color: '#8B5CF6',
-    description: 'Building and fine-tuning massive language models for text tasks.',
-    applications: ['Text generation', 'Summarization', 'Conversational AI'],
-    projects: ['Chatbot builder', 'Content summarizer', 'Language model evaluator'],
-  },
-  {
-    id: 'ai-ethics',
-    name: 'AI Ethics & Responsible AI',
-    icon: '⚖️',
-    color: '#6366F1',
-    description: 'Ensuring AI systems are fair, transparent, accountable, and unbiased.',
-    applications: ['Bias detection', 'Transparency tools', 'Ethical auditing'],
-    projects: ['Fairness evaluator', 'Compliance dashboard', 'AI ethics checklist'],
-  },
-  {
-    id: 'green-computing',
-    name: 'Green Computing',
-    icon: '🌱',
-    color: '#22C55E',
-    description: 'Designing energy-efficient hardware and software systems.',
-    applications: ['Power optimization', 'Resource efficiency', 'Sustainable design'],
-    projects: ['Energy tracking dashboard', 'Low-power scheduler', 'Green infrastructure planner'],
-  },
-];
 
+  {
+    id: 'ml',
+    name: 'Machine Learning',
+    icon: '⚙️',
+    color: '#6366F1',
+    description: 'Systems that learn from data and improve their performance automatically.',
+    applications: [
+      'Prediction Systems',
+      'Fraud Detection',
+      'Classification Models'
+    ],
+    projects: [
+      'Student Performance Prediction',
+      'Disease Prediction System',
+      'Spam Email Detection'
+    ],
+  },
+
+  {
+    id: 'web',
+    name: 'Web Development',
+    icon: '🌐',
+    color: '#14B8A6',
+    description: 'Designing and developing responsive modern web applications.',
+    applications: [
+      'E-Commerce Platforms',
+      'Management Systems',
+      'Business Websites'
+    ],
+    projects: [
+      'Student Project Management System',
+      'Online Shopping Portal',
+      'Library Management System'
+    ],
+  }
+];
 const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
   return (
     <button
