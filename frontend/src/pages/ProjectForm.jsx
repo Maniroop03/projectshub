@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { createProject, updateProject, getProject, getGuides, getGroups, formatApiError } from '../api';
 import { MdCloudUpload, MdInsertDriveFile, MdSave, MdArrowBack } from 'react-icons/md';
 
@@ -25,8 +25,14 @@ export default function ProjectForm() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [drag, setDrag] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const preselect = params.get('domain');
+        if (!isEdit && preselect) {
+            setForm((f) => ({ ...f, domain: preselect }));
+        }
         getGuides().then((r) => setGuides(Array.isArray(r.data) ? r.data : [])).catch(console.error);
         getGroups().then((r) => setGroups(Array.isArray(r.data) ? r.data : [])).catch(console.error);
         if (isEdit) {
@@ -46,7 +52,7 @@ export default function ProjectForm() {
                 setExistingFile(p.pptOriginalName || '');
             }).catch(console.error);
         }
-    }, [id, isEdit]);
+    }, [id, isEdit, location.search]);
     
     useEffect(() => {
         if (groups.length > 0) {
