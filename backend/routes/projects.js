@@ -83,9 +83,18 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('pptFile'), async (req, res) => {
     try {
         const data = { ...req.body };
+        if (data.coGuide === '') {
+    data.coGuide = null;
+}
+
+if (data.guide === '') {
+    data.guide = null;
+}
         if (typeof data.students === 'string') {
             try { data.students = JSON.parse(data.students); } catch { data.students = [data.students]; }
         }
+        if (data.coGuide === '') delete data.coGuide;
+        if (data.guide === '') delete data.guide;
         if (req.file) {
             data.pptFilePath = '/uploads/' + req.file.filename;
             data.pptOriginalName = req.file.originalname;
@@ -106,9 +115,18 @@ router.post('/', upload.single('pptFile'), async (req, res) => {
 router.put('/:id', upload.single('pptFile'), async (req, res) => {
     try {
         const data = { ...req.body };
+        if (data.coGuide === '') {
+    data.coGuide = null;
+}
+
+if (data.guide === '') {
+    data.guide = null;
+}
         if (typeof data.students === 'string') {
             try { data.students = JSON.parse(data.students); } catch { data.students = [data.students]; }
         }
+        if (data.coGuide === '') delete data.coGuide;
+        if (data.guide === '') delete data.guide;
         if (req.file) {
             data.pptFilePath = '/uploads/' + req.file.filename;
             data.pptOriginalName = req.file.originalname;
