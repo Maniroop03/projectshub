@@ -54,7 +54,7 @@ export default function GroupForm() {
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Batch No</label>
-                                <input className="form-input" placeholder="Batch 32" {...f('batch')} />
+                                <input className="form-input" placeholder="Batch 1" {...f('batch')} />
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Section</label>
