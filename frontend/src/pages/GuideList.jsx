@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getGuides, deleteGuide, bulkCreateGuides } from '../api';
+import { getGuides, deleteGuide, bulkCreateGuides, formatApiError } from '../api';
 import { MdAdd, MdEdit, MdDelete, MdWhatsapp, MdFileUpload } from 'react-icons/md';
 import BulkImportModal from '../components/BulkImportModal';
 
@@ -8,9 +8,17 @@ export default function GuideList() {
     const [guides, setGuides] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [error, setError] = useState('');
     const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
 
-    const load = () => { setLoading(true); getGuides().then((r) => setGuides(r.data)).catch(console.error).finally(() => setLoading(false)); };
+    const load = () => {
+        setLoading(true);
+        setError('');
+        getGuides()
+            .then((r) => setGuides(Array.isArray(r.data) ? r.data : []))
+            .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load guides.')); })
+            .finally(() => setLoading(false));
+    };
     useEffect(load, []);
 
     const handleDelete = async (id, name) => {
@@ -29,6 +37,7 @@ export default function GuideList() {
 
     return (
         <div className="page-container">
+            {error && <div className="alert alert-error">{error}</div>}
             <div className="page-header flex items-center justify-between">
                 <div>
                     <h1 className="page-title">Guides / Faculty</h1>

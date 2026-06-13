@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createProject, updateProject, getProject, getGuides, getGroups } from '../api';
+import { createProject, updateProject, getProject, getGuides, getGroups, formatApiError } from '../api';
 import { MdCloudUpload, MdInsertDriveFile, MdSave, MdArrowBack } from 'react-icons/md';
 
 const DOMAINS = ['Web Development', 'Machine Learning', 'Data Science', 'IoT', 'Mobile App', 'Embedded Systems', 'Cybersecurity', 'Cloud Computing', 'Blockchain', 'AR/VR', 'Image Processing', 'NLP', 'Other'];
@@ -27,8 +27,8 @@ export default function ProjectForm() {
     const [drag, setDrag] = useState(false);
 
     useEffect(() => {
-        getGuides().then((r) => setGuides(r.data)).catch(console.error);
-        getGroups().then((r) => setGroups(r.data)).catch(console.error);
+        getGuides().then((r) => setGuides(Array.isArray(r.data) ? r.data : [])).catch(console.error);
+        getGroups().then((r) => setGroups(Array.isArray(r.data) ? r.data : [])).catch(console.error);
         if (isEdit) {
             getProject(id).then((r) => {
                 const p = r.data;
@@ -88,7 +88,7 @@ export default function ProjectForm() {
             else { await createProject(fd); setSuccess('Project submitted successfully!'); }
             setTimeout(() => navigate('/projects'), 1200);
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to save project.');
+            setError(formatApiError(err, 'Failed to save project.'));
         } finally { setLoading(false); }
     };
 

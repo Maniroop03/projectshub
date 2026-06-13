@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getGroups, deleteGroup, bulkCreateGroups, clearAllGroups } from '../api';
+import { getGroups, deleteGroup, bulkCreateGroups, clearAllGroups, formatApiError } from '../api';
 import { MdAdd, MdEdit, MdDelete, MdFileUpload, MdPeople, MdExpandMore, MdExpandLess, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import BulkImportModal from '../components/BulkImportModal';
 
 export default function GroupList() {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
     const [search, setSearch] = useState('');
     const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
     const [expandedBatches, setExpandedBatches] = useState({});
 
     const load = () => {
         setLoading(true);
+        setError('');
         getGroups()
-            .then((r) => setGroups(r.data))
-            .catch(console.error)
+            .then((r) => setGroups(Array.isArray(r.data) ? r.data : []))
+            .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load groups.')); })
             .finally(() => setLoading(false));
     };
     useEffect(load, []);
@@ -65,6 +67,7 @@ export default function GroupList() {
 
     return (
         <div className="page-container">
+            {error && <div className="alert alert-error">{error}</div>}
             {/* Page Header */}
             <div className="page-header flex items-center justify-between" style={{ flexWrap: 'wrap', gap: 12 }}>
                 <div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getProjects, deleteProject } from '../api';
+import { getProjects, deleteProject, formatApiError } from '../api';
 import { MdAdd, MdEdit, MdDelete, MdVisibility } from 'react-icons/md';
 
 const TYPE_OPTS = ['', 'Mini', 'Major'];
@@ -14,6 +14,7 @@ const statusBadge = (s) => {
 export default function ProjectList() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
     const [typeFilter, setTypeFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [search, setSearch] = useState('');
@@ -21,10 +22,14 @@ export default function ProjectList() {
 
     const load = () => {
         setLoading(true);
+        setError('');
         const params = {};
         if (typeFilter) params.type = typeFilter;
         if (statusFilter) params.status = statusFilter;
-        getProjects(params).then((r) => setProjects(r.data)).catch(console.error).finally(() => setLoading(false));
+        getProjects(params)
+            .then((r) => setProjects(Array.isArray(r.data) ? r.data : []))
+            .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load projects.')); })
+            .finally(() => setLoading(false));
     };
 
     useEffect(() => { load(); }, [typeFilter, statusFilter]);
@@ -44,6 +49,7 @@ export default function ProjectList() {
 
     return (
         <div className="page-container">
+            {error && <div className="alert alert-error">{error}</div>}
             <div className="page-header flex items-center justify-between">
                 <div>
                     <h1 className="page-title">All Projects</h1>
