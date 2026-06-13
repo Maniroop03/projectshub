@@ -74,24 +74,32 @@ export default function GroupList() {
                     <h1 className="page-title">Groups</h1>
                     <p className="page-subtitle">{totalBatches} batch(es) · {totalMembers} member(s) registered</p>
                 </div>
-                <div className="flex gap-2" style={{ flexWrap: 'wrap' }}>
-                    <button
-                        className="btn btn-danger"
-                        onClick={handleDeleteAll}
-                        style={{ display: 'flex', alignItems: 'center', gap: 6 }}
-                    >
-                        <MdDelete /> Delete All
-                    </button>
-                    <button
-                        className="btn btn-outline"
-                        onClick={() => setIsBulkModalOpen(true)}
-                        style={{ display: 'flex', alignItems: 'center', gap: 6 }}
-                    >
-                        <MdFileUpload /> Bulk Add
-                    </button>
-                    <Link to="/groups/new" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <MdAdd /> Add Batch
-                    </Link>
+                <div className="flex gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+                    <div className="flex" style={{ gap: 8 }}>
+                        {!loading && totalBatches > 0 && (
+                            <button
+                                className="btn btn-danger"
+                                onClick={handleDeleteAll}
+                                style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                            >
+                                <MdDelete /> Delete All
+                            </button>
+                        )}
+
+                        <button
+                            className="btn btn-outline"
+                            onClick={() => setIsBulkModalOpen(true)}
+                            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                        >
+                            <MdFileUpload /> Bulk Add
+                        </button>
+                    </div>
+
+                    <div>
+                        <Link to="/groups/new" className="btn btn-primary btn-header" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <MdAdd /> Add Group
+                        </Link>
+                    </div>
                 </div>
             </div>
 
