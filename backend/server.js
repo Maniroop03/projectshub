@@ -11,8 +11,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static uploads folder
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Writable uploads folder for Vercel vs Local
+const uploadDir = process.env.VERCEL 
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, 'uploads');
+
+// Static uploads folder (support both paths)
+app.use('/uploads', express.static(uploadDir));
+app.use('/api/uploads', express.static(uploadDir));
 
 // Routes
 app.use('/api/groups', require('./routes/groups'));
@@ -23,15 +29,39 @@ app.use('/api/whatsapp', require('./routes/whatsapp'));
 // Health check
 app.get('/', (req, res) => res.json({ message: 'Student Project API is running.' }));
 
-// Connect to MongoDB and start server
-const PORT = process.env.PORT || 5000;
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
-    app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
-  })
-  .catch((err) => {
+// MongoDB Connection Helper (with caching for serverless)
+let cachedDbConnection = null;
+const connectDB = async () => {
+  if (cachedDbConnection && mongoose.connection.readyState === 1) {
+    return cachedDbConnection;
+  }
+  console.log('Connecting to MongoDB...');
+  cachedDbConnection = await mongoose.connect(process.env.MONGO_URI);
+  console.log('✅ Connected to MongoDB');
+  return cachedDbConnection;
+};
+
+// Middleware to ensure DB connection on every request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
     console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
-  });
+    res.status(500).json({ error: 'Database connection error: ' + err.message });
+  }
+});
+
+// Start local server if run directly (not via require)
+if (require.main === module || !process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+    })
+    .catch((err) => {
+      console.error('❌ Failed to start local server:', err.message);
+    });
+}
+
+module.exports = app;
