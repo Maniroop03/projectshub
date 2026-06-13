@@ -10,7 +10,7 @@ export default function GroupForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const [form, setForm] = useState({ name: '', rollNo: '', year: 'III', section: '', department: '', email: '', phone: '', domain: '' });
+    const [form, setForm] = useState({ batch: '', role: 'Member', name: '', rollNo: '', year: 'III', section: '', department: '', email: '', phone: '', domain: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -47,16 +47,27 @@ export default function GroupForm() {
                     <form onSubmit={handleSubmit}>
                         <div className="form-grid form-grid-2">
                             <div className="form-group">
+                                <label className="form-label">Batch <span>*</span></label>
+                                <input className="form-input" placeholder="e.g. Batch 1" required {...f('batch')} />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Role <span>*</span></label>
+                                <select className="form-select" required {...f('role')}>
+                                    <option value="Member">Member</option>
+                                    <option value="Lead">Lead</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
                                 <label className="form-label">Full Name <span>*</span></label>
-                                <input className="form-input" placeholder="Group full name / name" required {...f('name')} />
+                                <input className="form-input" placeholder="Group member full name" required {...f('name')} />
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Roll Number / ID <span>*</span></label>
                                 <input className="form-input" placeholder="e.g. 22CS001" required {...f('rollNo')} />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Year <span>*</span></label>
-                                <select className="form-select" required {...f('year')}>
+                                <label className="form-label">Year</label>
+                                <select className="form-select" {...f('year')}>
                                     {YEARS.map((y) => <option key={y} value={y}>{y} Year</option>)}
                                 </select>
                             </div>
@@ -72,16 +83,16 @@ export default function GroupForm() {
                                 </select>
                             </div>
                             <div className="form-group">
+                                <label className="form-label">Domain</label>
+                                <input className="form-input" placeholder="e.g. AI/ML, Web Dev" {...f('domain')} />
+                            </div>
+                            <div className="form-group">
                                 <label className="form-label">Email</label>
-                                <input className="form-input" type="email" placeholder="group@college.edu" {...f('email')} />
+                                <input className="form-input" type="email" placeholder="member@college.edu" {...f('email')} />
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Phone</label>
                                 <input className="form-input" type="tel" placeholder="10-digit mobile" {...f('phone')} />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Domain</label>
-                                <input className="form-input" placeholder="e.g. AI/ML, Web Dev" {...f('domain')} />
                             </div>
                         </div>
                         <div className="flex gap-3 mt-4">

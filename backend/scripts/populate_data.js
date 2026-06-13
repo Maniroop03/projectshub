@@ -34,11 +34,11 @@ const seed = async () => {
 
         // 3. Create Groups
         const groupData = [
-            { name: 'Arjun Mehta', rollNo: '2022CS01', year: 'IV', section: 'A', department: 'Computer Science', email: 'arjun.m@student.edu', phone: '7001112223', domain: 'Machine Learning' },
-            { name: 'Priya Rai', rollNo: '2022CS02', year: 'IV', section: 'A', department: 'Computer Science', email: 'priya.r@student.edu', phone: '7001112224', domain: 'Neural Networks' },
-            { name: 'Karan Singh', rollNo: '2022IT05', year: 'III', section: 'B', department: 'Information Technology', email: 'karan.s@student.edu', phone: '7001112225', domain: 'Web Security' },
-            { name: 'Sneha Gupta', rollNo: '2022IT06', year: 'III', section: 'B', department: 'Information Technology', email: 'sneha.g@student.edu', phone: '7001112226', domain: 'App Development' },
-            { name: 'Rahul Joshi', rollNo: '2022EC10', year: 'IV', section: 'A', department: 'Electronics', email: 'rahul.j@student.edu', phone: '7001112227', domain: 'Robotics' }
+            { batch: 'Batch 1', role: 'Lead', name: 'Arjun Mehta', rollNo: '2022CS01', year: 'IV', section: 'A', department: 'Computer Science', email: 'arjun.m@student.edu', phone: '7001112223', domain: 'Machine Learning' },
+            { batch: 'Batch 1', role: 'Member', name: 'Priya Rai', rollNo: '2022CS02', year: 'IV', section: 'A', department: 'Computer Science', email: 'priya.r@student.edu', phone: '7001112224', domain: 'Neural Networks' },
+            { batch: 'Batch 2', role: 'Lead', name: 'Karan Singh', rollNo: '2022IT05', year: 'III', section: 'B', department: 'Information Technology', email: 'karan.s@student.edu', phone: '7001112225', domain: 'Web Security' },
+            { batch: 'Batch 2', role: 'Member', name: 'Sneha Gupta', rollNo: '2022IT06', year: 'III', section: 'B', department: 'Information Technology', email: 'sneha.g@student.edu', phone: '7001112226', domain: 'App Development' },
+            { batch: 'Batch 3', role: 'Lead', name: 'Rahul Joshi', rollNo: '2022EC10', year: 'IV', section: 'A', department: 'Electronics', email: 'rahul.j@student.edu', phone: '7001112227', domain: 'Robotics' }
         ];
 
         const groups = await Group.insertMany(groupData);

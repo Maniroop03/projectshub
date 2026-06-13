@@ -45,7 +45,17 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE group
+// DELETE all groups
+router.delete('/all/clear', async (req, res) => {
+    try {
+        const result = await Group.deleteMany({});
+        res.json({ message: `All groups deleted`, count: result.deletedCount });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// DELETE group by id
 router.delete('/:id', async (req, res) => {
     try {
         const group = await Group.findByIdAndDelete(req.params.id);
