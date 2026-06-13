@@ -5,7 +5,7 @@ const Group = require('../models/Group');
 // GET all groups
 router.get('/', async (req, res) => {
     try {
-        const groups = await Group.find().sort({ name: 1 });
+        const groups = await Group.find().sort({ batch: 1 });
         res.json(groups);
     } catch (err) {
         res.status(500).json({ error: err.message });
