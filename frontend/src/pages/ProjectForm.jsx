@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createProject, updateProject, getProject, getGuides, getGroups, formatApiError } from '../api';
 import { MdCloudUpload, MdInsertDriveFile, MdSave, MdArrowBack } from 'react-icons/md';
 
-const DOMAINS = ['Web Development', 'Machine Learning', 'Data Science', 'IoT', 'Mobile App', 'Embedded Systems', 'Cybersecurity', 'Cloud Computing', 'Blockchain', 'AR/VR', 'Image Processing', 'NLP', 'Other'];
+const DOMAINS = ['Web Development', 'Machine Learning', 'Deep Learning', 'Natural Language Processing', 'Data Science', 'IoT', 'Mobile App', 'Embedded Systems', 'Cybersecurity', 'Cloud Computing', 'Blockchain', 'AR/VR', 'Image Processing', 'NLP', 'Other'];
 const STATUSES = ['Submitted', 'Under Review', 'Approved', 'Rejected', 'Completed'];
 
 export default function ProjectForm() {

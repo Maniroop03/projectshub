@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
     MdDashboard, MdFolderOpen, MdAddCircleOutline, MdPeople,
     MdPersonAdd, MdSupervisorAccount, MdPersonAddAlt1, MdLogout,
+    MdCategory,
 } from 'react-icons/md';
 
 const navItems = [
@@ -25,6 +26,12 @@ const navItems = [
         items: [
             { to: '/guides', icon: <MdSupervisorAccount />, label: 'All Guides' },
             { to: '/guides/new', icon: <MdPersonAddAlt1 />, label: 'Add Guide' },
+        ],
+    },
+    {
+        section: 'Domains',
+        items: [
+            { to: '/domains', icon: <MdCategory />, label: 'All Domains' },
         ],
     },
 ];

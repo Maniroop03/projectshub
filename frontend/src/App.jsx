@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import ProjectList from './pages/ProjectList';
 import ProjectForm from './pages/ProjectForm';
 import ProjectDetail from './pages/ProjectDetail';
+import Domains from './pages/Domains';
 import GroupList from './pages/GroupList';
 import GroupForm from './pages/GroupForm';
 import GuideList from './pages/GuideList';
@@ -48,6 +49,7 @@ export default function App() {
         <Route path="/guides/new" element={<ProtectedLayout><GuideForm /></ProtectedLayout>} />
         <Route path="/guides/:id/edit" element={<ProtectedLayout><GuideForm /></ProtectedLayout>} />
 
+        <Route path="/domains" element={<ProtectedLayout><Domains /></ProtectedLayout>} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
