@@ -17,7 +17,7 @@ router.post('/notify/:projectId', async (req, res) => {
 
         const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-        const studentNames = project.students.map((s) => `${s.name} (${s.rollNo})`).join(', ');
+        const groupNames = project.students.map((s) => `${s.name} (${s.rollNo})`).join(', ');
         const submissionDate = project.submissionDate
             ? new Date(project.submissionDate).toLocaleDateString('en-IN')
             : 'Not specified';

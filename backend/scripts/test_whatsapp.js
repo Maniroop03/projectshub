@@ -1,4 +1,4 @@
-const Student = require('../models/Student');
+const Group = require('../models/Group');
 const Guide = require('../models/Guide');
 const Project = require('../models/Project');
 const axios = require('axios');

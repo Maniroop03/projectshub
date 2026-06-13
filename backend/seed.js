@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const Student = require('./models/Student');
+const Group = require('./models/Group');
 const Guide = require('./models/Guide');
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -20,8 +20,8 @@ mongoose.connect(process.env.MONGO_URI, {
         await Guide.insertMany(guides);
         console.log('Guides added');
 
-        // Create Students
-        const students = [
+        // Create Groups
+        const groups = [
             { name: 'Alice Smith', rollNo: 'CS101', year: 'IV', section: 'A', department: 'Computer Science', email: 'alice@example.com', phone: '1112223333', domain: 'Machine Learning' },
             { name: 'Bob Johnson', rollNo: 'CS102', year: 'IV', section: 'B', department: 'Computer Science', email: 'bob@example.com', phone: '4445556666', domain: 'Cloud Computing' },
             { name: 'Charlie Brown', rollNo: 'CS103', year: 'III', section: 'A', department: 'Computer Science', email: 'charlie@example.com', phone: '7778889999', domain: 'Web Development' },
@@ -29,8 +29,8 @@ mongoose.connect(process.env.MONGO_URI, {
             { name: 'Evan Rachel', rollNo: 'IT202', year: 'III', section: 'A', department: 'Information Technology', email: 'evan@example.com', phone: '3213214321', domain: 'Cybersecurity' }
         ];
 
-        await Student.insertMany(students);
-        console.log('Students added');
+        await Group.insertMany(groups);
+        console.log('Groups added');
     } catch (err) {
         console.error('Error inserting data:', err);
     }

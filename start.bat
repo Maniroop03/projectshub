@@ -1,6 +1,6 @@
 @echo off
 echo ======================================
-echo  Student Project Management System
+echo  Group Project Management System
 echo ======================================
 echo.
 echo Step 1: Starting MongoDB (if installed as a service)...

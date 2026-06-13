@@ -81,7 +81,7 @@ export default function ProjectList() {
                                 <th>Title</th>
                                 <th>Domain</th>
                                 <th>Guide</th>
-                                <th>Students</th>
+                                <th>Groups</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Actions</th>

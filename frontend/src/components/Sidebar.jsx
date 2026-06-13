@@ -14,10 +14,10 @@ const navItems = [
         ],
     },
     {
-        section: 'Students',
+        section: 'Groups',
         items: [
-            { to: '/students', icon: <MdPeople />, label: 'All Students' },
-            { to: '/students/new', icon: <MdPersonAdd />, label: 'Add Student' },
+            { to: '/groups', icon: <MdPeople />, label: 'All Groups' },
+            { to: '/groups/new', icon: <MdPersonAdd />, label: 'Add Group' },
         ],
     },
     {

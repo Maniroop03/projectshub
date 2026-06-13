@@ -16,7 +16,7 @@ const projectSchema = new mongoose.Schema(
         batchYear: { type: String, trim: true },
         guide: { type: mongoose.Schema.Types.ObjectId, ref: 'Guide' },
         coGuide: { type: mongoose.Schema.Types.ObjectId, ref: 'Guide' },
-        students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
+        students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
         pptFilePath: { type: String, default: '' },
         pptOriginalName: { type: String, default: '' },
         remarks: { type: String, trim: true },

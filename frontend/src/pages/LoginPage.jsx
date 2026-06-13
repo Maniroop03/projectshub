@@ -31,7 +31,7 @@ export default function LoginPage() {
             <div className="login-card">
                 <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🎓</div>
                 <h1>Project Hub</h1>
-                <p>Student Project Management System<br />Enter your credentials to continue</p>
+                <p>Group Project Management System<br />Enter your credentials to continue</p>
 
                 {error && <div className="alert alert-error" style={{ marginBottom: 20 }}><MdLock /> {error}</div>}
 

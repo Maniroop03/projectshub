@@ -6,8 +6,8 @@ import Dashboard from './pages/Dashboard';
 import ProjectList from './pages/ProjectList';
 import ProjectForm from './pages/ProjectForm';
 import ProjectDetail from './pages/ProjectDetail';
-import StudentList from './pages/StudentList';
-import StudentForm from './pages/StudentForm';
+import GroupList from './pages/GroupList';
+import GroupForm from './pages/GroupForm';
 import GuideList from './pages/GuideList';
 import GuideForm from './pages/GuideForm';
 
@@ -40,9 +40,9 @@ export default function App() {
         <Route path="/projects/:id" element={<ProtectedLayout><ProjectDetail /></ProtectedLayout>} />
         <Route path="/projects/:id/edit" element={<ProtectedLayout><ProjectForm /></ProtectedLayout>} />
 
-        <Route path="/students" element={<ProtectedLayout><StudentList /></ProtectedLayout>} />
-        <Route path="/students/new" element={<ProtectedLayout><StudentForm /></ProtectedLayout>} />
-        <Route path="/students/:id/edit" element={<ProtectedLayout><StudentForm /></ProtectedLayout>} />
+        <Route path="/groups" element={<ProtectedLayout><GroupList /></ProtectedLayout>} />
+        <Route path="/groups/new" element={<ProtectedLayout><GroupForm /></ProtectedLayout>} />
+        <Route path="/groups/:id/edit" element={<ProtectedLayout><GroupForm /></ProtectedLayout>} />
 
         <Route path="/guides" element={<ProtectedLayout><GuideList /></ProtectedLayout>} />
         <Route path="/guides/new" element={<ProtectedLayout><GuideForm /></ProtectedLayout>} />

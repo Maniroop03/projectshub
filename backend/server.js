@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
-app.use('/api/students', require('./routes/students'));
+app.use('/api/groups', require('./routes/groups'));
 app.use('/api/guides', require('./routes/guides'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/whatsapp', require('./routes/whatsapp'));

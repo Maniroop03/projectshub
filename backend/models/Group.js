@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const studentSchema = new mongoose.Schema(
+const groupSchema = new mongoose.Schema(
     {
         name: { type: String, required: true, trim: true },
         rollNo: { type: String, required: true, trim: true, unique: true },
@@ -14,4 +14,4 @@ const studentSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('Student', studentSchema);
+module.exports = mongoose.model('Group', groupSchema, 'students');

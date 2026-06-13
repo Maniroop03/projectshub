@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const mongoose = require('mongoose');
-const Student = require('../models/Student');
+const Group = require('../models/Group');
 const Guide = require('../models/Guide');
 const Project = require('../models/Project');
 
@@ -18,7 +18,7 @@ const seed = async () => {
         console.log('Connected to MongoDB');
 
         // 1. Clear existing data (optional, but good for clean seeding)
-        // await Student.deleteMany({});
+        // await Group.deleteMany({});
         // await Guide.deleteMany({});
         // await Project.deleteMany({});
 
@@ -32,8 +32,8 @@ const seed = async () => {
         const guides = await Guide.insertMany(facultyData);
         console.log(`Added ${guides.length} faculty members.`);
 
-        // 3. Create Students
-        const studentData = [
+        // 3. Create Groups
+        const groupData = [
             { name: 'Arjun Mehta', rollNo: '2022CS01', year: 'IV', section: 'A', department: 'Computer Science', email: 'arjun.m@student.edu', phone: '7001112223', domain: 'Machine Learning' },
             { name: 'Priya Rai', rollNo: '2022CS02', year: 'IV', section: 'A', department: 'Computer Science', email: 'priya.r@student.edu', phone: '7001112224', domain: 'Neural Networks' },
             { name: 'Karan Singh', rollNo: '2022IT05', year: 'III', section: 'B', department: 'Information Technology', email: 'karan.s@student.edu', phone: '7001112225', domain: 'Web Security' },
@@ -41,8 +41,8 @@ const seed = async () => {
             { name: 'Rahul Joshi', rollNo: '2022EC10', year: 'IV', section: 'A', department: 'Electronics', email: 'rahul.j@student.edu', phone: '7001112227', domain: 'Robotics' }
         ];
 
-        const students = await Student.insertMany(studentData);
-        console.log(`Added ${students.length} students.`);
+        const groups = await Group.insertMany(groupData);
+        console.log(`Added ${groups.length} groups.`);
 
         // 4. Join them with Projects
         const projectData = [
@@ -55,7 +55,7 @@ const seed = async () => {
                 academicYear: '2025-26',
                 batchYear: '2022-26',
                 guide: guides[0]._id, // Dr. Rajesh Kumar
-                students: [students[0]._id, students[1]._id] // Arjun and Priya
+                students: [groups[0]._id, groups[1]._id] // Arjun and Priya
             },
             {
                 projectType: 'Mini',
@@ -66,7 +66,7 @@ const seed = async () => {
                 academicYear: '2025-26',
                 batchYear: '2022-26',
                 guide: guides[1]._id, // Dr. Sunita Sharma
-                students: [students[2]._id, students[3]._id] // Karan and Sneha
+                students: [groups[2]._id, groups[3]._id] // Karan and Sneha
             },
             {
                 projectType: 'Major',
@@ -77,12 +77,12 @@ const seed = async () => {
                 academicYear: '2025-26',
                 batchYear: '2022-26',
                 guide: guides[2]._id, // Prof. Amit Varma
-                students: [students[4]._id] // Rahul
+                students: [groups[4]._id] // Rahul
             }
         ];
 
         await Project.insertMany(projectData);
-        console.log('Successfully joined students with faculty via sample projects.');
+        console.log('Successfully joined groups with faculty via sample projects.');
 
         process.exit(0);
     } catch (error) {

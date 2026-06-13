@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createStudent, updateStudent, getStudent } from '../api';
+import { createGroup, updateGroup, getGroup } from '../api';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 
 const YEARS = ['I', 'II', 'III', 'IV'];
 const DEPTS = ['Computer Science', 'Data Science', 'Information Technology', 'ECE', 'EEE', 'Mechanical', 'Civil', 'Other'];
 
-export default function StudentForm() {
+export default function GroupForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
@@ -15,18 +15,18 @@ export default function StudentForm() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (isEdit) getStudent(id).then((r) => setForm(r.data)).catch(console.error);
+        if (isEdit) getGroup(id).then((r) => setForm(r.data)).catch(console.error);
     }, [id, isEdit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); setError('');
         try {
-            if (isEdit) await updateStudent(id, form);
-            else await createStudent(form);
-            navigate('/students');
+            if (isEdit) await updateGroup(id, form);
+            else await createGroup(form);
+            navigate('/groups');
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to save student.');
+            setError(err.response?.data?.error || 'Failed to save group.');
         } finally { setLoading(false); }
     };
 
@@ -37,8 +37,8 @@ export default function StudentForm() {
             <div className="page-header flex items-center gap-3">
                 <button className="btn btn-outline btn-sm" onClick={() => navigate(-1)}><MdArrowBack /> Back</button>
                 <div>
-                    <h1 className="page-title">{isEdit ? 'Edit Student' : 'Add Student'}</h1>
-                    <p className="page-subtitle">Student registration details</p>
+                    <h1 className="page-title">{isEdit ? 'Edit Group' : 'Add Group'}</h1>
+                    <p className="page-subtitle">Group registration details</p>
                 </div>
             </div>
             {error && <div className="alert alert-error">{error}</div>}
@@ -48,10 +48,10 @@ export default function StudentForm() {
                         <div className="form-grid form-grid-2">
                             <div className="form-group">
                                 <label className="form-label">Full Name <span>*</span></label>
-                                <input className="form-input" placeholder="Student full name" required {...f('name')} />
+                                <input className="form-input" placeholder="Group full name / name" required {...f('name')} />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Roll Number <span>*</span></label>
+                                <label className="form-label">Roll Number / ID <span>*</span></label>
                                 <input className="form-input" placeholder="e.g. 22CS001" required {...f('rollNo')} />
                             </div>
                             <div className="form-group">
@@ -73,7 +73,7 @@ export default function StudentForm() {
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Email</label>
-                                <input className="form-input" type="email" placeholder="student@college.edu" {...f('email')} />
+                                <input className="form-input" type="email" placeholder="group@college.edu" {...f('email')} />
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Phone</label>
@@ -86,7 +86,7 @@ export default function StudentForm() {
                         </div>
                         <div className="flex gap-3 mt-4">
                             <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
-                                {loading ? <><span className="loading-spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Saving...</> : <><MdSave /> {isEdit ? 'Update' : 'Add Student'}</>}
+                                {loading ? <><span className="loading-spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Saving...</> : <><MdSave /> {isEdit ? 'Update' : 'Add Group'}</>}
                             </button>
                             <button type="button" className="btn btn-outline" onClick={() => navigate(-1)}>Cancel</button>
                         </div>

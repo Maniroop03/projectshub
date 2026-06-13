@@ -125,8 +125,8 @@ export default function ProjectDetail() {
                 <div>
                     <div className="card mb-6">
                         <div className="card-body">
-                            <div className="section-title"><MdGroup /> Student Team ({p.students?.length || 0})</div>
-                            {p.students?.length === 0 ? <p className="text-muted">No students assigned.</p> : (
+                            <div className="section-title"><MdGroup /> Group Team ({p.students?.length || 0})</div>
+                            {p.students?.length === 0 ? <p className="text-muted">No groups assigned.</p> : (
                                 <div className="table-wrapper">
                                     <table>
                                         <thead><tr><th>Name</th><th>Roll No</th><th>Year</th><th>Dept</th></tr></thead>

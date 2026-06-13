@@ -10,12 +10,12 @@ export const updateGuide = (id, data) => API.put(`/guides/${id}`, data);
 export const deleteGuide = (id) => API.delete(`/guides/${id}`);
 export const bulkCreateGuides = (data) => API.post('/guides/bulk', data);
 
-export const getStudents = () => API.get('/students');
-export const getStudent = (id) => API.get(`/students/${id}`);
-export const createStudent = (data) => API.post('/students', data);
-export const updateStudent = (id, data) => API.put(`/students/${id}`, data);
-export const deleteStudent = (id) => API.delete(`/students/${id}`);
-export const bulkCreateStudents = (data) => API.post('/students/bulk', data);
+export const getGroups = () => API.get('/groups');
+export const getGroup = (id) => API.get(`/groups/${id}`);
+export const createGroup = (data) => API.post('/groups', data);
+export const updateGroup = (id, data) => API.put(`/groups/${id}`, data);
+export const deleteGroup = (id) => API.delete(`/groups/${id}`);
+export const bulkCreateGroups = (data) => API.post('/groups/bulk', data);
 
 export const getProjects = (params) => API.get('/projects', { params });
 export const getProjectStats = () => API.get('/projects/stats');

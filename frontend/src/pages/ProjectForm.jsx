@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createProject, updateProject, getProject, getGuides, getStudents } from '../api';
+import { createProject, updateProject, getProject, getGuides, getGroups } from '../api';
 import { MdCloudUpload, MdInsertDriveFile, MdSave, MdArrowBack } from 'react-icons/md';
 
 const DOMAINS = ['Web Development', 'Machine Learning', 'Data Science', 'IoT', 'Mobile App', 'Embedded Systems', 'Cybersecurity', 'Cloud Computing', 'Blockchain', 'AR/VR', 'Image Processing', 'NLP', 'Other'];
@@ -20,7 +20,7 @@ export default function ProjectForm() {
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState('');
     const [guides, setGuides] = useState([]);
-    const [students, setStudents] = useState([]);
+    const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -28,7 +28,7 @@ export default function ProjectForm() {
 
     useEffect(() => {
         getGuides().then((r) => setGuides(r.data)).catch(console.error);
-        getStudents().then((r) => setStudents(r.data)).catch(console.error);
+        getGroups().then((r) => setGroups(r.data)).catch(console.error);
         if (isEdit) {
             getProject(id).then((r) => {
                 const p = r.data;
@@ -49,9 +49,9 @@ export default function ProjectForm() {
     }, [id, isEdit]);
     
     useEffect(() => {
-        if (students.length > 0) {
+        if (groups.length > 0) {
             setForm(f => {
-                const eligibleSids = students.filter(s => {
+                const eligibleSids = groups.filter(s => {
                     if (f.projectType === 'Major') return s.year === 'IV';
                     if (f.projectType === 'Mini') return s.year === 'III';
                     return true;
@@ -61,9 +61,9 @@ export default function ProjectForm() {
                 return f;
             });
         }
-    }, [form.projectType, students]);
+    }, [form.projectType, groups]);
 
-    const toggleStudent = (sid) => {
+    const toggleGroup = (sid) => {
         setForm((f) => ({
             ...f,
             students: f.students.includes(sid) ? f.students.filter((x) => x !== sid) : [...f.students, sid],
@@ -189,20 +189,20 @@ export default function ProjectForm() {
 
                 <div className="card mb-6">
                     <div className="card-body">
-                        <div className="section-title">Student Team</div>
+                        <div className="section-title">Group Team</div>
                         <div className="form-group">
-                            <label className="form-label">Select Students ({form.students.length} selected)</label>
-                            {students.length === 0 ? (
-                                <div className="text-muted">No students found. <a href="/students/new" style={{ color: 'var(--accent-purple)' }}>Add students first →</a></div>
+                            <label className="form-label">Select Groups ({form.students.length} selected)</label>
+                            {groups.length === 0 ? (
+                                <div className="text-muted">No groups found. <a href="/groups/new" style={{ color: 'var(--accent-purple)' }}>Add groups first →</a></div>
                             ) : (
                                 <div className="multi-select-list">
-                                    {students.filter(s => {
+                                    {groups.filter(s => {
                                         if (form.projectType === 'Major') return s.year === 'IV';
                                         if (form.projectType === 'Mini') return s.year === 'III';
                                         return true;
                                     }).map((s) => (
                                         <label key={s._id} className="multi-select-item">
-                                            <input type="checkbox" checked={form.students.includes(s._id)} onChange={() => toggleStudent(s._id)} />
+                                            <input type="checkbox" checked={form.students.includes(s._id)} onChange={() => toggleGroup(s._id)} />
                                             <span><strong>{s.name}</strong> &nbsp;|&nbsp; {s.rollNo} &nbsp;|&nbsp; {s.year} Year &nbsp;|&nbsp; {s.department || ''}</span>
                                         </label>
                                     ))}

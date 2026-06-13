@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getStudents, deleteStudent, bulkCreateStudents } from '../api';
+import { getGroups, deleteGroup, bulkCreateGroups } from '../api';
 import { MdAdd, MdEdit, MdDelete, MdFileUpload } from 'react-icons/md';
 import BulkImportModal from '../components/BulkImportModal';
 
-export default function StudentList() {
-    const [students, setStudents] = useState([]);
+export default function GroupList() {
+    const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
     const navigate = useNavigate();
 
-    const load = () => { setLoading(true); getStudents().then((r) => setStudents(r.data)).catch(console.error).finally(() => setLoading(false)); };
+    const load = () => { setLoading(true); getGroups().then((r) => setGroups(r.data)).catch(console.error).finally(() => setLoading(false)); };
     useEffect(load, []);
 
     const handleDelete = async (id, name) => {
-        if (!window.confirm(`Delete student "${name}"?`)) return;
-        await deleteStudent(id); load();
+        if (!window.confirm(`Delete group "${name}"?`)) return;
+        await deleteGroup(id); load();
     };
 
     const handleBulkImport = async (data) => {
-        await bulkCreateStudents(data);
+        await bulkCreateGroups(data);
         load();
     };
 
-    const filtered = students.filter((s) =>
+    const filtered = groups.filter((s) =>
         search === '' || s.name.toLowerCase().includes(search.toLowerCase()) || s.rollNo.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -32,12 +32,12 @@ export default function StudentList() {
         <div className="page-container">
             <div className="page-header flex items-center justify-between">
                 <div>
-                    <h1 className="page-title">Students</h1>
-                    <p className="page-subtitle">{students.length} student(s) registered</p>
+                    <h1 className="page-title">Groups</h1>
+                    <p className="page-subtitle">{groups.length} group(s) registered</p>
                 </div>
                 <div className="flex gap-2">
                     <button className="btn btn-outline" onClick={() => setIsBulkModalOpen(true)}><MdFileUpload /> Bulk Add</button>
-                    <Link to="/students/new" className="btn btn-primary"><MdAdd /> Add Student</Link>
+                    <Link to="/groups/new" className="btn btn-primary"><MdAdd /> Add Group</Link>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@ export default function StudentList() {
                 isOpen={isBulkModalOpen}
                 onClose={() => setIsBulkModalOpen(false)}
                 onImport={handleBulkImport}
-                type="Students"
+                type="Groups"
                 fields={['name', 'rollNo', 'year', 'section', 'department', 'email', 'phone', 'domain']}
                 sample="John Doe, 22CS001, III, A, Computer Science, john@example.com, 1234567890, AI/ML"
             />
@@ -53,7 +53,7 @@ export default function StudentList() {
                 <input className="form-input" style={{ maxWidth: 300 }} placeholder="🔍 Search name or roll no..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             {loading ? <div className="loading-center"><div className="loading-spinner" /></div> : filtered.length === 0 ? (
-                <div className="empty-state"><div className="empty-state-icon">👥</div><p>No students found.</p><Link to="/students/new" className="btn btn-primary mt-4"><MdAdd /> Add Student</Link></div>
+                <div className="empty-state"><div className="empty-state-icon">👥</div><p>No groups found.</p><Link to="/groups/new" className="btn btn-primary mt-4"><MdAdd /> Add Group</Link></div>
             ) : (
                 <div className="table-wrapper">
                     <table>
@@ -71,7 +71,7 @@ export default function StudentList() {
                                     <td>{s.phone || '—'}</td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <Link to={`/students/${s._id}/edit`} className="btn btn-outline btn-sm"><MdEdit /></Link>
+                                            <Link to={`/groups/${s._id}/edit`} className="btn btn-outline btn-sm"><MdEdit /></Link>
                                             <button className="btn btn-danger btn-sm" onClick={() => handleDelete(s._id, s.name)}><MdDelete /></button>
                                         </div>
                                     </td>

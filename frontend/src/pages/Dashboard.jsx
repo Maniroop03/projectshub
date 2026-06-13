@@ -30,7 +30,7 @@ export default function Dashboard() {
             <div className="page-header flex items-center justify-between">
                 <div>
                     <h1 className="page-title">Dashboard</h1>
-                    <p className="page-subtitle">Overview of all student projects</p>
+                    <p className="page-subtitle">Overview of all group projects</p>
                 </div>
                 <Link to="/projects/new" className="btn btn-primary"><MdAddCircleOutline /> New Project</Link>
             </div>
