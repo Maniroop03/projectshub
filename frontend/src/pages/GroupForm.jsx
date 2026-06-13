@@ -12,9 +12,9 @@ export default function GroupForm() {
   batch: '',
   section: '',
   domain: '',
-
   members: [
     {
+      role: 'Lead',
       name: '',
       rollNo: '',
       email: '',
@@ -28,6 +28,7 @@ const addMember = () => {
     members: [
       ...form.members,
       {
+        role: 'Member',
         name: '',
         rollNo: '',
         email: '',
