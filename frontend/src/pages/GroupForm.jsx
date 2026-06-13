@@ -48,10 +48,39 @@ const addMember = () => {
         e.preventDefault();
         setLoading(true); setError('');
         try {
-            if (isEdit) await updateGroup(id, form);
-            else await createGroup(form);
-            navigate('/groups');
-        } catch (err) {
+
+    const invalidMember = form.members.find(
+        m => !m.name.trim() || !m.rollNo.trim()
+    );
+    if (!form.batch.trim()) {
+    setError('Batch Number is required');
+    setLoading(false);
+    return;
+}
+
+if (!form.section.trim()) {
+    setError('Section is required');
+    setLoading(false);
+    return;
+}
+
+if (!form.domain.trim()) {
+    setError('Please select a domain');
+    setLoading(false);
+    return;
+}
+
+    if (invalidMember) {
+        setError('Every member must have Name and Roll Number');
+        setLoading(false);
+        return;
+    }
+
+    if (isEdit) await updateGroup(id, form);
+    else await createGroup(form);
+
+    navigate('/groups');
+} catch (err) {
             setError(err.response?.data?.error || 'Failed to save group.');
         } finally { setLoading(false); }
     };
@@ -145,10 +174,11 @@ const addMember = () => {
       <div className="form-grid form-grid-2">
 
         <div className="form-group">
-          <label>Name</label>
+          <label>Name *</label>
 
           <input
             className="form-input"
+            required
             value={member.name}
             onChange={(e) => {
               const updated = [...form.members];
@@ -164,10 +194,11 @@ const addMember = () => {
         </div>
 
         <div className="form-group">
-          <label>Roll No</label>
+          <label>Roll No *</label>
 
           <input
             className="form-input"
+            required
             value={member.rollNo}
             onChange={(e) => {
               const updated = [...form.members];
