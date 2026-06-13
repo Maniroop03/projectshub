@@ -136,7 +136,7 @@ export default function Domains() {
               </>
             ) : (
               <div className="domain-placeholder">
-                <div className="domain-placeholder-icon">👉</div>
+                <div className="domain-placeholder-icon">👆</div>
                 <h3>Click on any domain card to explore its details, applications, and sample projects.</h3>
                 <p>Then press <strong style={{ color: 'var(--accent-purple)' }}>Select This Domain</strong> to choose it.</p>
               </div>
