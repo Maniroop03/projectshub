@@ -1,136 +1,141 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 
 const DOMAINS = [
   {
-    id: 'nlp',
-    name: 'Natural Language Processing',
-    icon: '🧠',
-    color: '#A855F7',
-    description: 'Teaching machines to understand and derive meaning from human language.',
-    applications: ['Chatbots & Virtual Assistants', 'Machine Translation', 'Sentiment Analysis', 'Named Entity Recognition'],
-    projects: ['Sentiment analysis on social media', 'Automatic text summarizer', 'Question answering system'],
-  },
-  {
-    id: 'deep-learning',
-    name: 'Deep Learning',
-    icon: '🧠',
-    color: '#EC4899',
-    description: 'Neural networks that mimic the human brain for advanced pattern recognition.',
-    applications: ['Image classification', 'Speech recognition', 'Anomaly detection'],
-    projects: ['Image recognition system', 'Voice-based assistant', 'Predictive maintenance model'],
-  },
-  {
-    id: 'machine-learning',
-    name: 'Machine Learning',
-    icon: '⚙️',
-    color: '#6366F1',
-    description: 'Systems that learn from data and improve from experience.',
-    applications: ['Recommendation engines', 'Fraud detection', 'Predictive analytics'],
-    projects: ['Student performance predictor', 'Course recommendation system', 'Sales forecasting dashboard'],
-  },
-  {
-    id: 'artificial-intelligence',
-    name: 'Artificial Intelligence',
+    id: 'rpa',
+    name: 'Robotic Process Automation (RPA)',
     icon: '🤖',
-    color: '#F59E0B',
-    description: 'Building intelligent systems that reason and act.',
-    applications: ['Automation', 'Intelligent assistants', 'Decision support'],
-    projects: ['AI-based tutoring system', 'Smart chatbot platform', 'Adaptive assessment tool'],
-  },
-  {
-    id: 'web-development',
-    name: 'Web Development',
-    icon: '🌐',
-    color: '#14B8A6',
-    description: 'Crafting modern web experiences end-to-end.',
-    applications: ['Responsive websites', 'Progressive web apps', 'API-driven dashboards'],
-    projects: ['Portfolio website', 'E-commerce platform', 'Project management app'],
-  },
-  {
-    id: 'computer-vision',
-    name: 'Computer Vision',
-    icon: '👁️',
-    color: '#F97316',
-    description: 'Enabling machines to see and interpret visuals.',
-    applications: ['Object detection', 'Video analysis', 'Face recognition'],
-    projects: ['License plate reader', 'Gesture recognition tool', 'Visual search engine'],
-  },
-  {
-    id: 'image-processing',
-    name: 'Image Processing',
-    icon: '🖼️',
-    color: '#22C55E',
-    description: 'Transforming and enhancing digital images.',
-    applications: ['Image enhancement', 'Feature extraction', 'Medical imaging'],
-    projects: ['Photo filter editor', 'Image compression tool', 'Document scanner'],
-  },
-  {
-    id: 'data-mining',
-    name: 'Data Mining',
-    icon: '⛏️',
-    color: '#A855F7',
-    description: 'Discovering hidden patterns in large datasets.',
-    applications: ['Customer segmentation', 'Trend detection', 'Market analysis'],
-    projects: ['Data clustering explorer', 'Sales trend dashboard', 'Recommendation engine'],
-  },
-  {
-    id: 'network-security',
-    name: 'Cryptography and Network Security',
-    icon: '🔒',
     color: '#8B5CF6',
-    description: 'Protecting data and communication in the digital age.',
-    applications: ['Encryption', 'Secure messaging', 'Threat detection'],
-    projects: ['Secure file transfer', 'Password manager', 'Network intrusion monitor'],
+    description: 'Automating repetitive digital tasks using software bots.',
+    applications: ['Workflow automation', 'Data entry bots', 'Process monitoring'],
+    projects: ['Invoice processing bot', 'Automated report generation', 'Task scheduling assistant'],
   },
   {
-    id: 'cloud-computing',
-    name: 'Cloud Computing',
-    icon: '☁️',
-    color: '#38BDF8',
-    description: 'Scalable infrastructure and services on demand.',
-    applications: ['Cloud storage', 'Serverless apps', 'Distributed systems'],
-    projects: ['Cloud backup tool', 'Serverless API', 'Resource usage dashboard'],
-  },
-  {
-    id: 'human-computer-interaction',
-    name: 'Human-Computer Interaction',
-    icon: '🖱️',
+    id: 'assistive-tech',
+    name: 'Assistive Technologies',
+    icon: '♿',
     color: '#6366F1',
-    description: 'Designing intuitive and accessible user experiences.',
-    applications: ['UX research', 'Interaction design', 'Accessibility tools'],
-    projects: ['Interactive prototyping app', 'Voice UI demo', 'Accessibility validator'],
+    description: 'Creating technology to improve accessibility and independence.',
+    applications: ['Speech assistance', 'Adaptive interfaces', 'Accessibility tools'],
+    projects: ['Voice navigation app', 'Screen reader enhancements', 'Gesture-controlled UI'],
   },
   {
-    id: 'cyber-security',
-    name: 'Cyber Security',
-    icon: '🛡️',
+    id: 'fintech',
+    name: 'FinTech & Banking Systems',
+    icon: '💳',
+    color: '#14B8A6',
+    description: 'Innovating financial services with secure, modern technology.',
+    applications: ['Digital banking', 'Payment processing', 'Risk management'],
+    projects: ['Mobile wallet', 'Budgeting dashboard', 'Loan approval engine'],
+  },
+  {
+    id: 'e-governance',
+    name: 'E-Governance Systems',
+    icon: '🏛️',
+    color: '#F59E0B',
+    description: 'Enhancing public services and democratic processes through digital platforms.',
+    applications: ['Citizen portals', 'Service automation', 'Policy tracking'],
+    projects: ['Public service dashboard', 'Document verification system', 'Community feedback hub'],
+  },
+  {
+    id: 'bioinformatics',
+    name: 'Bioinformatics',
+    icon: '🧬',
+    color: '#22C55E',
+    description: 'Analyzing complex biological data using computational tools.',
+    applications: ['Genomic analysis', 'Protein modeling', 'Medical research'],
+    projects: ['DNA sequence analyzer', 'Protein structure predictor', 'Clinical data explorer'],
+  },
+  {
+    id: 'computational-biology',
+    name: 'Computational Biology',
+    icon: '⚛️',
+    color: '#F97316',
+    description: 'Developing models of biological systems to study life processes.',
+    applications: ['Systems biology', 'Simulation models', 'Bioinformatics analysis'],
+    projects: ['Cell behavior simulator', 'Ecological modeler', 'Pathway visualization tool'],
+  },
+  {
+    id: 'social-network-analysis',
+    name: 'Social Network Analysis',
+    icon: '🕸️',
+    color: '#A855F7',
+    description: 'Investigating social structures through network and graph theories.',
+    applications: ['Community detection', 'Influence mapping', 'Relationship analytics'],
+    projects: ['Social graph explorer', 'Trend propagation analyzer', 'Network cluster tool'],
+  },
+  {
+    id: 'scientific-computing',
+    name: 'Scientific Computing',
+    icon: '📐',
     color: '#0EA5E9',
-    description: 'Defending systems and data from digital attacks.',
-    applications: ['Threat hunting', 'Vulnerability scanning', 'Risk assessment'],
-    projects: ['Phishing detection app', 'Secure login portal', 'Incident response dashboard'],
+    description: 'Solving mathematical models of scientific problems computationally.',
+    applications: ['Numerical simulation', 'Model optimization', 'Data visualization'],
+    projects: ['Physics solver', 'Climate model builder', 'High-performance analysis app'],
+  },
+  {
+    id: 'prompt-engineering',
+    name: 'Generative AI Prompt Engineering',
+    icon: '✨',
+    color: '#EC4899',
+    description: 'Structuring optimal inputs to get desired outputs from generative models.',
+    applications: ['Content generation', 'Chatbot prompts', 'Creative AI workflows'],
+    projects: ['Prompt library manager', 'AI response tuner', 'Creative prompt tool'],
+  },
+  {
+    id: 'llms',
+    name: 'Large Language Models (LLMs)',
+    icon: '💬',
+    color: '#8B5CF6',
+    description: 'Building and fine-tuning massive language models for text tasks.',
+    applications: ['Text generation', 'Summarization', 'Conversational AI'],
+    projects: ['Chatbot builder', 'Content summarizer', 'Language model evaluator'],
+  },
+  {
+    id: 'ai-ethics',
+    name: 'AI Ethics & Responsible AI',
+    icon: '⚖️',
+    color: '#6366F1',
+    description: 'Ensuring AI systems are fair, transparent, accountable, and unbiased.',
+    applications: ['Bias detection', 'Transparency tools', 'Ethical auditing'],
+    projects: ['Fairness evaluator', 'Compliance dashboard', 'AI ethics checklist'],
+  },
+  {
+    id: 'green-computing',
+    name: 'Green Computing',
+    icon: '🌱',
+    color: '#22C55E',
+    description: 'Designing energy-efficient hardware and software systems.',
+    applications: ['Power optimization', 'Resource efficiency', 'Sustainable design'],
+    projects: ['Energy tracking dashboard', 'Low-power scheduler', 'Green infrastructure planner'],
   },
 ];
 
+const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
+  return (
+    <button
+      type="button"
+      className={`domain-card ${active ? 'active' : ''}`}
+      onClick={onSelect}
+    >
+      <div className="domain-card-icon" style={{ color: '#ffffff' }}>
+        {domain.icon}
+      </div>
+      <div>
+        <h2>{domain.name}</h2>
+        <p>{domain.description}</p>
+      </div>
+    </button>
+  );
+});
+
 export default function Domains() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(null);
 
-  const filteredDomains = useMemo(() => {
-    const query = search.toLowerCase().trim();
-    if (!query) return DOMAINS;
-    return DOMAINS.filter((domain) => domain.name.toLowerCase().includes(query));
-  }, [search]);
-
-  useEffect(() => {
-    if (selected && !filteredDomains.some((domain) => domain.id === selected)) {
-      setSelected(null);
-    }
-  }, [filteredDomains, selected]);
-
-  const current = DOMAINS.find((d) => d.id === selected) || null;
+  const current = useMemo(() => DOMAINS.find((d) => d.id === selected) || null, [selected]);
 
   return (
     <div className="page-container domain-explorer">
@@ -139,44 +144,16 @@ export default function Domains() {
         <p className="page-subtitle">Browse all available project domains below. Click a domain to learn more, then select it for your project.</p>
       </div>
 
-      <div className="domain-toolbar card mb-6">
-        <div className="domain-toolbar-content">
-          <div className="domain-search">
-            <MdSearch className="domain-search-icon" />
-            <input
-              type="search"
-              placeholder="Search domains..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="domain-count">{DOMAINS.length} domains</div>
-        </div>
-      </div>
-
       <div className="domain-grid-layout">
         <div className="domain-grid">
-          {filteredDomains.map((domain) => (
-            <button
+          {DOMAINS.map((domain) => (
+            <DomainCard
               key={domain.id}
-              type="button"
-              className={`domain-card ${selected === domain.id ? 'active' : ''}`}
-              onClick={() => setSelected(domain.id)}
-            >
-              <div className="domain-card-icon" style={{ background: `${domain.color}22`, color: domain.color }}>
-                {domain.icon}
-              </div>
-              <div>
-                <h2>{domain.name}</h2>
-                <p>{domain.description}</p>
-              </div>
-            </button>
+              domain={domain}
+              active={selected === domain.id}
+              onSelect={() => setSelected(domain.id)}
+            />
           ))}
-          {filteredDomains.length === 0 && (
-            <div className="domain-empty-message card">
-              No domains matched your search.
-            </div>
-          )}
         </div>
 
         <div className="domain-panel card">
