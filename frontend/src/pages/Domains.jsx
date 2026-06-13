@@ -8,17 +8,28 @@ const DOMAINS = [
     name: 'Artificial Intelligence',
     icon: '🤖',
     color: '#8B5CF6',
-    description: 'Building intelligent systems that can reason, learn, and make decisions.',
+
+    shortDescription:
+      'Building intelligent systems that reason and act',
+
+    fullDescription:
+      'Artificial Intelligence focuses on creating systems capable of simulating human intelligence, including reasoning, learning, decision making, problem solving, and automation.',
+
     applications: [
-      'Chatbots',
-      'Virtual Assistants',
-      'Expert Systems'
+      'Chatbots & Virtual Assistants',
+      'Recommendation Systems',
+      'Predictive Analytics',
+      'Expert Systems',
+      'Intelligent Automation'
     ],
+
     projects: [
       'AI Career Guidance System',
       'Smart Attendance System',
-      'Virtual Assistant'
-    ],
+      'Virtual Assistant',
+      'Student Performance Predictor',
+      'AI Help Desk'
+    ]
   },
 
   {
@@ -26,35 +37,57 @@ const DOMAINS = [
     name: 'Machine Learning',
     icon: '⚙️',
     color: '#6366F1',
-    description: 'Systems that learn from data and improve their performance automatically.',
+
+    shortDescription:
+      'Systems that learn from data and improve from experience',
+
+    fullDescription:
+      'Machine Learning enables computers to learn patterns from data and make predictions or decisions without being explicitly programmed.',
+
     applications: [
-      'Prediction Systems',
       'Fraud Detection',
-      'Classification Models'
+      'Classification Models',
+      'Prediction Systems',
+      'Data Mining',
+      'Recommendation Engines'
     ],
+
     projects: [
-      'Student Performance Prediction',
       'Disease Prediction System',
-      'Spam Email Detection'
-    ],
+      'Spam Email Detection',
+      'Student Performance Prediction',
+      'Loan Approval Prediction',
+      'Stock Price Forecasting'
+    ]
   },
 
   {
     id: 'web',
     name: 'Web Development',
     icon: '🌐',
-    color: '#14B8A6',
-    description: 'Designing and developing responsive modern web applications.',
+    color: '#06B6D4',
+
+    shortDescription:
+      'Crafting modern web experiences end-to-end',
+
+    fullDescription:
+      'Web Development focuses on designing and building responsive, interactive, and scalable web applications for businesses, organizations, and users.',
+
     applications: [
       'E-Commerce Platforms',
       'Management Systems',
-      'Business Websites'
+      'Business Websites',
+      'Customer Portals',
+      'Enterprise Applications'
     ],
+
     projects: [
       'Student Project Management System',
       'Online Shopping Portal',
-      'Library Management System'
-    ],
+      'Hospital Management System',
+      'Library Management System',
+      'Event Management Platform'
+    ]
   }
 ];
 const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
