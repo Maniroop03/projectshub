@@ -1,27 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  MdLanguage,
-  MdMemory,
-  MdSettings,
-  MdSmartToy,
-  MdWeb,
-  MdVisibility,
-  MdImage,
-  MdAnalytics,
-  MdSecurity,
-  MdCloud,
-  MdGesture,
-  MdShield,
-  MdSearch,
-  MdTouchApp,
-} from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 
 const DOMAINS = [
   {
     id: 'nlp',
     name: 'Natural Language Processing',
-    icon: <MdLanguage size={26} />,
+    icon: '🧠',
+    color: '#A855F7',
     description: 'Teaching machines to understand and derive meaning from human language.',
     applications: ['Chatbots & Virtual Assistants', 'Machine Translation', 'Sentiment Analysis', 'Named Entity Recognition'],
     projects: ['Sentiment analysis on social media', 'Automatic text summarizer', 'Question answering system'],
@@ -29,7 +15,8 @@ const DOMAINS = [
   {
     id: 'deep-learning',
     name: 'Deep Learning',
-    icon: <MdMemory size={26} />,
+    icon: '🧠',
+    color: '#EC4899',
     description: 'Neural networks that mimic the human brain for advanced pattern recognition.',
     applications: ['Image classification', 'Speech recognition', 'Anomaly detection'],
     projects: ['Image recognition system', 'Voice-based assistant', 'Predictive maintenance model'],
@@ -37,7 +24,8 @@ const DOMAINS = [
   {
     id: 'machine-learning',
     name: 'Machine Learning',
-    icon: <MdSettings size={26} />,
+    icon: '⚙️',
+    color: '#6366F1',
     description: 'Systems that learn from data and improve from experience.',
     applications: ['Recommendation engines', 'Fraud detection', 'Predictive analytics'],
     projects: ['Student performance predictor', 'Course recommendation system', 'Sales forecasting dashboard'],
@@ -45,7 +33,8 @@ const DOMAINS = [
   {
     id: 'artificial-intelligence',
     name: 'Artificial Intelligence',
-    icon: <MdSmartToy size={26} />,
+    icon: '🤖',
+    color: '#F59E0B',
     description: 'Building intelligent systems that reason and act.',
     applications: ['Automation', 'Intelligent assistants', 'Decision support'],
     projects: ['AI-based tutoring system', 'Smart chatbot platform', 'Adaptive assessment tool'],
@@ -53,7 +42,8 @@ const DOMAINS = [
   {
     id: 'web-development',
     name: 'Web Development',
-    icon: <MdWeb size={26} />,
+    icon: '🌐',
+    color: '#14B8A6',
     description: 'Crafting modern web experiences end-to-end.',
     applications: ['Responsive websites', 'Progressive web apps', 'API-driven dashboards'],
     projects: ['Portfolio website', 'E-commerce platform', 'Project management app'],
@@ -61,7 +51,8 @@ const DOMAINS = [
   {
     id: 'computer-vision',
     name: 'Computer Vision',
-    icon: <MdVisibility size={26} />,
+    icon: '👁️',
+    color: '#F97316',
     description: 'Enabling machines to see and interpret visuals.',
     applications: ['Object detection', 'Video analysis', 'Face recognition'],
     projects: ['License plate reader', 'Gesture recognition tool', 'Visual search engine'],
@@ -69,7 +60,8 @@ const DOMAINS = [
   {
     id: 'image-processing',
     name: 'Image Processing',
-    icon: <MdImage size={26} />,
+    icon: '🖼️',
+    color: '#22C55E',
     description: 'Transforming and enhancing digital images.',
     applications: ['Image enhancement', 'Feature extraction', 'Medical imaging'],
     projects: ['Photo filter editor', 'Image compression tool', 'Document scanner'],
@@ -77,7 +69,8 @@ const DOMAINS = [
   {
     id: 'data-mining',
     name: 'Data Mining',
-    icon: <MdAnalytics size={26} />,
+    icon: '⛏️',
+    color: '#A855F7',
     description: 'Discovering hidden patterns in large datasets.',
     applications: ['Customer segmentation', 'Trend detection', 'Market analysis'],
     projects: ['Data clustering explorer', 'Sales trend dashboard', 'Recommendation engine'],
@@ -85,7 +78,8 @@ const DOMAINS = [
   {
     id: 'network-security',
     name: 'Cryptography and Network Security',
-    icon: <MdSecurity size={26} />,
+    icon: '🔒',
+    color: '#8B5CF6',
     description: 'Protecting data and communication in the digital age.',
     applications: ['Encryption', 'Secure messaging', 'Threat detection'],
     projects: ['Secure file transfer', 'Password manager', 'Network intrusion monitor'],
@@ -93,7 +87,8 @@ const DOMAINS = [
   {
     id: 'cloud-computing',
     name: 'Cloud Computing',
-    icon: <MdCloud size={26} />,
+    icon: '☁️',
+    color: '#38BDF8',
     description: 'Scalable infrastructure and services on demand.',
     applications: ['Cloud storage', 'Serverless apps', 'Distributed systems'],
     projects: ['Cloud backup tool', 'Serverless API', 'Resource usage dashboard'],
@@ -101,7 +96,8 @@ const DOMAINS = [
   {
     id: 'human-computer-interaction',
     name: 'Human-Computer Interaction',
-    icon: <MdGesture size={26} />,
+    icon: '🖱️',
+    color: '#6366F1',
     description: 'Designing intuitive and accessible user experiences.',
     applications: ['UX research', 'Interaction design', 'Accessibility tools'],
     projects: ['Interactive prototyping app', 'Voice UI demo', 'Accessibility validator'],
@@ -109,7 +105,8 @@ const DOMAINS = [
   {
     id: 'cyber-security',
     name: 'Cyber Security',
-    icon: <MdShield size={26} />,
+    icon: '🛡️',
+    color: '#0EA5E9',
     description: 'Defending systems and data from digital attacks.',
     applications: ['Threat hunting', 'Vulnerability scanning', 'Risk assessment'],
     projects: ['Phishing detection app', 'Secure login portal', 'Incident response dashboard'],
@@ -166,7 +163,9 @@ export default function Domains() {
               className={`domain-card ${selected === domain.id ? 'active' : ''}`}
               onClick={() => setSelected(domain.id)}
             >
-              <div className="domain-card-icon">{domain.icon}</div>
+              <div className="domain-card-icon" style={{ background: `${domain.color}22`, color: domain.color }}>
+                {domain.icon}
+              </div>
               <div>
                 <h2>{domain.name}</h2>
                 <p>{domain.description}</p>
@@ -216,9 +215,9 @@ export default function Domains() {
               </>
             ) : (
               <div className="domain-placeholder">
-                <div className="domain-placeholder-icon"><MdTouchApp size={36} /></div>
+                <div className="domain-placeholder-icon">👉</div>
                 <h3>Click on any domain card to explore its details, applications, and sample projects.</h3>
-                <p>Then press <strong>Select This Domain</strong> to choose it.</p>
+                <p>Then press <strong style={{ color: 'var(--accent-purple)' }}>Select This Domain</strong> to choose it.</p>
               </div>
             )}
           </div>
