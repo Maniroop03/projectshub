@@ -445,27 +445,21 @@ export default function Domains() {
             <div className="domain-panel-section">
               <h4>🔧 Applications</h4>
 
-              {current.applications.map((item) => (
-                <div
-                  key={item}
-                  className="application-item"
-                >
-                  {item}
-                </div>
-              ))}
+              <ul className="domain-list">
+                {current.applications.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
 
             <div className="domain-panel-section">
               <h4>💡 Sample Projects</h4>
 
-              {current.projects.map((item) => (
-                <div
-                  key={item}
-                  className="project-item"
-                >
-                  {item}
-                </div>
-              ))}
+              <ul className="domain-list">
+                {current.projects.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
 
             <button
