@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createGroup, updateGroup, getGroup } from '../api';
-import { DOMAINS } from '../data/domains';
+import { createGuide, updateGuide, getGuide } from '../api';
 import { MdSave, MdArrowBack } from 'react-icons/md';
 
-export default function GroupForm() {
+const DEPTS = ['Computer Science', 'Data Science', 'Information Technology', 'ECE', 'EEE', 'Mechanical', 'Civil', 'Mathematics', 'Physics', 'Other'];
+
+export default function GuideForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const [form, setForm] = useState({ batch: '', name: '', rollNo: '', section: '', domain: '' });
+    const [form, setForm] = useState({ name: '', phone: '', email: '', department: '', domain: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (isEdit) getGroup(id).then((r) => setForm(r.data)).catch(console.error);
+        if (isEdit) getGuide(id).then((r) => setForm(r.data)).catch(console.error);
     }, [id, isEdit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); setError('');
         try {
-            if (isEdit) await updateGroup(id, form);
-            else await createGroup(form);
-            navigate('/groups');
+            if (isEdit) await updateGuide(id, form);
+            else await createGuide(form);
+            navigate('/guides');
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to save group.');
+            setError(err.response?.data?.error || 'Failed to save guide.');
         } finally { setLoading(false); }
     };
 
@@ -35,47 +36,45 @@ export default function GroupForm() {
             <div className="page-header flex items-center gap-3">
                 <button className="btn btn-outline btn-sm" onClick={() => navigate(-1)}><MdArrowBack /> Back</button>
                 <div>
-                    <h1 className="page-title">{isEdit ? 'Edit Batch' : 'Add Batch'}</h1>
-                    <p className="page-subtitle">Student registration details</p>
+                    <h1 className="page-title">{isEdit ? 'Edit Guide' : 'Add Guide'}</h1>
+                    <p className="page-subtitle">Guide / Faculty details</p>
                 </div>
             </div>
             {error && <div className="alert alert-error">{error}</div>}
             <div className="card">
                 <div className="card-body">
+                    <div className="alert alert-info" style={{ marginBottom: 20 }}>
+                        📱 The <strong>phone number</strong> is used to send WhatsApp notifications when a project is assigned to this guide.
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="form-grid form-grid-2">
                             <div className="form-group">
                                 <label className="form-label">Full Name <span>*</span></label>
-                                <input className="form-input" placeholder="Student full name" required {...f('name')} />
+                                <input className="form-input" placeholder="Dr. / Mrs. / Mr. ..." required {...f('name')} />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Roll Number <span>*</span></label>
-                                <input className="form-input" placeholder="e.g. 22CS001" required {...f('rollNo')} />
+                                <label className="form-label">Phone Number <span>*</span></label>
+                                <input className="form-input" type="tel" placeholder="10-digit WhatsApp number" required {...f('phone')} />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Batch No</label>
-                                <input className="form-input" placeholder="Batch 1" {...f('batch')} />
+                                <label className="form-label">Email</label>
+                                <input className="form-input" type="email" placeholder="guide@college.edu" {...f('email')} />
                             </div>
                             <div className="form-group">
-                                <label className="form-label">Section</label>
-                                <input className="form-input" placeholder="e.g. A" {...f('section')} />
-                            </div>
-                            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                <label className="form-label">Domain</label>
-                                <select className="form-select" {...f('domain')}>
-                                    <option value="">— Select a domain —</option>
-                                    {DOMAINS.map((domain) => (
-                                        <option key={domain.id} value={domain.name}>{domain.name}</option>
-                                    ))}
+                                <label className="form-label">Department</label>
+                                <select className="form-select" {...f('department')}>
+                                    <option value="">Select department</option>
+                                    {DEPTS.map((d) => <option key={d} value={d}>{d}</option>)}
                                 </select>
-                                <p style={{ marginTop: 8, fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                                    💡 Visit the Domains tab to explore each domain before choosing.
-                                </p>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Domain</label>
+                                <input className="form-input" placeholder="e.g. Cybersecurity, IoT" {...f('domain')} />
                             </div>
                         </div>
                         <div className="flex gap-3 mt-4">
                             <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
-                                {loading ? <><span className="loading-spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Saving...</> : <><MdSave /> {isEdit ? 'Update Batch' : 'Add Batch'}</>}
+                                {loading ? <><span className="loading-spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Saving...</> : <><MdSave /> {isEdit ? 'Update' : 'Add Guide'}</>}
                             </button>
                             <button type="button" className="btn btn-outline" onClick={() => navigate(-1)}>Cancel</button>
                         </div>
