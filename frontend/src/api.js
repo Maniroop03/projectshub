@@ -1,7 +1,51 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const API = axios.create({ baseURL });
+const LOCAL_API_URL = 'http://localhost:5000/api';
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+const fallbackApiUrl = import.meta.env.DEV ? LOCAL_API_URL : '/api';
+const baseURL = (configuredApiUrl || fallbackApiUrl).replace(/\/$/, '');
+
+export const apiBaseURL = baseURL;
+export const apiOrigin = (() => {
+    try {
+        return new URL(baseURL, window.location.origin).origin;
+    } catch {
+        return '';
+    }
+})();
+
+export const getAssetUrl = (path) => {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${apiOrigin}${normalizedPath}`;
+};
+
+export const formatApiError = (err, fallback = 'Request failed.') => {
+    const data = err?.response?.data;
+
+    if (data?.details?.length) {
+        return `${data.error || fallback}: ${data.details.join('; ')}`;
+    }
+
+    if (data?.error) return data.error;
+
+    if (!configuredApiUrl && import.meta.env.PROD && err?.response?.status === 404) {
+        return 'Backend API was not found at /api. Set VITE_API_URL to the deployed backend URL and redeploy the frontend.';
+    }
+
+    if (!err?.response && err?.message === 'Network Error') {
+        return `Cannot reach the backend API at ${baseURL}. Start the backend server, or set VITE_API_URL to the deployed backend URL.`;
+    }
+
+    if (err?.code === 'ECONNABORTED') {
+        return 'The request timed out. Please check the backend server and try again.';
+    }
+
+    return err?.message || fallback;
+};
+
+const API = axios.create({ baseURL, timeout: 15000 });
 
 export const getGuides = () => API.get('/guides');
 export const getGuide = (id) => API.get(`/guides/${id}`);

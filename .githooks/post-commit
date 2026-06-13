@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Push the current branch after each successful local commit.
+# Set GIT_AUTO_PUSH_SKIP=1 before committing to skip one auto-push.
+
+if [ -n "$GIT_AUTO_PUSH_SKIP" ]; then
+  echo "Auto-push: skipped because GIT_AUTO_PUSH_SKIP is set."
+  exit 0
+fi
+
+branch=$(git symbolic-ref --quiet --short HEAD)
+if [ -z "$branch" ]; then
+  echo "Auto-push: detached HEAD; skipping push."
+  exit 0
+fi
+
+if git rev-parse --abbrev-ref --symbolic-full-name "@{u}" >/dev/null 2>&1; then
+  echo "Auto-push: pushing $branch to its upstream."
+  git push
+else
+  remote="${GIT_AUTO_PUSH_REMOTE:-origin}"
+  echo "Auto-push: no upstream for $branch; pushing to $remote/$branch."
+  git push -u "$remote" "$branch"
+fi
+
+status=$?
+if [ "$status" -ne 0 ]; then
+  echo "Auto-push: push failed; the commit remains local." >&2
+fi
+
+exit 0

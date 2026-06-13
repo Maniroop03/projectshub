@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getProject, deleteProject, notifyGuide } from '../api';
+import { getProject, deleteProject, notifyGuide, getAssetUrl } from '../api';
 import {
     MdArrowBack, MdEdit, MdDelete, MdWhatsapp,
     MdInsertDriveFile, MdPerson, MdGroup, MdCalendarToday,
@@ -151,7 +151,7 @@ export default function ProjectDetail() {
                             <div className="card-body">
                                 <div className="section-title"><MdInsertDriveFile /> Uploaded File</div>
                                 <a
-                                    href={`http://localhost:5000${p.pptFilePath}`}
+                                    href={getAssetUrl(p.pptFilePath)}
                                     target="_blank"
                                     rel="noreferrer"
                                     className="btn btn-outline"
