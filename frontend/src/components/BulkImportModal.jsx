@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { MdClose, MdFileUpload, MdInfo } from 'react-icons/md';
 import { formatApiError } from '../api';
 
 export default function BulkImportModal({ isOpen, onClose, onImport, type, fields, sample }) {
+    const fileInputRef = useRef(null);
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [dragActive, setDragActive] = useState(false);
 
     if (!isOpen) return null;
 
@@ -44,6 +46,51 @@ export default function BulkImportModal({ isOpen, onClose, onImport, type, field
 
     const handleUseSample = () => {
         setText(sample);
+    };
+
+    const handleFile = (file) => {
+        if (!file) return;
+        if (!file.name.toLowerCase().endsWith('.csv') && file.type !== 'text/csv') {
+            return setError('Please upload a valid CSV file.');
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const fileText = e.target.result || '';
+            setText(fileText);
+            setError('');
+            setSuccess(`Loaded ${file.name}`);
+        };
+        reader.onerror = () => {
+            setError('Unable to read the selected file.');
+        };
+        reader.readAsText(file);
+    };
+
+    const handleFileInputChange = (event) => {
+        const file = event.target.files?.[0];
+        if (file) handleFile(file);
+        event.target.value = '';
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        setDragActive(false);
+        const file = event.dataTransfer.files?.[0];
+        if (file) handleFile(file);
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+        setDragActive(true);
+    };
+
+    const handleDragLeave = (event) => {
+        event.preventDefault();
+        setDragActive(false);
+    };
+
+    const openFileSelector = () => {
+        fileInputRef.current?.click();
     };
 
     const handleDownloadTemplate = () => {
@@ -106,6 +153,45 @@ export default function BulkImportModal({ isOpen, onClose, onImport, type, field
 
                     <div className="form-group" style={{ marginTop: 16 }}>
                         <label className="form-label">Paste Data Here</label>
+                        <div
+                            className={`drop-zone${dragActive ? ' active' : ''}`}
+                            onDragEnter={handleDragOver}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            style={{
+                                border: '2px dashed rgba(255,255,255,0.35)',
+                                borderRadius: 10,
+                                padding: 18,
+                                marginBottom: 12,
+                                textAlign: 'center',
+                                background: dragActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+                                cursor: 'pointer',
+                            }}
+                            onClick={openFileSelector}
+                        >
+                            <p style={{ margin: 0, fontSize: '0.90rem', color: 'var(--text-muted)' }}>
+                                Drag & drop a CSV file here, or click to choose a file.
+                            </p>
+                            <button
+                                type="button"
+                                className="btn btn-outline btn-sm"
+                                style={{ marginTop: 10 }}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    openFileSelector();
+                                }}
+                            >
+                                Upload CSV file
+                            </button>
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept=".csv,text/csv"
+                                style={{ display: 'none' }}
+                                onChange={handleFileInputChange}
+                            />
+                        </div>
                         <textarea
                             className="form-input"
                             style={{ height: 220, fontFamily: 'monospace', fontSize: '13px', lineHeight: 1.6 }}
