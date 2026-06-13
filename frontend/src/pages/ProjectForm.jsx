@@ -86,8 +86,13 @@ export default function ProjectForm() {
         try {
             const fd = new FormData();
             Object.entries(form).forEach(([k, v]) => {
-                if (k === 'students') fd.append(k, JSON.stringify(v));
-                else fd.append(k, v);
+                if (k === 'students') {
+                    fd.append(k, JSON.stringify(v));
+                } else if ((k === 'coGuide' || k === 'guide') && typeof v === 'string' && v.trim() === '') {
+                    return;
+                } else {
+                    fd.append(k, v);
+                }
             });
             if (file) fd.append('pptFile', file);
             if (isEdit) { await updateProject(id, fd); setSuccess('Project updated successfully!'); }

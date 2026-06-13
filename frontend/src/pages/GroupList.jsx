@@ -108,10 +108,10 @@ export default function GroupList() {
                 onClose={() => setIsBulkModalOpen(false)}
                 onImport={handleBulkImport}
                 type="Groups"
-                fields={['batch', 'role', 'name', 'rollNo', 'section', 'domain', 'phone', 'email']}
-                sample={`Batch 1, Lead, CHETLA AKSHITHA, 237Z1A6729, A, AI and Robotics, 9876543210, akshitha@example.com
-Batch 1, Member, KANUGANTI RUSHIKESH, 237Z1A6757, A, AI and Robotics, , 
-Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics, , `}
+                fields={['batch', 'role', 'name', 'rollNo', 'section', 'domain']}
+                sample={`Batch 1, Lead, CHETLA AKSHITHA, 237Z1A6729, A, AI and Robotics
+Batch 1, Member, KANUGANTI RUSHIKESH, 237Z1A6757, A, AI and Robotics
+Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics`}
             />
 
             {/* Search Bar */}
@@ -250,8 +250,6 @@ Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics, , `}
                                                         <th>ROLL NO</th>
                                                         <th>SECTION</th>
                                                         <th>DOMAIN</th>
-                                                        <th>PHONE</th>
-                                                        <th>EMAIL</th>
                                                         <th>ACTIONS</th>
                                                     </tr>
                                                 </thead>
@@ -288,10 +286,6 @@ Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics, , `}
                                                                             {m.domain}
                                                                         </span>
                                                                     ) : '—'}
-                                                                </td>
-                                                                <td>{m.phone || '—'}</td>
-                                                                <td style={{ maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                    {m.email || '—'}
                                                                 </td>
                                                                 <td>
                                                                     <div className="flex gap-2">
