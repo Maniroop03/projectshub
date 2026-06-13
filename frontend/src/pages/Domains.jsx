@@ -14,6 +14,7 @@ import {
   MdGesture,
   MdShield,
   MdSearch,
+  MdTouchApp,
 } from 'react-icons/md';
 
 const DOMAINS = [
@@ -118,7 +119,7 @@ const DOMAINS = [
 export default function Domains() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState(DOMAINS[0].id);
+  const [selected, setSelected] = useState(null);
 
   const filteredDomains = useMemo(() => {
     const query = search.toLowerCase().trim();
@@ -127,12 +128,12 @@ export default function Domains() {
   }, [search]);
 
   useEffect(() => {
-    if (!filteredDomains.some((domain) => domain.id === selected)) {
-      setSelected(filteredDomains[0]?.id || DOMAINS[0].id);
+    if (selected && !filteredDomains.some((domain) => domain.id === selected)) {
+      setSelected(null);
     }
   }, [filteredDomains, selected]);
 
-  const current = DOMAINS.find((d) => d.id === selected) || DOMAINS[0];
+  const current = DOMAINS.find((d) => d.id === selected) || null;
 
   return (
     <div className="page-container domain-explorer">
@@ -181,35 +182,45 @@ export default function Domains() {
 
         <div className="domain-panel card">
           <div className="domain-panel-body">
-            <div className="domain-panel-header">
-              <div className="domain-panel-icon">{current.icon}</div>
-              <div>
-                <h3>{current.name}</h3>
-                <p>{current.description}</p>
+            {current ? (
+              <>
+                <div className="domain-panel-header">
+                  <div className="domain-panel-icon">{current.icon}</div>
+                  <div>
+                    <h3>{current.name}</h3>
+                    <p>{current.description}</p>
+                  </div>
+                </div>
+
+                <div className="domain-panel-section">
+                  <h4>Applications</h4>
+                  <ul>
+                    {current.applications.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+
+                <div className="domain-panel-section">
+                  <h4>Sample Projects</h4>
+                  <ul>
+                    {current.projects.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => navigate(`/projects/new?domain=${encodeURIComponent(current.name)}`)}
+                >
+                  Select This Domain
+                </button>
+              </>
+            ) : (
+              <div className="domain-placeholder">
+                <div className="domain-placeholder-icon"><MdTouchApp size={36} /></div>
+                <h3>Click on any domain card to explore its details, applications, and sample projects.</h3>
+                <p>Then press <strong>Select This Domain</strong> to choose it.</p>
               </div>
-            </div>
-
-            <div className="domain-panel-section">
-              <h4>Applications</h4>
-              <ul>
-                {current.applications.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </div>
-
-            <div className="domain-panel-section">
-              <h4>Sample Projects</h4>
-              <ul>
-                {current.projects.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </div>
-
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => navigate(`/projects/new?domain=${encodeURIComponent(current.name)}`)}
-            >
-              Select This Domain
-            </button>
+            )}
           </div>
         </div>
       </div>
