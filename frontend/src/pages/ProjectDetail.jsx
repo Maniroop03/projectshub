@@ -87,7 +87,7 @@ export default function ProjectDetail() {
                                 { label: 'Status', value: statusBadge(p.status) },
                                 { label: 'Submission Date', value: p.submissionDate ? new Date(p.submissionDate).toLocaleDateString('en-IN') : '—' },
                                 { label: 'Academic Year', value: p.academicYear || '—' },
-                                { label: 'Batch Year', value: p.batchYear || '—' },
+                                { label: 'Batch', value: p.batch || '—' },
                             ].map((row) => (
                                 <div className="detail-row" key={row.label}>
                                     <span className="detail-label">{row.label}</span>
