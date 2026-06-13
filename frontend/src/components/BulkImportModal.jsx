@@ -46,6 +46,21 @@ export default function BulkImportModal({ isOpen, onClose, onImport, type, field
         setText(sample);
     };
 
+    const handleDownloadTemplate = () => {
+        const header = fields.join(',');
+        const sampleLines = sample.trim().split(/\r?\n/).filter(Boolean);
+        const csvContent = [header, ...sampleLines].join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${type.toLowerCase().replace(/\s+/g, '-')}-template.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     return (
         <div className="modal-overlay">
             <div className="modal-container" style={{ maxWidth: 660 }}>
@@ -103,11 +118,16 @@ export default function BulkImportModal({ isOpen, onClose, onImport, type, field
                         </p>
                     </div>
                 </div>
-                <div className="modal-footer flex gap-3 justify-end">
-                    <button className="btn btn-outline" onClick={onClose} disabled={loading}>Cancel</button>
-                    <button className="btn btn-primary" onClick={handleImport} disabled={loading}>
-                        {loading ? 'Importing...' : <><MdFileUpload /> Import {type}</>}
+                <div className="modal-footer flex gap-3 justify-between" style={{ alignItems: 'center' }}>
+                    <button className="btn btn-outline btn-sm" type="button" onClick={handleDownloadTemplate}>
+                        Template (.csv)
                     </button>
+                    <div className="flex gap-3" style={{ justifyContent: 'flex-end' }}>
+                        <button className="btn btn-outline" onClick={onClose} disabled={loading}>Cancel</button>
+                        <button className="btn btn-primary" onClick={handleImport} disabled={loading}>
+                            {loading ? 'Importing...' : <><MdFileUpload /> Import {type}</>}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
