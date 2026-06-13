@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getProjectStats, getProjects } from '../api';
+import { formatApiError, getProjectStats, getProjects } from '../api';
 import { MdFolderOpen, MdSchool, MdDomainVerification, MdCheckCircle, MdPendingActions, MdAddCircleOutline } from 'react-icons/md';
 
 const statusBadge = (status) => {
@@ -12,14 +12,18 @@ export default function Dashboard() {
     const [stats, setStats] = useState(null);
     const [recent, setRecent] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         Promise.all([getProjectStats(), getProjects()])
             .then(([statsRes, projectsRes]) => {
-                setStats(statsRes.data);
-                setRecent(projectsRes.data.slice(0, 8));
+                setStats(statsRes.data && typeof statsRes.data === 'object' ? statsRes.data : null);
+                setRecent(Array.isArray(projectsRes.data) ? projectsRes.data.slice(0, 8) : []);
             })
-            .catch(console.error)
+            .catch((err) => {
+                console.error(err);
+                setError(formatApiError(err, 'Failed to load dashboard.'));
+            })
             .finally(() => setLoading(false));
     }, []);
 
@@ -34,6 +38,8 @@ export default function Dashboard() {
                 </div>
                 <Link to="/projects/new" className="btn btn-primary"><MdAddCircleOutline /> New Project</Link>
             </div>
+
+            {error && <div className="alert alert-error">{error}</div>}
 
             <div className="stat-grid">
                 {[

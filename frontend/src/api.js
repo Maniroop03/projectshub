@@ -4,6 +4,7 @@ const LOCAL_API_URL = 'http://localhost:5000/api';
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
 const fallbackApiUrl = import.meta.env.DEV ? LOCAL_API_URL : '/api';
 const baseURL = (configuredApiUrl || fallbackApiUrl).replace(/\/$/, '');
+const missingApiMessage = 'Backend API is not connected. Set VITE_API_URL to the deployed backend URL and redeploy the frontend.';
 
 export const apiBaseURL = baseURL;
 export const apiOrigin = (() => {
@@ -22,6 +23,8 @@ export const getAssetUrl = (path) => {
 };
 
 export const formatApiError = (err, fallback = 'Request failed.') => {
+    if (err?.isApiConfigError) return err.message;
+
     const data = err?.response?.data;
 
     if (data?.details?.length) {
@@ -31,7 +34,7 @@ export const formatApiError = (err, fallback = 'Request failed.') => {
     if (data?.error) return data.error;
 
     if (!configuredApiUrl && import.meta.env.PROD && err?.response?.status === 404) {
-        return 'Backend API was not found at /api. Set VITE_API_URL to the deployed backend URL and redeploy the frontend.';
+        return missingApiMessage;
     }
 
     if (!err?.response && err?.message === 'Network Error') {
@@ -46,6 +49,24 @@ export const formatApiError = (err, fallback = 'Request failed.') => {
 };
 
 const API = axios.create({ baseURL, timeout: 15000 });
+
+API.interceptors.response.use((response) => {
+    const contentType = response.headers?.['content-type'] || '';
+    const isHtmlResponse =
+        contentType.includes('text/html') ||
+        (typeof response.data === 'string' && /^\s*(<!doctype html|<html[\s>])/i.test(response.data));
+
+    if (isHtmlResponse) {
+        const err = new Error(!configuredApiUrl && import.meta.env.PROD
+            ? missingApiMessage
+            : 'Backend API returned HTML instead of JSON. Please check the API URL.');
+        err.response = response;
+        err.isApiConfigError = true;
+        throw err;
+    }
+
+    return response;
+});
 
 export const getGuides = () => API.get('/guides');
 export const getGuide = (id) => API.get(`/guides/${id}`);
