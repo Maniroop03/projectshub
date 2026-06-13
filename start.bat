@@ -1,4 +1,5 @@
 @echo off
+:: Auto-push enabled
 echo ======================================
 echo  Group Project Management System
 echo ======================================
