@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const app = express();
-// Testing Git
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -20,15 +20,6 @@ const uploadDir = process.env.VERCEL
 app.use('/uploads', express.static(uploadDir));
 app.use('/api/uploads', express.static(uploadDir));
 
-// Routes
-app.use('/api/groups', require('./routes/groups'));
-app.use('/api/guides', require('./routes/guides'));
-app.use('/api/projects', require('./routes/projects'));
-app.use('/api/whatsapp', require('./routes/whatsapp'));
-
-// Health check
-app.get('/', (req, res) => res.json({ message: 'Student Project API is running.' }));
-
 // MongoDB Connection Helper (with caching for serverless)
 let cachedDbConnection = null;
 const connectDB = async () => {
@@ -41,7 +32,8 @@ const connectDB = async () => {
   return cachedDbConnection;
 };
 
-// Middleware to ensure DB connection on every request
+// DB connection middleware — MUST be registered BEFORE routes
+// so that every request has a live MongoDB connection
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -51,6 +43,15 @@ app.use(async (req, res, next) => {
     res.status(500).json({ error: 'Database connection error: ' + err.message });
   }
 });
+
+// Routes (registered after DB middleware)
+app.use('/api/groups', require('./routes/groups'));
+app.use('/api/guides', require('./routes/guides'));
+app.use('/api/projects', require('./routes/projects'));
+app.use('/api/whatsapp', require('./routes/whatsapp'));
+
+// Health check
+app.get('/', (req, res) => res.json({ message: 'Student Project API is running.' }));
 
 // Start local server if run directly (not via require)
 if (require.main === module || !process.env.VERCEL) {
@@ -65,3 +66,4 @@ if (require.main === module || !process.env.VERCEL) {
 }
 
 module.exports = app;
+
