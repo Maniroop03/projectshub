@@ -30,6 +30,36 @@ export const DOMAINS = [
     projects: ['Face Recognition', 'Voice Assistant', 'Traffic Sign Detection']
   },
   {
+    id: 'ml',
+    colorClass: 'ml',
+    name: 'Machine Learning',
+    icon: '⚙️',
+    shortDescription: 'Systems that learn and improve from experience',
+    fullDescription: 'Machine Learning algorithms build computational models based on sample training data to make predictions or decisions without explicit human programming.',
+    applications: ['Predictive Modeling', 'Supervised Learning', 'Unsupervised Learning', 'Anomaly Detection'],
+    projects: ['House Price Prediction', 'Customer Churn Tracker', 'Stock Trend Predictor']
+  },
+  {
+    id: 'web',
+    colorClass: 'web',
+    name: 'Web Development',
+    icon: '🌐',
+    shortDescription: 'Crafting modern responsive web applications',
+    fullDescription: 'Web Development spans building interactive frontend spaces, robust backend microservices frameworks, database layers, and responsive API routing pipelines.',
+    applications: ['E-commerce Engines', 'SaaS Architectures', 'RESTful API Services', 'Content Management'],
+    projects: ['College Management Portal', 'E-Store with Payment Gateways', 'Real-time Chat App']
+  },
+  {
+    id: 'compbio',
+    colorClass: 'compbio',
+    name: 'Computational Biology',
+    icon: '🧬',
+    shortDescription: 'Data analytics for complex biological structures',
+    fullDescription: 'Computational Biology builds mathematical modeling structures and algorithmic simulations to decrypt complex data structures found across genomic and biological domains.',
+    applications: ['Genome Sequencing Analysis', 'Structural Proteomics', 'Epidemiologic Modeling', 'Phylogenetics'],
+    projects: ['DNA Sequence Alignment Tool', 'Protein Folding Simulator', 'Genomic Variant Predictor']
+  },
+  {
     id: 'cv',
     colorClass: 'cv',
     name: 'Computer Vision',
