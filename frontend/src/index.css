@@ -128,135 +128,157 @@ input, select, textarea { font-family: inherit; }
    DOMAIN EXPLORER PERFECT LAYOUT FIX
    ========================================================================== */
 
-/* Main Layout Grid Frame */
+/* ==========================================================================
+   DOMAIN EXPLORER LAYOUT PERFECT MATCH V2
+   ========================================================================== */
+
+/* Layout Flex Frame */
 .domain-grid-layout {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   width: 100%;
   max-width: 1600px;
-  margin: 20px auto 0 auto;
+  margin: 24px auto 0 auto;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items: flex-start; /* Keeps the grid and panel aligned at the top */
 }
 
 /* Card Grid Layout */
 .domain-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(240px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px;
   align-content: start;
 }
 
-/* ─── Domain Grid Cards ─── */
+/* ─── Domain Grid Item Blueprint ─── */
 .domain-card {
-  height: 140px;
+  height: 154px;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 18px;
+  border-radius: 16px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   text-align: left;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Individual Card Hover State Color Engine */
-.domain-card.ai:hover { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); }
-.domain-card.nlp:hover { border-color: #a855f7; background: rgba(168, 85, 247, 0.05); }
-.domain-card.dl:hover { border-color: #ec4899; background: rgba(236, 72, 153, 0.05); }
-.domain-card.ml:hover { border-color: #4f46e5; background: rgba(79, 70, 229, 0.05); }
-.domain-card.web:hover { border-color: #06b6d4; background: rgba(6, 182, 212, 0.05); }
-.domain-card.compbio:hover { border-color: #00e676; background: rgba(0, 230, 118, 0.05); }
-.domain-card.cv:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
-.domain-card.ip:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
-.domain-card.dm:hover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
-.domain-card.crypto:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
-.domain-card.cloud:hover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); }
-.domain-card.hci:hover { border-color: #14b8a6; background: rgba(20, 184, 166, 0.05); }
-.domain-card.cyber:hover { border-color: #dc2626; background: rgba(220, 38, 38, 0.05); }
-.domain-card.analytics:hover { border-color: #84cc16; background: rgba(132, 204, 22, 0.05); }
-.domain-card.iot:hover { border-color: #d946ef; background: rgba(217, 70, 239, 0.05); }
-.domain-card.game:hover { border-color: #ff007f; background: rgba(255, 0, 127, 0.05); }
-.domain-card.darkpatterns:hover { border-color: #4b5563; background: rgba(75, 85, 99, 0.05); }
-.domain-card.uiux:hover { border-color: #ff5722; background: rgba(255, 87, 34, 0.05); }
-.domain-card.datascience:hover { border-color: #00bcd4; background: rgba(0, 188, 212, 0.05); }
-.domain-card.forensics:hover { border-color: #607d8b; background: rgba(96, 125, 139, 0.05); }
-.domain-card.malware:hover { border-color: #9c27b0; background: rgba(156, 39, 176, 0.05); }
-.domain-card.ids:hover { border-color: #ff9800; background: rgba(255, 152, 0, 0.05); }
-.domain-card.mobile:hover { border-color: #4caf50; background: rgba(76, 175, 80, 0.05); }
-.domain-card.devops:hover { border-color: #009688; background: rgba(0, 150, 136, 0.05); }
-.domain-card.edge:hover { border-color: #3f51b5; background: rgba(63, 81, 181, 0.05); }
-.domain-card.blockchain:hover { border-color: #ffeb3b; background: rgba(255, 235, 59, 0.05); }
-.domain-card.quantum:hover { border-color: #e91e63; background: rgba(233, 30, 99, 0.05); }
-.domain-card.arvr:hover { border-color: #cc00ff; background: rgba(204, 0, 255, 0.05); }
-.domain-card.rpa:hover { border-color: #795548; background: rgba(121, 85, 72, 0.05); }
-.domain-card.assistive:hover { border-color: #ab47bc; background: rgba(171, 71, 188, 0.05); }
-.domain-card.fintech:hover { border-color: #26a69a; background: rgba(38, 166, 154, 0.05); }
-.domain-card.egov:hover { border-color: #5c6bc0; background: rgba(92, 107, 192, 0.05); }
-.domain-card.bioinfo:hover { border-color: #26c6da; background: rgba(38, 198, 218, 0.05); }
-.domain-card.social:hover { border-color: #9ccc65; background: rgba(156, 204, 101, 0.05); }
-.domain-card.scientific:hover { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
-.domain-card.prompt:hover { border-color: #29b6f6; background: rgba(41, 182, 246, 0.05); }
-.domain-card.llm:hover { border-color: #7e57c2; background: rgba(126, 87, 194, 0.05); }
-.domain-card.ethics:hover { border-color: #ef5350; background: rgba(239, 83, 80, 0.05); }
-.domain-card.green:hover { border-color: #66bb6a; background: rgba(102, 187, 106, 0.05); }
+/* Individual Card Hover Colors */
+.domain-card.ai:hover { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); box-shadow: 0 0 15px rgba(139, 92, 246, 0.15); }
+.domain-card.nlp:hover { border-color: #a855f7; background: rgba(168, 85, 247, 0.05); box-shadow: 0 0 15px rgba(168, 85, 247, 0.15); }
+.domain-card.dl:hover { border-color: #ec4899; background: rgba(236, 72, 153, 0.05); box-shadow: 0 0 15px rgba(236, 72, 153, 0.15); }
+.domain-card.ml:hover { border-color: #4f46e5; background: rgba(79, 70, 229, 0.05); box-shadow: 0 0 15px rgba(79, 70, 229, 0.15); }
+.domain-card.web:hover { border-color: #06b6d4; background: rgba(6, 182, 212, 0.05); box-shadow: 0 0 15px rgba(6, 182, 212, 0.15); }
+.domain-card.compbio:hover { border-color: #00e676; background: rgba(0, 230, 118, 0.05); box-shadow: 0 0 15px rgba(0, 230, 118, 0.15); }
+.domain-card.cv:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); box-shadow: 0 0 15px rgba(59, 130, 246, 0.15); }
+.domain-card.ip:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.05); box-shadow: 0 0 15px rgba(16, 185, 129, 0.15); }
+.domain-card.dm:hover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); box-shadow: 0 0 15px rgba(245, 158, 11, 0.15); }
+.domain-card.crypto:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.05); box-shadow: 0 0 15px rgba(239, 68, 68, 0.15); }
+.domain-card.cloud:hover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); box-shadow: 0 0 15px rgba(14, 165, 233, 0.15); }
+.domain-card.hci:hover { border-color: #14b8a6; background: rgba(20, 184, 166, 0.05); box-shadow: 0 0 15px rgba(20, 184, 166, 0.15); }
+.domain-card.cyber:hover { border-color: #dc2626; background: rgba(220, 38, 38, 0.05); box-shadow: 0 0 15px rgba(220, 38, 38, 0.15); }
+.domain-card.analytics:hover { border-color: #84cc16; background: rgba(132, 204, 22, 0.05); box-shadow: 0 0 15px rgba(132, 204, 22, 0.15); }
+.domain-card.iot:hover { border-color: #d946ef; background: rgba(217, 70, 239, 0.05); box-shadow: 0 0 15px rgba(217, 70, 239, 0.15); }
+.domain-card.game:hover { border-color: #ff007f; background: rgba(255, 0, 127, 0.05); box-shadow: 0 0 15px rgba(255, 0, 127, 0.15); }
+.domain-card.darkpatterns:hover { border-color: #4b5563; background: rgba(75, 85, 99, 0.05); box-shadow: 0 0 15px rgba(75, 85, 99, 0.15); }
+.domain-card.uiux:hover { border-color: #ff5722; background: rgba(255, 87, 34, 0.05); box-shadow: 0 0 15px rgba(255, 87, 34, 0.15); }
+.domain-card.datascience:hover { border-color: #00bcd4; background: rgba(0, 188, 212, 0.05); box-shadow: 0 0 15px rgba(0, 188, 212, 0.15); }
+.domain-card.forensics:hover { border-color: #607d8b; background: rgba(96, 125, 139, 0.05); box-shadow: 0 0 15px rgba(96, 125, 139, 0.15); }
+.domain-card.malware:hover { border-color: #9c27b0; background: rgba(156, 39, 176, 0.05); box-shadow: 0 0 15px rgba(156, 39, 176, 0.15); }
+.domain-card.ids:hover { border-color: #ff9800; background: rgba(255, 152, 0, 0.05); box-shadow: 0 0 15px rgba(255, 152, 0, 0.15); }
+.domain-card.mobile:hover { border-color: #4caf50; background: rgba(76, 175, 80, 0.05); box-shadow: 0 0 15px rgba(76, 175, 80, 0.15); }
+.domain-card.devops:hover { border-color: #009688; background: rgba(0, 150, 136, 0.05); box-shadow: 0 0 15px rgba(0, 150, 136, 0.15); }
+.domain-card.edge:hover { border-color: #3f51b5; background: rgba(63, 81, 181, 0.05); box-shadow: 0 0 15px rgba(63, 81, 181, 0.15); }
+.domain-card.blockchain:hover { border-color: #ffeb3b; background: rgba(255, 235, 59, 0.05); box-shadow: 0 0 15px rgba(255, 235, 59, 0.15); }
+.domain-card.quantum:hover { border-color: #e91e63; background: rgba(233, 30, 99, 0.05); box-shadow: 0 0 15px rgba(233, 30, 99, 0.15); }
+.domain-card.arvr:hover { border-color: #cc00ff; background: rgba(204, 0, 255, 0.05); box-shadow: 0 0 15px rgba(204, 0, 255, 0.15); }
+.domain-card.rpa:hover { border-color: #795548; background: rgba(121, 85, 72, 0.05); box-shadow: 0 0 15px rgba(121, 85, 72, 0.15); }
+.domain-card.assistive:hover { border-color: #ab47bc; background: rgba(171, 71, 188, 0.05); box-shadow: 0 0 15px rgba(171, 71, 188, 0.15); }
+.domain-card.fintech:hover { border-color: #26a69a; background: rgba(38, 166, 154, 0.05); box-shadow: 0 0 15px rgba(38, 166, 154, 0.15); }
+.domain-card.egov:hover { border-color: #5c6bc0; background: rgba(92, 107, 192, 0.05); box-shadow: 0 0 15px rgba(92, 107, 192, 0.15); }
+.domain-card.bioinfo:hover { border-color: #26c6da; background: rgba(38, 198, 218, 0.05); box-shadow: 0 0 15px rgba(38, 198, 218, 0.15); }
+.domain-card.social:hover { border-color: #9ccc65; background: rgba(156, 204, 101, 0.05); box-shadow: 0 0 15px rgba(156, 204, 101, 0.15); }
+.domain-card.scientific:hover { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); box-shadow: 0 0 15px rgba(255, 202, 40, 0.15); }
+.domain-card.prompt:hover { border-color: #29b6f6; background: rgba(41, 182, 246, 0.05); box-shadow: 0 0 15px rgba(41, 182, 246, 0.15); }
+.domain-card.llm:hover { border-color: #7e57c2; background: rgba(126, 87, 194, 0.05); box-shadow: 0 0 15px rgba(126, 87, 194, 0.15); }
+.domain-card.ethics:hover { border-color: #ef5350; background: rgba(239, 83, 80, 0.05); box-shadow: 0 0 15px rgba(239, 83, 80, 0.15); }
+.domain-card.green:hover { border-color: #66bb6a; background: rgba(102, 187, 106, 0.05); box-shadow: 0 0 15px rgba(102, 187, 106, 0.15); }
 
+/* Active Card State Override */
 .domain-card.active {
   border-color: var(--theme-accent) !important;
   background: var(--theme-bg) !important;
+  box-shadow: 0 0 20px var(--theme-hover-glow) !important;
 }
 
-.domain-card-icon {
-  font-size: 1.3rem;
-  margin-bottom: 2px;
+.domain-card-icon-wrapper {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+
+.domain-card-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
 }
 
 .domain-card h2 {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 600;
-  color: #ffffff;
+  color: #ffffff !important;
   margin: 0;
+  line-height: 1.3;
 }
 
 .domain-card p {
-  font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.42) !important;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* ─── INFO PANEL OVERHAUL  ─── */
+/* ─── DYNAMIC INFO PANEL (PERFECT COMPACT DIMENSIONS) ─── */
 .domain-panel {
-  width: 420px;            /* Increased width  */
+  width: 420px;
   min-width: 420px;
   max-width: 420px;
-  align-self: stretch;     /* Stretches to perfectly match the grid height */
+  align-self: stretch; /* Forces panel height to natively expand with the grid */
   
-  background: var(--theme-panel-bg, #0c0c1e) !important;
-  border: 1px solid var(--theme-accent, rgba(255, 255, 255, 0.08)) !important;
-  border-radius: 18px;
+  background: var(--theme-panel-bg, #0d0d1f) !important;
+  border: 1px solid var(--theme-accent, rgba(255, 255, 255, 0.07)) !important;
+  border-radius: 20px;
   box-sizing: border-box;
   position: sticky;
   top: 24px;
-  overflow: hidden;        /* Keeps clean boundaries without ugly scrolls */
+  overflow: hidden; /* Strictly blocks internal container scrollbars */
   display: flex;
   flex-direction: column;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 
 .domain-panel-body {
-  padding: 28px 24px;
+  padding: 26px 22px;
   display: flex;
   flex-direction: column;
-  gap: 22px;               /* Open, relaxed spacing */
+  gap: 20px;
   height: 100%;
   box-sizing: border-box;
 }
@@ -266,14 +288,14 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
-.domain-panel-icon {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  background: rgba(255, 255, 255, 0.03);
+.domain-panel-icon-box {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   display: flex;
@@ -282,24 +304,30 @@ input, select, textarea { font-family: inherit; }
   font-size: 1.6rem;
 }
 
-.domain-panel-header h3 {
-  font-size: 19px;
+.domain-panel-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.domain-panel-title-area h3 {
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
   line-height: 1.25;
 }
 
-.domain-panel-header p {
+.domain-panel-title-area p {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
-  margin: 4px 0 0 0;
-  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  line-height: 1.35;
 }
 
 .domain-full-description {
   font-size: 13.5px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
@@ -307,7 +335,7 @@ input, select, textarea { font-family: inherit; }
 .domain-panel-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .domain-panel-section h4 {
@@ -315,28 +343,31 @@ input, select, textarea { font-family: inherit; }
   font-weight: 600;
   color: #ffffff;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* ─── APPLICATION LIST BLOCK LAYOUT (As seen in image_1c1b0b.jpg) ─── */
+/* Vertical Block Application list */
 .domain-apps-container {
   display: flex;
-  flex-direction: column;   /* Forced vertical block stacking */
+  flex-direction: column;
   gap: 8px;
 }
 
 .domain-app-item {
   background: rgba(255, 255, 255, 0.02);
   border-left: 3px solid var(--theme-accent, #8b5cf6);
-  padding: 10px 14px;
+  padding: 9px 12px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.75);
   border-radius: 0 8px 8px 0;
-  width: 100%;             /* Takes up entire block width */
-  box-sizing: border-box;
   font-weight: 450;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Sample Projects Layout */
+/* Projects Stack */
 .domain-projects-container {
   display: flex;
   flex-direction: column;
@@ -348,21 +379,24 @@ input, select, textarea { font-family: inherit; }
   flex-direction: row;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.6);
 }
 
-.project-bullet {
+.domain-project-item .project-bullet {
   font-size: 12px;
   margin-top: 2px;
 }
 
-/* Select Button Style */
+.domain-project-item .project-text {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Fixed Primary Action Button Alignment */
 .domain-panel .select-domain-btn {
   width: 100%;
-  height: 48px;
-  margin-top: auto;        /* Pushes flawlessly to the bottom boundary */
+  height: 46px;
+  margin-top: auto; /* Clean separation, snaps button tightly to the bottom boundary */
   background: var(--theme-accent, #8b5cf6) !important;
   color: #04040c !important;
   border: none;
@@ -373,53 +407,55 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.1s ease, opacity 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 
 .domain-panel .select-domain-btn:hover {
-  opacity: 0.92;
+  opacity: 0.9;
 }
 
-/* ─── CENTRAL COLOR VARIABLES ENGINE ─── */
-.ai { --theme-accent: #8b5cf6; --theme-bg: rgba(139, 92, 246, 0.05); --theme-panel-bg: rgba(139, 92, 246, 0.03); }
-.nlp { --theme-accent: #a855f7; --theme-bg: rgba(168, 85, 247, 0.05); --theme-panel-bg: rgba(168, 85, 247, 0.03); }
-.dl { --theme-accent: #ec4899; --theme-bg: rgba(236, 72, 153, 0.05); --theme-panel-bg: rgba(236, 72, 153, 0.03); }
-.ml { --theme-accent: #4f46e5; --theme-bg: rgba(79, 70, 229, 0.05); --theme-panel-bg: rgba(79, 70, 229, 0.03); }
-.web { --theme-accent: #06b6d4; --theme-bg: rgba(6, 182, 212, 0.05); --theme-panel-bg: rgba(6, 182, 212, 0.03); }
-.compbio { --theme-accent: #00e676; --theme-bg: rgba(0, 230, 118, 0.05); --theme-panel-bg: rgba(0, 230, 118, 0.03); }
-.cv { --theme-accent: #3b82f6; --theme-bg: rgba(59, 130, 246, 0.05); --theme-panel-bg: rgba(59, 130, 246, 0.03); }
-.ip { --theme-accent: #10b981; --theme-bg: rgba(16, 185, 129, 0.05); --theme-panel-bg: rgba(16, 185, 129, 0.03); }
-.dm { --theme-accent: #f59e0b; --theme-bg: rgba(245, 158, 11, 0.05); --theme-panel-bg: rgba(245, 158, 11, 0.03); }
-.crypto { --theme-accent: #ef4444; --theme-bg: rgba(239, 68, 68, 0.05); --theme-panel-bg: rgba(239, 68, 68, 0.03); }
-.cloud { --theme-accent: #0ea5e9; --theme-bg: rgba(14, 165, 233, 0.05); --theme-panel-bg: rgba(14, 165, 233, 0.03); }
-.hci { --theme-accent: #14b8a6; --theme-bg: rgba(20, 184, 166, 0.05); --theme-panel-bg: rgba(20, 184, 166, 0.03); }
-.cyber { --theme-accent: #dc2626; --theme-bg: rgba(220, 38, 38, 0.05); --theme-panel-bg: rgba(220, 38, 38, 0.03); }
-.analytics { --theme-accent: #84cc16; --theme-bg: rgba(132, 204, 22, 0.05); --theme-panel-bg: rgba(132, 204, 22, 0.03); }
-.iot { --theme-accent: #d946ef; --theme-bg: rgba(217, 70, 239, 0.05); --theme-panel-bg: rgba(217, 70, 239, 0.03); }
-.game { --theme-accent: #ff007f; --theme-bg: rgba(255, 0, 127, 0.05); --theme-panel-bg: rgba(255, 0, 127, 0.03); }
-.darkpatterns { --theme-accent: #4b5563; --theme-bg: rgba(75, 85, 99, 0.05); --theme-panel-bg: rgba(75, 85, 99, 0.03); }
-.uiux { --theme-accent: #ff5722; --theme-bg: rgba(255, 87, 34, 0.05); --theme-panel-bg: rgba(255, 87, 34, 0.03); }
-.datascience { --theme-accent: #00bcd4; --theme-bg: rgba(0, 188, 212, 0.05); --theme-panel-bg: rgba(0, 188, 212, 0.03); }
-.forensics { --theme-accent: #607d8b; --theme-bg: rgba(96, 125, 139, 0.05); --theme-panel-bg: rgba(96, 125, 139, 0.03); }
-.malware { --theme-accent: #9c27b0; --theme-bg: rgba(156, 39, 176, 0.05); --theme-panel-bg: rgba(156, 39, 176, 0.03); }
-.ids { --theme-accent: #ff9800; --theme-bg: rgba(255, 152, 0, 0.05); --theme-panel-bg: rgba(255, 152, 0, 0.03); }
-.mobile { --theme-accent: #4caf50; --theme-bg: rgba(76, 175, 80, 0.05); --theme-panel-bg: rgba(76, 175, 80, 0.03); }
-.devops { --theme-accent: #009688; --theme-bg: rgba(0, 150, 136, 0.05); --theme-panel-bg: rgba(0, 150, 136, 0.03); }
-.edge { --theme-accent: #3f51b5; --theme-bg: rgba(63, 81, 181, 0.05); --theme-panel-bg: rgba(63, 81, 181, 0.03); }
-.blockchain { --theme-accent: #ffeb3b; --theme-bg: rgba(255, 235, 59, 0.05); --theme-panel-bg: rgba(255, 235, 59, 0.03); }
-.quantum { --theme-accent: #e91e63; --theme-bg: rgba(233, 30, 99, 0.05); --theme-panel-bg: rgba(233, 30, 99, 0.03); }
-.arvr { --theme-accent: #cc00ff; --theme-bg: rgba(20, 0, 255, 0.05); --theme-panel-bg: rgba(204, 0, 255, 0.03); }
-.rpa { --theme-accent: #795548; --theme-bg: rgba(121, 85, 72, 0.05); --theme-panel-bg: rgba(121, 85, 72, 0.03); }
-.assistive { --theme-accent: #ab47bc; --theme-bg: rgba(171, 71, 188, 0.05); --theme-panel-bg: rgba(171, 71, 188, 0.03); }
-.fintech { --theme-accent: #26a69a; --theme-bg: rgba(38, 166, 154, 0.05); --theme-panel-bg: rgba(38, 166, 154, 0.03); }
-.egov { --theme-accent: #5c6bc0; --theme-bg: rgba(92, 107, 192, 0.05); --theme-panel-bg: rgba(92, 107, 192, 0.03); }
-.bioinfo { --theme-accent: #26c6da; --theme-bg: rgba(38, 198, 218, 0.05); --theme-panel-bg: rgba(38, 198, 218, 0.03); }
-.social { --theme-accent: #9ccc65; --theme-bg: rgba(156, 204, 101, 0.05); --theme-panel-bg: rgba(156, 204, 101, 0.03); }
-.scientific { --theme-accent: #ffca28; --theme-bg: rgba(255, 202, 40, 0.05); --theme-panel-bg: rgba(255, 202, 40, 0.03); }
-.prompt { --theme-accent: #29b6f6; --theme-bg: rgba(41, 182, 246, 0.05); --theme-panel-bg: rgba(41, 182, 246, 0.03); }
-.llm { --theme-accent: #7e57c2; --theme-bg: rgba(126, 87, 194, 0.05); --theme-panel-bg: rgba(126, 87, 194, 0.03); }
-.ethics { --theme-accent: #ef5350; --theme-bg: rgba(239, 83, 80, 0.05); --theme-panel-bg: rgba(239, 83, 80, 0.03); }
-.green { --theme-accent: #66bb6a; --theme-bg: rgba(102, 187, 106, 0.05); --theme-panel-bg: rgba(102, 187, 106, 0.03); }
+/* ==========================================================================
+   THEMATIC THEME COLOR PROPERTIES (39 SCHEMES)
+   ========================================================================== */
+.ai { --theme-accent: #8b5cf6; --theme-bg: rgba(139, 92, 246, 0.05); --theme-hover-glow: rgba(139, 92, 246, 0.15); --theme-panel-bg: rgba(139, 92, 246, 0.04); }
+.nlp { --theme-accent: #a855f7; --theme-bg: rgba(168, 85, 247, 0.05); --theme-hover-glow: rgba(168, 85, 247, 0.15); --theme-panel-bg: rgba(168, 85, 247, 0.04); }
+.dl { --theme-accent: #ec4899; --theme-bg: rgba(236, 72, 153, 0.05); --theme-hover-glow: rgba(236, 72, 153, 0.15); --theme-panel-bg: rgba(236, 72, 153, 0.04); }
+.ml { --theme-accent: #4f46e5; --theme-bg: rgba(79, 70, 229, 0.05); --theme-hover-glow: rgba(79, 70, 229, 0.15); --theme-panel-bg: rgba(79, 70, 229, 0.04); }
+.web { --theme-accent: #06b6d4; --theme-bg: rgba(6, 182, 212, 0.05); --theme-hover-glow: rgba(6, 182, 212, 0.15); --theme-panel-bg: rgba(6, 182, 212, 0.04); }
+.compbio { --theme-accent: #00e676; --theme-bg: rgba(0, 230, 118, 0.05); --theme-hover-glow: rgba(0, 230, 118, 0.15); --theme-panel-bg: rgba(0, 230, 118, 0.04); }
+.cv { --theme-accent: #3b82f6; --theme-bg: rgba(59, 130, 246, 0.05); --theme-hover-glow: rgba(59, 130, 246, 0.15); --theme-panel-bg: rgba(59, 130, 246, 0.04); }
+.ip { --theme-accent: #10b981; --theme-bg: rgba(16, 185, 129, 0.05); --theme-hover-glow: rgba(16, 185, 129, 0.15); --theme-panel-bg: rgba(16, 185, 129, 0.04); }
+.dm { --theme-accent: #f59e0b; --theme-bg: rgba(245, 158, 11, 0.05); --theme-hover-glow: rgba(245, 158, 11, 0.15); --theme-panel-bg: rgba(245, 158, 11, 0.04); }
+.crypto { --theme-accent: #ef4444; --theme-bg: rgba(239, 68, 68, 0.05); --theme-hover-glow: rgba(239, 68, 68, 0.15); --theme-panel-bg: rgba(239, 68, 68, 0.04); }
+.cloud { --theme-accent: #0ea5e9; --theme-bg: rgba(14, 165, 233, 0.05); --theme-hover-glow: rgba(14, 165, 233, 0.15); --theme-panel-bg: rgba(14, 165, 233, 0.04); }
+.hci { --theme-accent: #14b8a6; --theme-bg: rgba(20, 184, 166, 0.05); --theme-hover-glow: rgba(20, 184, 166, 0.15); --theme-panel-bg: rgba(20, 184, 166, 0.04); }
+.cyber { --theme-accent: #dc2626; --theme-bg: rgba(220, 38, 38, 0.05); --theme-hover-glow: rgba(220, 38, 38, 0.15); --theme-panel-bg: rgba(220, 38, 38, 0.04); }
+.analytics { --theme-accent: #84cc16; --theme-bg: rgba(132, 204, 22, 0.05); --theme-hover-glow: rgba(132, 204, 22, 0.15); --theme-panel-bg: rgba(132, 204, 22, 0.04); }
+.iot { --theme-accent: #d946ef; --theme-bg: rgba(217, 70, 239, 0.05); --theme-hover-glow: rgba(217, 70, 239, 0.15); --theme-panel-bg: rgba(217, 70, 239, 0.04); }
+.game { --theme-accent: #ff007f; --theme-bg: rgba(255, 0, 127, 0.05); --theme-hover-glow: rgba(255, 0, 127, 0.15); --theme-panel-bg: rgba(255, 0, 127, 0.04); }
+.darkpatterns { --theme-accent: #4b5563; --theme-bg: rgba(75, 85, 99, 0.05); --theme-hover-glow: rgba(75, 85, 99, 0.15); --theme-panel-bg: rgba(75, 85, 99, 0.04); }
+.uiux { --theme-accent: #ff5722; --theme-bg: rgba(255, 87, 34, 0.05); --theme-hover-glow: rgba(255, 87, 34, 0.15); --theme-panel-bg: rgba(255, 87, 34, 0.04); }
+.datascience { --theme-accent: #00bcd4; --theme-bg: rgba(0, 188, 212, 0.05); --theme-hover-glow: rgba(0, 188, 212, 0.15); --theme-panel-bg: rgba(0, 188, 212, 0.04); }
+.forensics { --theme-accent: #607d8b; --theme-bg: rgba(96, 125, 139, 0.05); --theme-hover-glow: rgba(96, 125, 139, 0.15); --theme-panel-bg: rgba(96, 125, 139, 0.04); }
+.malware { --theme-accent: #9c27b0; --theme-bg: rgba(156, 39, 176, 0.05); --theme-hover-glow: rgba(156, 39, 176, 0.15); --theme-panel-bg: rgba(156, 39, 176, 0.04); }
+.ids { --theme-accent: #ff9800; --theme-bg: rgba(255, 152, 0, 0.05); --theme-hover-glow: rgba(255, 152, 0, 0.15); --theme-panel-bg: rgba(255, 152, 0, 0.04); }
+.mobile { --theme-accent: #4caf50; --theme-bg: rgba(76, 175, 80, 0.05); --theme-hover-glow: rgba(76, 175, 80, 0.15); --theme-panel-bg: rgba(76, 175, 80, 0.04); }
+.devops { --theme-accent: #009688; --theme-bg: rgba(0, 150, 136, 0.05); --theme-hover-glow: rgba(0, 150, 136, 0.15); --theme-panel-bg: rgba(0, 150, 136, 0.04); }
+.edge { --theme-accent: #3f51b5; --theme-bg: rgba(63, 81, 181, 0.05); --theme-hover-glow: rgba(63, 81, 181, 0.15); --theme-panel-bg: rgba(63, 81, 181, 0.04); }
+.blockchain { --theme-accent: #ffeb3b; --theme-bg: rgba(255, 235, 59, 0.05); --theme-hover-glow: rgba(255, 235, 59, 0.15); --theme-panel-bg: rgba(255, 235, 59, 0.04); }
+.quantum { --theme-accent: #e91e63; --theme-bg: rgba(233, 30, 99, 0.05); --theme-hover-glow: rgba(233, 30, 99, 0.15); --theme-panel-bg: rgba(233, 30, 99, 0.04); }
+.arvr { --theme-accent: #cc00ff; --theme-bg: rgba(204, 0, 255, 0.05); --theme-hover-glow: rgba(204, 0, 255, 0.15); --theme-panel-bg: rgba(204, 0, 255, 0.04); }
+.rpa { --theme-accent: #795548; --theme-bg: rgba(121, 85, 72, 0.05); --theme-hover-glow: rgba(121, 85, 72, 0.15); --theme-panel-bg: rgba(121, 85, 72, 0.04); }
+.assistive { --theme-accent: #ab47bc; --theme-bg: rgba(171, 71, 188, 0.05); --theme-hover-glow: rgba(171, 71, 188, 0.15); --theme-panel-bg: rgba(171, 71, 188, 0.04); }
+.fintech { --theme-accent: #26a69a; --theme-bg: rgba(38, 166, 154, 0.05); --theme-hover-glow: rgba(38, 166, 154, 0.15); --theme-panel-bg: rgba(38, 166, 154, 0.04); }
+.egov { --theme-accent: #5c6bc0; --theme-bg: rgba(92, 107, 192, 0.05); --theme-hover-glow: rgba(92, 107, 192, 0.15); --theme-panel-bg: rgba(92, 107, 192, 0.04); }
+.bioinfo { --theme-accent: #26c6da; --theme-bg: rgba(38, 198, 218, 0.05); --theme-hover-glow: rgba(38, 198, 218, 0.15); --theme-panel-bg: rgba(38, 198, 218, 0.04); }
+.social { --theme-accent: #9ccc65; --theme-bg: rgba(156, 204, 101, 0.05); --theme-hover-glow: rgba(156, 204, 101, 0.15); --theme-panel-bg: rgba(156, 204, 101, 0.04); }
+.scientific { --theme-accent: #ffca28; --theme-bg: rgba(255, 202, 40, 0.05); --theme-hover-glow: rgba(255, 202, 40, 0.15); --theme-panel-bg: rgba(255, 202, 40, 0.04); }
+.prompt { --theme-accent: #29b6f6; --theme-bg: rgba(41, 182, 246, 0.05); --theme-hover-glow: rgba(41, 182, 246, 0.15); --theme-panel-bg: rgba(41, 182, 246, 0.04); }
+.llm { --theme-accent: #7e57c2; --theme-bg: rgba(126, 87, 194, 0.05); --theme-hover-glow: rgba(126, 87, 194, 0.15); --theme-panel-bg: rgba(126, 87, 194, 0.04); }
+.ethics { --theme-accent: #ef5350; --theme-bg: rgba(239, 83, 80, 0.05); --theme-hover-glow: rgba(239, 83, 80, 0.15); --theme-panel-bg: rgba(239, 83, 80, 0.04); }
+.green { --theme-accent: #66bb6a; --theme-bg: rgba(102, 187, 106, 0.05); --theme-hover-glow: rgba(102, 187, 106, 0.15); --theme-panel-bg: rgba(102, 187, 106, 0.04); }
 
 .domain-list {
   list-style: none;
