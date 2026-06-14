@@ -1,11 +1,11 @@
 /* ==========================================================================
-   DOMAINS EXPLORER PAGE STYLES (MODERNIZED WITH PILLS, TABS & ADAPTIVE SHEET Layout)
+   DOMAINS EXPLORER INTERFACE STRUCTURE SHEET
    ========================================================================== */
 
-/* ─── Search & Toolbar Track ─── */
+/* ─── Search Toolbar Header ─── */
 .domain-explorer .domain-toolbar {
-  padding: 16px 4px;
-  margin-bottom: 8px;
+  padding: 8px 2px;
+  margin-bottom: 4px;
 }
 
 .domain-toolbar-content {
@@ -23,15 +23,15 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 0 16px;
-  width: 420px;
+  width: 440px;
   max-width: 100%;
-  height: 46px;
+  height: 48px;
   transition: all 0.2s ease;
 }
 
 .domain-search:focus-within {
   border-color: var(--accent-purple, #8b5cf6);
-  background: rgba(139, 92, 246, 0.04);
+  background: rgba(139, 92, 246, 0.05);
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
@@ -49,28 +49,24 @@
   font-size: 0.92rem;
 }
 
-.domain-search input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
-}
-
 .domain-count {
   color: var(--text-secondary, #94a3b8);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px 14px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ─── Idea 1: Smart Horizontal Filter Pills ─── */
+/* ─── Smooth Filter Category Pills ─── */
 .category-filter-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
-  margin: 8px 0 24px 0;
-  padding: 0 2px;
+  margin: 12px 0 24px 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -88,18 +84,18 @@
 
 .category-pill:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.14);
   color: #ffffff;
 }
 
 .category-pill.active {
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(139, 92, 246, 0.12);
   border-color: var(--accent-purple, #8b5cf6);
   color: #c084fc;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.12);
 }
 
-/* ─── Layout Master-Detail Split Grid ─── */
+/* ─── Grid Master-Detail Columns Workspace ─── */
 .domain-grid-layout {
   display: flex;
   gap: 24px;
@@ -114,7 +110,7 @@
   gap: 16px;
 }
 
-/* ─── Left Side: Domain Select Cards (Idea 3 Elevate) ─── */
+/* ─── Selection Side Domain Cards ─── */
 .domain-card {
   background: var(--bg-card, rgba(255, 255, 255, 0.04));
   border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
@@ -133,8 +129,8 @@
 }
 
 .domain-card-icon-wrapper {
-  font-size: 1.5rem;
-  background: rgba(255, 255, 255, 0.04);
+  font-size: 1.45rem;
+  background: rgba(255, 255, 255, 0.03);
   width: 44px;
   height: 44px;
   min-width: 44px;
@@ -142,7 +138,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .domain-card-text-wrapper {
@@ -167,14 +163,14 @@
   font-size: 0.82rem;
   color: var(--text-secondary, #94a3b8);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Base Card Interaction States */
+/* Interaction Profiles */
 .domain-card:hover:not(.active) {
   transform: translateY(-2px);
   background: var(--bg-card-hover, rgba(255, 255, 255, 0.07));
@@ -188,16 +184,16 @@
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
 }
 
-/* ─── Right Side: Preview Detail Sidebar ─── */
+/* ─── Preview Panel Column Profile ─── */
 .domain-panel {
-  width: 440px;
-  min-width: 440px;
-  max-width: 440px;
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
   background: var(--bg-secondary, #12122b);
   border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius, 14px);
   position: sticky;
-  top: 90px; /* Aligns comfortably underneath the sticky topbar navigation */
+  top: 92px; /* Offsets directly beneath standard topbar line thresholds */
   overflow: hidden;
   box-shadow: var(--shadow-glass, 0 8px 32px rgba(0, 0, 0, 0.3));
 }
@@ -218,9 +214,9 @@
 .domain-panel-icon-box {
   font-size: 2.2rem;
   background: rgba(255, 255, 255, 0.03);
-  width: 68px;
-  height: 68px;
-  min-width: 68px;
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,14 +224,8 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.domain-panel-title-area {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .domain-panel-title-area h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-primary, #f1f5f9);
   margin: 0;
@@ -243,15 +233,15 @@
 }
 
 .domain-panel-title-area p {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-secondary, #94a3b8);
-  margin: 0;
+  margin: 4px 0 0 0;
   line-height: 1.3;
 }
 
 .domain-full-description {
-  font-size: 0.9rem;
-  color: rgba(241, 245, 249, 0.75);
+  font-size: 0.88rem;
+  color: rgba(241, 245, 249, 0.7);
   line-height: 1.6;
   margin: 0;
   background: rgba(0, 0, 0, 0.15);
@@ -260,7 +250,7 @@
   border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
-/* ─── Idea 3/4: Segregated Inner Sidebar Interactive View Tabs ─── */
+/* ─── Dedicated Inside Sidebar Tab Architectures ─── */
 .panel-tab-headers {
   display: flex;
   background: rgba(0, 0, 0, 0.2);
@@ -274,8 +264,8 @@
   flex: 1;
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.4);
-  padding: 9px 0;
+  color: rgba(255, 255, 255, 0.42);
+  padding: 10px 0;
   font-size: 0.85rem;
   font-weight: 600;
   border-radius: 7px;
@@ -301,10 +291,6 @@
   min-height: 180px;
 }
 
-.domain-panel-section {
-  width: 100%;
-}
-
 .fade-in-engine {
   animation: tabFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -314,7 +300,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Applications Inner Elements Styling */
+/* Applications Container Content Elements */
 .domain-apps-container {
   display: flex;
   flex-direction: column;
@@ -329,17 +315,17 @@
   display: flex;
   align-items: center;
   color: var(--text-primary, #f1f5f9);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 500;
   border: 1px solid rgba(255, 255, 255, 0.03);
-  border-left: none; /* Fallback override */
+  border-left: none;
 }
 
-/* Projects Inner Elements Styling */
+/* Projects Container Content Elements */
 .domain-projects-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .domain-project-item {
@@ -354,29 +340,26 @@
 
 .domain-project-item .project-bullet {
   color: var(--theme-accent, #8b5cf6);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.2;
-  text-shadow: 0 0 6px var(--theme-accent, #8b5cf6);
 }
 
 .domain-project-item .project-text {
   color: var(--text-secondary, #94a3b8);
   font-size: 0.85rem;
   line-height: 1.4;
-  font-weight: 500;
 }
 
-/* Bottom Action Sub-Anchor Activation button */
+/* Core CTA Button Override Placement */
 .select-domain-btn {
   width: 100%;
-  height: 46px;
+  height: 48px;
   border-radius: 10px;
   font-size: 0.92rem;
   font-weight: 700;
   margin-top: 4px;
 }
 
-/* Empty State Filters Look */
 .domain-empty-state {
   grid-column: 1 / -1;
   padding: 48px;
@@ -388,71 +371,51 @@
   font-size: 0.88rem;
 }
 
-
-/* ==========================================================================
-   DYNAMIC COLOR CLASSES OVERRIDES (MATCHING DESIGN REFERENCE SPECS)
-   ========================================================================== */
-
-/* 1. Artificial Intelligence */
+/* ─── DYNAMIC UNIQUE COLORED CLASSES OVERRIDES ─── */
 .domain-card.ai.active { border-color: #8b5cf6; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent); }
 .domain-panel.ai { border-color: rgba(139, 92, 246, 0.25); --theme-accent: #8b5cf6; }
 
-/* 2. Natural Language Processing */
 .domain-card.nlp.active { border-color: #a855f7; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent); }
 .domain-panel.nlp { border-color: rgba(168, 85, 247, 0.25); --theme-accent: #a855f7; }
 
-/* 3. Deep Learning */
 .domain-card.dl.active { border-color: #ec4899; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent); }
 .domain-panel.dl { border-color: rgba(236, 72, 153, 0.25); --theme-accent: #ec4899; }
 
-/* 4. Machine Learning */
 .domain-card.ml.active { border-color: #4f46e5; background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), transparent); }
 .domain-panel.ml { border-color: rgba(79, 70, 229, 0.25); --theme-accent: #4f46e5; }
 
-/* 5. Web Development */
 .domain-card.web.active { border-color: #06b6d4; background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), transparent); }
 .domain-panel.web { border-color: rgba(6, 182, 212, 0.25); --theme-accent: #06b6d4; }
 
-/* 6. Computational Biology */
 .domain-card.compbio.active { border-color: #00e676; background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), transparent); }
 .domain-panel.compbio { border-color: rgba(0, 230, 118, 0.25); --theme-accent: #00e676; }
 
-/* 7. Computer Vision */
 .domain-card.cv.active { border-color: #3b82f6; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent); }
 .domain-panel.cv { border-color: rgba(59, 130, 246, 0.25); --theme-accent: #3b82f6; }
 
-/* 8. Image Processing */
 .domain-card.ip.active { border-color: #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent); }
 .domain-panel.ip { border-color: rgba(16, 185, 129, 0.25); --theme-accent: #10b981; }
 
-/* 9. Data Mining */
 .domain-card.dm.active { border-color: #f59e0b; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), transparent); }
 .domain-panel.dm { border-color: rgba(245, 158, 11, 0.25); --theme-accent: #f59e0b; }
 
-/* 10. Cryptography & Security */
 .domain-card.crypto.active { border-color: #ef4444; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), transparent); }
 .domain-panel.crypto { border-color: rgba(239, 68, 68, 0.25); --theme-accent: #ef4444; }
 
-
-/* ==========================================================================
-   Idea 5: RESPONSIVE MEDIA BREAKPOINTS (COLLAPSIBLE SHEET MECHANICS)
-   ========================================================================== */
-
+/* ─── Media Breakpoints Adaptive Rules ─── */
 @media (max-width: 1280px) {
   .domain-panel {
-    width: 360px;
-    min-width: 360px;
-    max-width: 360px;
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
   }
 }
 
 @media (max-width: 1024px) {
-  /* Side panel slides down to form a cohesive horizontal workflow below the grid selection track */
   .domain-grid-layout {
     flex-direction: column-reverse;
     gap: 20px;
   }
-
   .domain-panel {
     width: 100%;
     min-width: 100%;
@@ -460,9 +423,8 @@
     position: relative;
     top: 0;
   }
-
   .panel-tab-body-container {
-    min-height: auto; /* Drops unnecessary empty space reserves on tablets */
+    min-height: auto;
   }
 }
 
@@ -472,29 +434,17 @@
     align-items: stretch;
     gap: 12px;
   }
-
   .domain-search {
     width: 100%;
   }
-
-  .domain-count {
-    align-self: flex-start;
-  }
-
   .category-filter-bar {
     gap: 6px;
   }
-
   .category-pill {
     padding: 6px 12px;
-    font-size: 12.5px;
+    font-size: 12px;
   }
-
   .domain-grid {
-    grid-template-columns: 1fr; /* Stack elements cleanly on smartphone screens */
-  }
-
-  .domain-panel-body {
-    padding: 20px 16px;
+    grid-template-columns: 1fr;
   }
 }
