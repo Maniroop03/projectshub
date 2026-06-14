@@ -1,12 +1,7 @@
 import { memo, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DOMAINS } from '../data/domains';
 
-const DomainCard = memo(function DomainCard({
-  domain,
-  active,
-  onSelect
-}) {
+const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
   return (
     <button
       type="button"
@@ -16,7 +11,6 @@ const DomainCard = memo(function DomainCard({
       <div className="domain-card-icon">
         {domain.icon}
       </div>
-
       <div>
         <h2>{domain.name}</h2>
         <p>{domain.shortDescription}</p>
@@ -26,42 +20,38 @@ const DomainCard = memo(function DomainCard({
 });
 
 export default function Domains() {
-  const navigate = useNavigate();
-
-  const [selected, setSelected] = useState('ai');
+  const [selected, setSelected] = useState('web'); // Defaulting to web to match reference look
   const [search, setSearch] = useState('');
 
   const current = useMemo(
     () => DOMAINS.find((d) => d.id === selected),
     [selected]
   );
+  
   const filteredDomains = DOMAINS.filter((domain) =>
     domain.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="page-container domain-explorer">
-
       <div className="domain-toolbar">
-  <div className="domain-toolbar-content">
-    <div className="domain-search">
-      <span className="domain-search-icon">🔍</span>
+        <div className="domain-toolbar-content">
+          <div className="domain-search">
+            <span className="domain-search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Search domains..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <span className="domain-count">
+            {filteredDomains.length} domains
+          </span>
+        </div>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Search domains..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-    </div>
-
-    <span className="domain-count">
-      {filteredDomains.length} domains
-    </span>
-  </div>
-</div>
-
-<div className="domain-grid-layout">
+      <div className="domain-grid-layout">
         <div className="domain-grid">
           {filteredDomains.map((domain) => (
             <DomainCard
@@ -75,47 +65,47 @@ export default function Domains() {
 
         <div className={`domain-panel ${current?.colorClass || ''}`}>
           <div className="domain-panel-body">
+            <div className="domain-panel-header">
+              <div className="domain-panel-icon">
+                {current?.icon}
+              </div>
+              <div>
+                <h3>{current?.name}</h3>
+                <p>{current?.shortDescription}</p>
+              </div>
+            </div>
 
-  <div className="domain-panel-header">
-    <div className="domain-panel-icon">
-      {current?.icon}
-    </div>
+            <p className="domain-full-description">
+              {current?.fullDescription}
+            </p>
 
-    <div>
-      <h3>{current?.name}</h3>
-      <p>{current?.shortDescription}</p>
-    </div>
-  </div>
+            <div className="domain-panel-section">
+              <h4>🔧 Applications</h4>
+              <div className="domain-apps-container">
+                {(current?.applications || []).map((app) => (
+                  <div className="domain-app-item" key={app}>
+                    {app}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-  <p className="domain-full-description">
-    {current?.fullDescription}
-  </p>
+            <div className="domain-panel-section">
+              <h4>💡 Sample Projects</h4>
+              <div className="domain-projects-container">
+                {(current?.projects || []).map((project) => (
+                  <div className="domain-project-item" key={project}>
+                    <span className="project-bullet">💡</span>
+                    <span className="project-text">{project}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-  <div className="domain-panel-section">
-    <h4>🔧 Applications</h4>
-
-    {(current?.applications || []).map(app => (
-      <div className="domain-app-item" key={app}>
-        {app}
-      </div>
-    ))}
-  </div>
-
-  <div className="domain-panel-section">
-    <h4>💡 Sample Projects</h4>
-
-    {(current?.projects || []).map(project => (
-      <div className="domain-project-item" key={project}>
-        {project}
-      </div>
-    ))}
-  </div>
-
-  <button className="btn-primary">
-    Select This Domain →
-  </button>
-
-</div>
+            <button className="btn-primary select-domain-btn">
+              Select This Domain →
+            </button>
+          </div>
         </div>
       </div>
     </div>
