@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { createProject, updateProject, getProject, getGuides, getGroups, formatApiError } from '../api';
 import { MdCloudUpload, MdInsertDriveFile, MdSave, MdArrowBack } from 'react-icons/md';
+import { DOMAINS } from '../data/domains';
 
-const DOMAINS = ['Web Development', 'Machine Learning', 'Deep Learning', 'Natural Language Processing', 'Data Science', 'IoT', 'Mobile App', 'Embedded Systems', 'Cybersecurity', 'Cloud Computing', 'Blockchain', 'AR/VR', 'Image Processing', 'NLP', 'Other'];
 const STATUSES = ['Submitted', 'Under Review', 'Approved', 'Rejected', 'Completed'];
 
 export default function ProjectForm() {
@@ -143,7 +143,11 @@ export default function ProjectForm() {
                                 <label className="form-label">Domain</label>
                                 <select className="form-select" value={form.domain} onChange={(e) => setForm({ ...form, domain: e.target.value })}>
                                     <option value="">Select domain</option>
-                                    {DOMAINS.map((d) => <option key={d} value={d}>{d}</option>)}
+                                    {DOMAINS.map((d) => (
+                                        <option key={d.id} value={d.name}>
+                                            {d.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="form-group">
