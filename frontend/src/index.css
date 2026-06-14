@@ -233,64 +233,73 @@ input, select, textarea { font-family: inherit; }
   line-height: 1.4;
 }
 
-/* ─── COMPACT SIDE INFO PANEL (Fits completely without scrolling) ─── */
+/* ─── INFO PANEL OVERHAUL  ─── */
 .domain-panel {
-  width: 410px;
-  min-width: 410px;
-  max-width: 410px;
-  background: var(--theme-panel-bg, #111126) !important;
+  width: 420px;            /* Increased width  */
+  min-width: 420px;
+  max-width: 420px;
+  align-self: stretch;     /* Stretches to perfectly match the grid height */
+  
+  background: var(--theme-panel-bg, #0c0c1e) !important;
   border: 1px solid var(--theme-accent, rgba(255, 255, 255, 0.08)) !important;
-  border-radius: 16px;
+  border-radius: 18px;
   box-sizing: border-box;
   position: sticky;
-  top: 20px;
-  overflow: hidden; /* Stops scrolling completely */
-  transition: background 0.2s ease, border-color 0.2s ease;
+  top: 24px;
+  overflow: hidden;        /* Keeps clean boundaries without ugly scrolls */
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 
 .domain-panel-body {
-  padding: 22px 20px;
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Tight spaces like picture 1 */
+  gap: 22px;               /* Open, relaxed spacing */
+  height: 100%;
+  box-sizing: border-box;
 }
 
+/* Header Config */
 .domain-panel-header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .domain-panel-icon {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
-  background: rgba(255, 255, 255, 0.04);
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 
 .domain-panel-header h3 {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
+  line-height: 1.25;
 }
 
 .domain-panel-header p {
-  font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.45);
-  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 4px 0 0 0;
+  line-height: 1.4;
 }
 
 .domain-full-description {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 13.5px;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
@@ -298,64 +307,77 @@ input, select, textarea { font-family: inherit; }
 .domain-panel-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .domain-panel-section h4 {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #ffffff;
   margin: 0;
 }
 
-/* HORIZONTAL APP ITEMS (Allows items to sit side-by-side to save huge vertical screen space) */
+/* ─── APPLICATION LIST BLOCK LAYOUT (As seen in image_1c1b0b.jpg) ─── */
 .domain-apps-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;   /* Forced vertical block stacking */
+  gap: 8px;
 }
 
 .domain-app-item {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 2.5px solid var(--theme-accent, #8b5cf6);
-  padding: 6px 10px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
-  border-radius: 0 6px 6px 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--theme-accent, #8b5cf6);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 0 8px 8px 0;
+  width: 100%;             /* Takes up entire block width */
+  box-sizing: border-box;
+  font-weight: 450;
 }
 
-/* Projects Layout */
+/* Sample Projects Layout */
 .domain-projects-container {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .domain-project-item {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.65);
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-/* Dynamic Accent Button Styling */
+.project-bullet {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Select Button Style */
 .domain-panel .select-domain-btn {
   width: 100%;
-  height: 44px;
-  margin-top: 4px;
+  height: 48px;
+  margin-top: auto;        /* Pushes flawlessly to the bottom boundary */
   background: var(--theme-accent, #8b5cf6) !important;
   color: #04040c !important;
   border: none;
-  border-radius: 10px;
-  font-size: 13.5px;
+  border-radius: 12px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.domain-panel .select-domain-btn:hover {
+  opacity: 0.92;
 }
 
 /* ─── CENTRAL COLOR VARIABLES ENGINE ─── */
