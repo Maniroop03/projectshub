@@ -1,6 +1,7 @@
 export const DOMAINS = [
   {
     id: 'ai',
+    colorClass: 'ai',
     name: 'Artificial Intelligence',
     icon: '🤖',
     shortDescription: 'Building intelligent systems that reason and act',
@@ -10,6 +11,7 @@ export const DOMAINS = [
   },
   {
     id: 'nlp',
+    colorClass: 'nlp',
     name: 'Natural Language Processing',
     icon: '📝',
     shortDescription: 'Enabling machines to understand human language',
@@ -19,6 +21,7 @@ export const DOMAINS = [
   },
   {
     id: 'dl',
+    colorClass: 'dl',
     name: 'Deep Learning',
     icon: '🧠',
     shortDescription: 'Advanced neural networks for intelligent systems',
@@ -28,6 +31,7 @@ export const DOMAINS = [
   },
   {
     id: 'cv',
+    colorClass: 'cv',
     name: 'Computer Vision',
     icon: '👁️',
     shortDescription: 'Teaching computers to see and interpret images',
@@ -37,6 +41,7 @@ export const DOMAINS = [
   },
   {
     id: 'ip',
+    colorClass: 'ip',
     name: 'Image Processing',
     icon: '🖼️',
     shortDescription: 'Enhancing and analyzing digital images',
@@ -46,6 +51,7 @@ export const DOMAINS = [
   },
   {
     id: 'dm',
+    colorClass: 'dm',
     name: 'Data Mining',
     icon: '⛏️',
     shortDescription: 'Discovering patterns hidden in data',
@@ -55,6 +61,7 @@ export const DOMAINS = [
   },
   {
     id: 'crypto',
+    colorClass: 'crypto',
     name: 'Cryptography & Network Security',
     icon: '🔐',
     shortDescription: 'Protecting data and communications',
@@ -64,6 +71,7 @@ export const DOMAINS = [
   },
   {
     id: 'cloud',
+    colorClass: 'cloud',
     name: 'Cloud Computing',
     icon: '☁️',
     shortDescription: 'Scalable computing over the internet',
@@ -73,6 +81,7 @@ export const DOMAINS = [
   },
   {
     id: 'hci',
+    colorClass: 'hci',
     name: 'Human-Computer Interaction',
     icon: '🖥️',
     shortDescription: 'Improving interaction between users and systems',
@@ -82,6 +91,7 @@ export const DOMAINS = [
   },
   {
     id: 'cyber',
+    colorClass: 'cyber',
     name: 'Cyber Security',
     icon: '🛡️',
     shortDescription: 'Defending systems against cyber threats',
@@ -91,6 +101,7 @@ export const DOMAINS = [
   },
   {
     id: 'analytics',
+    colorClass: 'analytics',
     name: 'Data Analytics',
     icon: '📊',
     shortDescription: 'Turning data into actionable insights',
@@ -100,6 +111,7 @@ export const DOMAINS = [
   },
   {
     id: 'iot',
+    colorClass: 'iot',
     name: 'Internet of Things',
     icon: '📡',
     shortDescription: 'Connecting smart devices and sensors',
@@ -109,6 +121,7 @@ export const DOMAINS = [
   },
   {
     id: 'game',
+    colorClass: 'game',
     name: 'Game Development',
     icon: '🎮',
     shortDescription: 'Designing interactive gaming experiences',
@@ -118,6 +131,7 @@ export const DOMAINS = [
   },
   {
     id: 'darkpatterns',
+    colorClass: 'darkpatterns',
     name: 'Dark Patterns',
     icon: '🎭',
     shortDescription: 'Studying deceptive UX practices',
@@ -127,6 +141,7 @@ export const DOMAINS = [
   },
   {
     id: 'uiux',
+    colorClass: 'uiux',
     name: 'UI/UX Design',
     icon: '🎨',
     shortDescription: 'Creating intuitive user experiences',
@@ -136,6 +151,7 @@ export const DOMAINS = [
   },
   {
     id: 'datascience',
+    colorClass: 'datascience',
     name: 'Data Science',
     icon: '📈',
     shortDescription: 'Combining statistics, AI, and computing',
@@ -145,6 +161,7 @@ export const DOMAINS = [
   },
   {
     id: 'forensics',
+    colorClass: 'forensics',
     name: 'Digital Forensics',
     icon: '🔍',
     shortDescription: 'Investigating digital evidence',
@@ -154,6 +171,7 @@ export const DOMAINS = [
   },
   {
     id: 'malware',
+    colorClass: 'malware',
     name: 'Malware Analysis',
     icon: '☣️',
     shortDescription: 'Analyzing malicious software behavior',
@@ -163,6 +181,7 @@ export const DOMAINS = [
   },
   {
     id: 'ids',
+    colorClass: 'ids',
     name: 'Intrusion Detection Systems',
     icon: '🚨',
     shortDescription: 'Detecting unauthorized system access',
@@ -172,6 +191,7 @@ export const DOMAINS = [
   },
   {
     id: 'mobile',
+    colorClass: 'mobile',
     name: 'Mobile Application Development',
     icon: '📱',
     shortDescription: 'Building applications for mobile devices',
@@ -181,6 +201,7 @@ export const DOMAINS = [
   },
   {
     id: 'devops',
+    colorClass: 'devops',
     name: 'DevOps',
     icon: '⚙️',
     shortDescription: 'Bridging development and operations',
@@ -190,6 +211,7 @@ export const DOMAINS = [
   },
   {
     id: 'edge',
+    colorClass: 'edge',
     name: 'Edge Computing',
     icon: '🌐',
     shortDescription: 'Processing data closer to devices',
@@ -199,6 +221,7 @@ export const DOMAINS = [
   },
   {
     id: 'blockchain',
+    colorClass: 'blockchain',
     name: 'Blockchain Technology',
     icon: '⛓️',
     shortDescription: 'Building decentralized trust systems',
@@ -208,6 +231,7 @@ export const DOMAINS = [
   },
   {
     id: 'quantum',
+    colorClass: 'quantum',
     name: 'Quantum Computing',
     icon: '⚛️',
     shortDescription: 'Computing beyond classical limitations',
@@ -217,6 +241,7 @@ export const DOMAINS = [
   },
   {
     id: 'arvr',
+    colorClass: 'arvr',
     name: 'AR/VR',
     icon: '🥽',
     shortDescription: 'Immersive augmented and virtual experiences',
@@ -226,6 +251,7 @@ export const DOMAINS = [
   },
   {
     id: 'rpa',
+    colorClass: 'rpa',
     name: 'Robotic Process Automation',
     icon: '🤖',
     shortDescription: 'Automating repetitive business tasks',
@@ -235,6 +261,7 @@ export const DOMAINS = [
   },
   {
     id: 'assistive',
+    colorClass: 'assistive',
     name: 'Assistive Technologies',
     icon: '♿',
     shortDescription: 'Technology for accessibility and inclusion',
@@ -244,6 +271,7 @@ export const DOMAINS = [
   },
   {
     id: 'fintech',
+    colorClass: 'fintech',
     name: 'FinTech & Banking Systems',
     icon: '💳',
     shortDescription: 'Innovating financial services with technology',
@@ -253,6 +281,7 @@ export const DOMAINS = [
   },
   {
     id: 'egov',
+    colorClass: 'egov',
     name: 'E-Government Systems',
     icon: '🏛️',
     shortDescription: 'Digitizing public services',
@@ -262,6 +291,7 @@ export const DOMAINS = [
   },
   {
     id: 'bioinfo',
+    colorClass: 'bioinfo',
     name: 'Bioinformatics',
     icon: '🧬',
     shortDescription: 'Applying computing to biological data',
@@ -271,6 +301,7 @@ export const DOMAINS = [
   },
   {
     id: 'social',
+    colorClass: 'social',
     name: 'Social Network Analysis',
     icon: '👥',
     shortDescription: 'Studying relationships in social networks',
@@ -280,6 +311,7 @@ export const DOMAINS = [
   },
   {
     id: 'scientific',
+    colorClass: 'scientific',
     name: 'Scientific Computing',
     icon: '🔬',
     shortDescription: 'Solving scientific problems computationally',
@@ -289,6 +321,7 @@ export const DOMAINS = [
   },
   {
     id: 'prompt',
+    colorClass: 'prompt',
     name: 'Generative AI Prompt Engineering',
     icon: '✨',
     shortDescription: 'Designing effective AI prompts',
@@ -298,6 +331,7 @@ export const DOMAINS = [
   },
   {
     id: 'llm',
+    colorClass: 'llm',
     name: 'Large Language Models (LLMs)',
     icon: '📚',
     shortDescription: 'Building applications with foundation models',
@@ -307,6 +341,7 @@ export const DOMAINS = [
   },
   {
     id: 'ethics',
+    colorClass: 'ethics',
     name: 'AI Ethics & Responsible AI',
     icon: '⚖️',
     shortDescription: 'Ensuring fairness and accountability in AI',
@@ -316,6 +351,7 @@ export const DOMAINS = [
   },
   {
     id: 'green',
+    colorClass: 'green',
     name: 'Green Computing',
     icon: '🌱',
     shortDescription: 'Sustainable and energy-efficient computing',
