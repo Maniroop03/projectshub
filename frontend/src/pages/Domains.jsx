@@ -41,6 +41,9 @@ export default function Domains() {
               <button
                 key={domain.id}
                 type="button"
+                /* Applying the domain.colorClass variable directly here ensures 
+                  hover styles update dynamically for each distinct domain item.
+                */
                 className={`domain-card ${domain.colorClass} ${isActive ? 'active' : ''}`}
                 onClick={() => setSelected(domain.id)}
               >
@@ -56,6 +59,9 @@ export default function Domains() {
           })}
         </div>
 
+        {/* Passing the active current domain class down directly to the panel container 
+          applies the same color variables to the header title and the CTA select button.
+        */}
         <div className={`domain-panel ${current?.colorClass}`}>
           <div className="domain-panel-body">
             <div className="domain-panel-header">
