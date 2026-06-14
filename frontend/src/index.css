@@ -124,6 +124,11 @@ input, select, textarea { font-family: inherit; }
   font-weight: 600;
 }
 
+/* ==========================================================================
+   DOMAIN EXPLORER STRUCTURAL OVERHAUL
+   ========================================================================== */
+
+/* Layout Flex Frame - Stops content truncation */
 .domain-grid-layout {
   display: flex;
   flex-direction: row;
@@ -133,21 +138,23 @@ input, select, textarea { font-family: inherit; }
   max-width: 1600px;
   margin: 24px auto 0 auto;
   box-sizing: border-box;
+  align-items: flex-start; /* Keeps items matching top line */
 }
 
+/* Card Grid Layout */
 .domain-grid {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(260px, 1fr));
   gap: 16px;
   align-content: start;
-} 
+}
 
-
+/* ─── Domain Grid Item Blueprint ─── */
 .domain-card {
   height: 154px;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   padding: 22px;
@@ -159,7 +166,22 @@ input, select, textarea { font-family: inherit; }
   cursor: pointer;
   text-align: left;
   transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
-              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dynamic Hover State Implementation Using Local CSS Custom Variables */
+.domain-card:hover {
+  border-color: var(--theme-accent, rgba(255, 255, 255, 0.2));
+  background: var(--theme-bg, rgba(255, 255, 255, 0.04));
+  box-shadow: 0 0 15px var(--theme-hover-glow, rgba(255, 255, 255, 0.01));
+}
+
+/* Selected Active State Styles */
+.domain-card.active {
+  border-color: var(--theme-accent) !important;
+  background: var(--theme-bg) !important;
+  box-shadow: 0 0 20px var(--theme-hover-glow) !important;
 }
 
 .domain-card-icon-wrapper {
@@ -177,50 +199,12 @@ input, select, textarea { font-family: inherit; }
   width: 100%;
 }
 
-.domain-card:hover,
-.domain-card.active {
-  border-color: #8b5cf6;
-
-  box-shadow:
-    0 0 0 1px rgba(139,92,246,0.3),
-    0 12px 40px rgba(139,92,246,0.15);
-
-  transform: translateY(-2px);
-
-  background: linear-gradient(
-    135deg,
-    rgba(139,92,246,0.15),
-    rgba(99,102,241,0.05)
-  );
-}
-
-.domain-card-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  font-size: 1.25rem;
-}
-
 .domain-card h2 {
   font-size: 15.5px;
   font-weight: 600;
   color: #ffffff !important;
   margin: 0;
   line-height: 1.3;
-}
-
-.domain-card h3,
-.domain-card h2 {
-  color: #ffffff !important;
-}
-
-.domain-card p {
-  color: rgba(255,255,255,0.45) !important;
 }
 
 .domain-card p {
@@ -235,6 +219,7 @@ input, select, textarea { font-family: inherit; }
   overflow: hidden;
 }
 
+/* ─── Rigidity Rules Fixing Cut-Off Panel Viewport Bugs ─── */
 .domain-panel {
   width: 440px;
   min-width: 440px;
@@ -244,8 +229,18 @@ input, select, textarea { font-family: inherit; }
   border-radius: 20px;
   box-sizing: border-box;
   position: sticky;
-  top: 30px;
-  align-self: start;
+  top: 24px;
+  max-height: calc(100vh - 120px); /* Forces panel to stay entirely visible within browser height */
+  overflow-y: auto; /* Adds clean scrollbar inside panel text if lists scale long */
+}
+
+/* Clean scrollbar tracks inside the info side panel */
+.domain-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.domain-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
 .domain-panel-body {
@@ -266,7 +261,8 @@ input, select, textarea { font-family: inherit; }
   width: 60px;
   height: 60px;
   min-width: 60px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--theme-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -280,10 +276,11 @@ input, select, textarea { font-family: inherit; }
   gap: 3px;
 }
 
+/* Reference image matching text coloring dynamic override */
 .domain-panel-title-area h3 {
   font-size: 19px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--theme-accent, #ffffff);
   margin: 0;
   line-height: 1.25;
 }
@@ -360,7 +357,7 @@ input, select, textarea { font-family: inherit; }
   color: rgba(255, 255, 255, 0.65);
 }
 
-/* Bottom CTA Interactive Button */
+/* Dynamic Call-To-Action Button styling mapped to --theme-accent variable */
 .domain-panel .select-domain-btn {
   width: 100%;
   height: 50px;
@@ -375,174 +372,289 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.15s ease;
+  transition: background 0.2s ease, opacity 0.15s ease;
 }
 
 .domain-panel .select-domain-btn:hover {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 /* ==========================================================================
-   THEALL-DOMAIN COLOR MATRICES (COMPLETE 36 THEMES MAP)
+   DYNAMIC MATRIX THEMES (SETS ENTIRE VARIATION SCOPE PER SYSTEM ID)
    ========================================================================== */
 
 /* 1. Artificial Intelligence */
-.domain-card.ai.active { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); }
-.domain-panel.ai { border-color: rgba(139, 92, 246, 0.3); --theme-accent: #8b5cf6; }
+.ai { 
+  --theme-accent: #8b5cf6; 
+  --theme-bg: rgba(139, 92, 246, 0.05); 
+  --theme-hover-glow: rgba(139, 92, 246, 0.15); 
+}
 
 /* 2. Natural Language Processing */
-.domain-card.nlp.active { border-color: #a855f7; background: rgba(168, 85, 247, 0.05); }
-.domain-panel.nlp { border-color: rgba(168, 85, 247, 0.3); --theme-accent: #a855f7; }
+.nlp { 
+  --theme-accent: #a855f7; 
+  --theme-bg: rgba(168, 85, 247, 0.05); 
+  --theme-hover-glow: rgba(168, 85, 247, 0.15); 
+}
 
 /* 3. Deep Learning */
-.domain-card.dl.active { border-color: #ec4899; background: rgba(236, 72, 153, 0.05); }
-.domain-panel.dl { border-color: rgba(236, 72, 153, 0.3); --theme-accent: #ec4899; }
+.dl { 
+  --theme-accent: #ec4899; 
+  --theme-bg: rgba(236, 72, 153, 0.05); 
+  --theme-hover-glow: rgba(236, 72, 153, 0.15); 
+}
 
-/* 4. Computer Vision */
-.domain-card.cv.active { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
-.domain-panel.cv { border-color: rgba(59, 130, 246, 0.3); --theme-accent: #3b82f6; }
+/* 4. Machine Learning */
+.ml { 
+  --theme-accent: #4f46e5; 
+  --theme-bg: rgba(79, 70, 229, 0.05); 
+  --theme-hover-glow: rgba(79, 70, 229, 0.15); 
+}
 
-/* 5. Image Processing */
-.domain-card.ip.active { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
-.domain-panel.ip { border-color: rgba(16, 185, 129, 0.3); --theme-accent: #10b981; }
+/* 5. Web Development */
+.web { 
+  --theme-accent: #06b6d4; 
+  --theme-bg: rgba(6, 182, 212, 0.05); 
+  --theme-hover-glow: rgba(6, 182, 212, 0.15); 
+}
 
-/* 6. Data Mining */
-.domain-card.dm.active { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
-.domain-panel.dm { border-color: rgba(245, 158, 11, 0.3); --theme-accent: #f59e0b; }
+/* 6. Computer Vision */
+.cv { 
+  --theme-accent: #3b82f6; 
+  --theme-bg: rgba(59, 130, 246, 0.05); 
+  --theme-hover-glow: rgba(59, 130, 246, 0.15); 
+}
 
-/* 7. Cryptography & Network Security */
-.domain-card.crypto.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
-.domain-panel.crypto { border-color: rgba(239, 68, 68, 0.3); --theme-accent: #ef4444; }
+/* 7. Image Processing */
+.ip { 
+  --theme-accent: #10b981; 
+  --theme-bg: rgba(16, 185, 129, 0.05); 
+  --theme-hover-glow: rgba(16, 185, 129, 0.15); 
+}
 
-/* 8. Cloud Computing */
-.domain-card.cloud.active { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); }
-.domain-panel.cloud { border-color: rgba(14, 165, 233, 0.3); --theme-accent: #0ea5e9; }
+/* 8. Data Mining */
+.dm { 
+  --theme-accent: #f59e0b; 
+  --theme-bg: rgba(245, 158, 11, 0.05); 
+  --theme-hover-glow: rgba(245, 158, 11, 0.15); 
+}
 
-/* 9. Human-Computer Interaction */
-.domain-card.hci.active { border-color: #14b8a6; background: rgba(20, 184, 166, 0.05); }
-.domain-panel.hci { border-color: rgba(20, 184, 166, 0.3); --theme-accent: #14b8a6; }
+/* 9. Cryptography & Network Security */
+.crypto { 
+  --theme-accent: #ef4444; 
+  --theme-bg: rgba(239, 68, 68, 0.05); 
+  --theme-hover-glow: rgba(239, 68, 68, 0.15); 
+}
 
-/* 10. Cyber Security */
-.domain-card.cyber.active { border-color: #dc2626; background: rgba(220, 38, 38, 0.05); }
-.domain-panel.cyber { border-color: rgba(220, 38, 38, 0.3); --theme-accent: #dc2626; }
+/* 10. Cloud Computing */
+.cloud { 
+  --theme-accent: #0ea5e9; 
+  --theme-bg: rgba(14, 165, 233, 0.05); 
+  --theme-hover-glow: rgba(14, 165, 233, 0.15); 
+}
 
-/* 11. Data Analytics */
-.domain-card.analytics.active { border-color: #84cc16; background: rgba(132, 204, 22, 0.05); }
-.domain-panel.analytics { border-color: rgba(132, 204, 22, 0.3); --theme-accent: #84cc16; }
+/* 11. Human-Computer Interaction */
+.hci { 
+  --theme-accent: #14b8a6; 
+  --theme-bg: rgba(20, 184, 166, 0.05); 
+  --theme-hover-glow: rgba(20, 184, 166, 0.15); 
+}
 
-/* 12. Internet of Things */
-.domain-card.iot.active { border-color: #d946ef; background: rgba(217, 70, 239, 0.05); }
-.domain-panel.iot { border-color: rgba(217, 70, 239, 0.3); --theme-accent: #d946ef; }
+/* 12. Cyber Security */
+.cyber { 
+  --theme-accent: #dc2626; 
+  --theme-bg: rgba(220, 38, 38, 0.05); 
+  --theme-hover-glow: rgba(220, 38, 38, 0.15); 
+}
 
-/* 13. Game Development */
-.domain-card.game.active { border-color: #ff007f; background: rgba(255, 0, 127, 0.05); }
-.domain-panel.game { border-color: rgba(255, 0, 127, 0.3); --theme-accent: #ff007f; }
+/* 13. Data Analytics */
+.analytics { 
+  --theme-accent: #84cc16; 
+  --theme-bg: rgba(132, 204, 22, 0.05); 
+  --theme-hover-glow: rgba(132, 204, 22, 0.15); 
+}
 
-/* 14. Dark Patterns */
-.domain-card.darkpatterns.active { border-color: #4b5563; background: rgba(75, 85, 99, 0.05); }
-.domain-panel.darkpatterns { border-color: rgba(75, 85, 99, 0.3); --theme-accent: #4b5563; }
+/* 14. Internet of Things */
+.iot { 
+  --theme-accent: #d946ef; 
+  --theme-bg: rgba(217, 70, 239, 0.05); 
+  --theme-hover-glow: rgba(217, 70, 239, 0.15); 
+}
 
-/* 15. UI/UX Design */
-.domain-card.uiux.active { border-color: #ff5722; background: rgba(255, 87, 34, 0.05); }
-.domain-panel.uiux { border-color: rgba(255, 87, 34, 0.3); --theme-accent: #ff5722; }
+/* 15. Game Development */
+.game { 
+  --theme-accent: #ff007f; 
+  --theme-bg: rgba(255, 0, 127, 0.05); 
+  --theme-hover-glow: rgba(255, 0, 127, 0.15); 
+}
 
-/* 16. Data Science */
-.domain-card.datascience.active { border-color: #00bcd4; background: rgba(0, 188, 212, 0.05); }
-.domain-panel.datascience { border-color: rgba(0, 188, 212, 0.3); --theme-accent: #00bcd4; }
+/* 16. Dark Patterns */
+.darkpatterns { 
+  --theme-accent: #4b5563; 
+  --theme-bg: rgba(75, 85, 99, 0.05); 
+  --theme-hover-glow: rgba(75, 85, 99, 0.15); 
+}
 
-/* 17. Digital Forensics */
-.domain-card.forensics.active { border-color: #607d8b; background: rgba(96, 125, 139, 0.05); }
-.domain-panel.forensics { border-color: rgba(96, 125, 139, 0.3); --theme-accent: #607d8b; }
+/* 17. UI/UX Design */
+.uiux { 
+  --theme-accent: #ff5722; 
+  --theme-bg: rgba(255, 87, 34, 0.05); 
+  --theme-hover-glow: rgba(255, 87, 34, 0.15); 
+}
 
-/* 18. Malware Analysis */
-.domain-card.malware.active { border-color: #9c27b0; background: rgba(156, 39, 176, 0.05); }
-.domain-panel.malware { border-color: rgba(156, 39, 176, 0.3); --theme-accent: #9c27b0; }
+/* 18. Data Science */
+.datascience { 
+  --theme-accent: #00bcd4; 
+  --theme-bg: rgba(0, 188, 212, 0.05); 
+  --theme-hover-glow: rgba(0, 188, 212, 0.15); 
+}
 
-/* 19. Intrusion Detection Systems */
-.domain-card.ids.active { border-color: #ff9800; background: rgba(255, 152, 0, 0.05); }
-.domain-panel.ids { border-color: rgba(255, 152, 0, 0.3); --theme-accent: #ff9800; }
+/* 19. Digital Forensics */
+.forensics { 
+  --theme-accent: #607d8b; 
+  --theme-bg: rgba(96, 125, 139, 0.05); 
+  --theme-hover-glow: rgba(96, 125, 139, 0.15); 
+}
 
-/* 20. Mobile Application Development */
-.domain-card.mobile.active { border-color: #4caf50; background: rgba(76, 175, 80, 0.05); }
-.domain-panel.mobile { border-color: rgba(76, 175, 80, 0.3); --theme-accent: #4caf50; }
+/* 20. Malware Analysis */
+.malware { 
+  --theme-accent: #9c27b0; 
+  --theme-bg: rgba(156, 39, 176, 0.05); 
+  --theme-hover-glow: rgba(156, 39, 176, 0.15); 
+}
 
-/* 21. DevOps */
-.domain-card.devops.active { border-color: #009688; background: rgba(0, 150, 136, 0.05); }
-.domain-panel.devops { border-color: rgba(0, 150, 136, 0.3); --theme-accent: #009688; }
+/* 21. Intrusion Detection Systems */
+.ids { 
+  --theme-accent: #ff9800; 
+  --theme-bg: rgba(255, 152, 0, 0.05); 
+  --theme-hover-glow: rgba(255, 152, 0, 0.15); 
+}
 
-/* 22. Edge Computing */
-.domain-card.edge.active { border-color: #3f51b5; background: rgba(63, 81, 181, 0.05); }
-.domain-panel.edge { border-color: rgba(63, 81, 181, 0.3); --theme-accent: #3f51b5; }
+/* 22. Mobile Application Development */
+.mobile { 
+  --theme-accent: #4caf50; 
+  --theme-bg: rgba(76, 175, 80, 0.05); 
+  --theme-hover-glow: rgba(76, 175, 80, 0.15); 
+}
 
-/* 23. Blockchain Technology */
-.domain-card.blockchain.active { border-color: #ffeb3b; background: rgba(255, 235, 59, 0.05); }
-.domain-panel.blockchain { border-color: rgba(255, 235, 59, 0.3); --theme-accent: #ffeb3b; }
+/* 23. DevOps */
+.devops { 
+  --theme-accent: #009688; 
+  --theme-bg: rgba(0, 150, 136, 0.05); 
+  --theme-hover-glow: rgba(0, 150, 136, 0.15); 
+}
 
-/* 24. Quantum Computing */
-.domain-card.quantum.active { border-color: #e91e63; background: rgba(233, 30, 99, 0.05); }
-.domain-panel.quantum { border-color: rgba(233, 30, 99, 0.3); --theme-accent: #e91e63; }
+/* 24. Edge Computing */
+.edge { 
+  --theme-accent: #3f51b5; 
+  --theme-bg: rgba(63, 81, 181, 0.05); 
+  --theme-hover-glow: rgba(63, 81, 181, 0.15); 
+}
 
-/* 25. AR/VR */
-.domain-card.arvr.active { border-color: #cc00ff; background: rgba(204, 0, 255, 0.05); }
-.domain-panel.arvr { border-color: rgba(204, 0, 255, 0.3); --theme-accent: #cc00ff; }
+/* 25. Blockchain Technology */
+.blockchain { 
+  --theme-accent: #ffeb3b; 
+  --theme-bg: rgba(255, 235, 59, 0.05); 
+  --theme-hover-glow: rgba(255, 235, 59, 0.15); 
+}
 
-/* 26. Robotic Process Automation */
-.domain-card.rpa.active { border-color: #795548; background: rgba(121, 85, 72, 0.05); }
-.domain-panel.rpa { border-color: rgba(121, 85, 72, 0.3); --theme-accent: #795548; }
+/* 26. Quantum Computing */
+.quantum { 
+  --theme-accent: #e91e63; 
+  --theme-bg: rgba(233, 30, 99, 0.05); 
+  --theme-hover-glow: rgba(233, 30, 99, 0.15); 
+}
 
-/* 27. Assistive Technologies */
-.domain-card.assistive.active { border-color: #ab47bc; background: rgba(171, 71, 188, 0.05); }
-.domain-panel.assistive { border-color: rgba(171, 71, 188, 0.3); --theme-accent: #ab47bc; }
+/* 27. AR/VR */
+.arvr { 
+  --theme-accent: #cc00ff; 
+  --theme-bg: rgba(204, 0, 255, 0.05); 
+  --theme-hover-glow: rgba(204, 0, 255, 0.15); 
+}
 
-/* 28. FinTech & Banking Systems */
-.domain-card.fintech.active { border-color: #26a69a; background: rgba(38, 166, 154, 0.05); }
-.domain-panel.fintech { border-color: rgba(38, 166, 154, 0.3); --theme-accent: #26a69a; }
+/* 28. Robotic Process Automation */
+.rpa { 
+  --theme-accent: #795548; 
+  --theme-bg: rgba(121, 85, 72, 0.05); 
+  --theme-hover-glow: rgba(121, 85, 72, 0.15); 
+}
 
-/* 29. E-Government Systems */
-.domain-card.egov.active { border-color: #5c6bc0; background: rgba(92, 107, 192, 0.05); }
-.domain-panel.egov { border-color: rgba(92, 107, 192, 0.3); --theme-accent: #5c6bc0; }
+/* 29. Assistive Technologies */
+.assistive { 
+  --theme-accent: #ab47bc; 
+  --theme-bg: rgba(171, 71, 188, 0.05); 
+  --theme-hover-glow: rgba(171, 71, 188, 0.15); 
+}
 
-/* 30. Bioinformatics */
-.domain-card.bioinfo.active { border-color: #26c6da; background: rgba(38, 198, 218, 0.05); }
-.domain-panel.bioinfo { border-color: rgba(38, 198, 218, 0.3); --theme-accent: #26c6da; }
+/* 30. FinTech & Banking Systems */
+.fintech { 
+  --theme-accent: #26a69a; 
+  --theme-bg: rgba(38, 166, 154, 0.05); 
+  --theme-hover-glow: rgba(38, 166, 154, 0.15); 
+}
 
-/* 31. Social Network Analysis */
-.domain-card.social.active { border-color: #9ccc65; background: rgba(156, 204, 101, 0.05); }
-.domain-panel.social { border-color: rgba(156, 204, 101, 0.3); --theme-accent: #9ccc65; }
+/* 31. E-Government Systems */
+.egov { 
+  --theme-accent: #5c6bc0; 
+  --theme-bg: rgba(92, 107, 192, 0.05); 
+  --theme-hover-glow: rgba(92, 107, 192, 0.15); 
+}
 
-/* 32. Scientific Computing */
-.domain-card.scientific.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
-.domain-panel.scientific { border-color: rgba(255, 202, 40, 0.3); --theme-accent: #ffca28; }
+/* 32. Bioinformatics */
+.bioinfo { 
+  --theme-accent: #26c6da; 
+  --theme-bg: rgba(38, 198, 218, 0.05); 
+  --theme-hover-glow: rgba(38, 198, 218, 0.15); 
+}
 
-/* 33. Generative AI Prompt Engineering */
-.domain-card.prompt.active { border-color: #29b6f6; background: rgba(41, 182, 246, 0.05); }
-.domain-panel.prompt { border-color: rgba(41, 182, 246, 0.3); --theme-accent: #29b6f6; }
+/* 33. Computational Biology */
+.compbio { 
+  --theme-accent: #00e676; 
+  --theme-bg: rgba(0, 230, 118, 0.05); 
+  --theme-hover-glow: rgba(0, 230, 118, 0.15); 
+}
 
-/* 34. Large Language Models (LLMs) */
-.domain-card.llm.active { border-color: #7e57c2; background: rgba(126, 87, 194, 0.05); }
-.domain-panel.llm { border-color: rgba(126, 87, 194, 0.3); --theme-accent: #7e57c2; }
+/* 34. Social Network Analysis */
+.social { 
+  --theme-accent: #9ccc65; 
+  --theme-bg: rgba(156, 204, 101, 0.05); 
+  --theme-hover-glow: rgba(156, 204, 101, 0.15); 
+}
 
-/* 35. AI Ethics & Responsible AI */
-.domain-card.ethics.active { border-color: #ef5350; background: rgba(239, 83, 80, 0.05); }
-.domain-panel.ethics { border-color: rgba(239, 83, 80, 0.3); --theme-accent: #ef5350; }
+/* 35. Scientific Computing */
+.scientific { 
+  --theme-accent: #ffca28; 
+  --theme-bg: rgba(255, 202, 40, 0.05); 
+  --theme-hover-glow: rgba(255, 202, 40, 0.15); 
+}
 
-/* 36. Green Computing */
-.domain-card.green.active { border-color: #66bb6a; background: rgba(102, 187, 106, 0.05); }
-.domain-panel.green { border-color: rgba(102, 187, 106, 0.3); --theme-accent: #66bb6a; }
+/* 36. Generative AI Prompt Engineering */
+.prompt { 
+  --theme-accent: #29b6f6; 
+  --theme-bg: rgba(41, 182, 246, 0.05); 
+  --theme-hover-glow: rgba(41, 182, 246, 0.15); 
+}
 
-/* ─── Newly Appended Colors ─── */
+/* 37. Large Language Models (LLMs) */
+.llm { 
+  --theme-accent: #7e57c2; 
+  --theme-bg: rgba(126, 87, 194, 0.05); 
+  --theme-hover-glow: rgba(126, 87, 194, 0.15); 
+}
 
-/* Machine Learning Theme - Deep Indigo Blue */
-.domain-card.ml.active { border-color: #4f46e5; background: rgba(79, 70, 229, 0.05); }
-.domain-panel.ml { border-color: rgba(79, 70, 229, 0.3); --theme-accent: #4f46e5; }
+/* 38. AI Ethics & Responsible AI */
+.ethics { 
+  --theme-accent: #ef5350; 
+  --theme-bg: rgba(239, 83, 80, 0.05); 
+  --theme-hover-glow: rgba(239, 83, 80, 0.15); 
+}
 
-/* Web Development Theme - Vivid Cyan */
-.domain-card.web.active { border-color: #06b6d4; background: rgba(6, 182, 212, 0.05); }
-.domain-panel.web { border-color: rgba(6, 182, 212, 0.3); --theme-accent: #06b6d4; }
-
-/* Computational Biology Theme - Bright Bio-Genomic Green */
-.domain-card.compbio.active { border-color: #00e676; background: rgba(0, 230, 118, 0.05); }
-.domain-panel.compbio { border-color: rgba(0, 230, 118, 0.3); --theme-accent: #00e676; }
+/* 39. Green Computing */
+.green { 
+  --theme-accent: #66bb6a; 
+  --theme-bg: rgba(102, 187, 106, 0.05); 
+  --theme-hover-glow: rgba(102, 187, 106, 0.15); 
+}
 
 .domain-list {
   list-style: none;
