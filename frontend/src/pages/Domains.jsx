@@ -1,9 +1,9 @@
 import { memo, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DOMAINS } from '../data/domains';
-import './domains.css'; // Direct page-level stylesheet import
+import './domains.css';
 
-// Semantic Filter Track Metadata
+// Group structures mapped out precisely to match filter rules
 const CATEGORIES = [
   { id: 'all', label: 'All Domains' },
   { id: 'ai-ml', label: 'AI & Machine Learning' },
@@ -36,9 +36,9 @@ export default function Domains() {
   const [selected, setSelected] = useState('ai');
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState('apps'); // Sub-Panel Switcher: 'apps' or 'projects'
+  const [activeTab, setActiveTab] = useState('apps'); // Sub-tab state: 'apps' | 'projects'
 
-  // Map individual domain keys to categories
+  // Map individual domain keys to active category groupings
   const categoryMap = useMemo(() => ({
     'ai-ml': ['ai', 'nlp', 'dl', 'ml', 'cv', 'prompt', 'llm', 'ethics', 'datascience'],
     'security': ['crypto', 'cyber', 'forensics', 'malware', 'ids'],
@@ -46,7 +46,7 @@ export default function Domains() {
     'specialized': ['ip', 'dm', 'cloud', 'hci', 'iot', 'edge', 'quantum', 'arvr', 'rpa', 'assistive', 'fintech', 'egov', 'bioinfo', 'compbio', 'social', 'scientific', 'green']
   }), []);
 
-  // Multi-tier search and category calculation stream
+  // Filter pipeline execution
   const filteredDomains = useMemo(() => {
     return DOMAINS.filter((domain) => {
       const matchesSearch = domain.name.toLowerCase().includes(search.toLowerCase());
@@ -56,17 +56,17 @@ export default function Domains() {
     });
   }, [search, activeCategory, categoryMap]);
 
-  // Track the active single item preview context fallback
+  // Keep a selected item context visible even through filtering alterations
   const current = useMemo(() => {
     const found = DOMAINS.find((d) => d.id === selected);
     if (found && filteredDomains.some(d => d.id === selected)) return found;
-    return filteredDomains[0] || DOMAINS[0];
+    return filteredDomains[0] || null;
   }, [selected, filteredDomains]);
 
   return (
     <div className="page-container domain-explorer">
       
-      {/* Search Header Core */}
+      {/* Search Header Container */}
       <div className="domain-toolbar">
         <div className="domain-toolbar-content">
           <div className="domain-search">
@@ -84,7 +84,7 @@ export default function Domains() {
         </div>
       </div>
 
-      {/* Interactive Category Navigation Row */}
+      {/* Pill Filter Navigation Row */}
       <div className="category-filter-bar">
         {CATEGORIES.map((category) => (
           <button
@@ -93,7 +93,6 @@ export default function Domains() {
             className={`category-pill ${activeCategory === category.id ? 'active' : ''}`}
             onClick={() => {
               setActiveCategory(category.id);
-              // Auto-focus selection onto first item in target list to prevent empty layout view state
               const matches = DOMAINS.find(d => category.id === 'all' || (categoryMap[category.id] || []).includes(d.id));
               if (matches) setSelected(matches.id);
             }}
@@ -103,10 +102,10 @@ export default function Domains() {
         ))}
       </div>
 
-      {/* Main Structural Framework Layout */}
+      {/* Main Split Grid Layout Framework */}
       <div className="domain-grid-layout">
         
-        {/* Left Side: Domain Card Selection Column */}
+        {/* Card Picker Area */}
         <div className="domain-grid">
           {filteredDomains.map((domain) => (
             <DomainCard
@@ -119,17 +118,16 @@ export default function Domains() {
           
           {filteredDomains.length === 0 && (
             <div className="domain-empty-state">
-              <span>⚠️</span> No active domains match your search or category filter parameters.
+              <span>⚠️</span> No active domains match your current filter parameters.
             </div>
           )}
         </div>
 
-        {/* Right Side: Preview Detail Sheet Panel */}
+        {/* Dynamic Detail Panel Area */}
         {current && (
           <div className={`domain-panel ${current.colorClass || ''}`}>
             <div className="domain-panel-body">
               
-              {/* Profile Card Header Component */}
               <div className="domain-panel-header">
                 <div className="domain-panel-icon-box">
                   {current.icon}
@@ -144,7 +142,7 @@ export default function Domains() {
                 {current.fullDescription}
               </p>
 
-              {/* Functional Display Tab Segment Controls */}
+              {/* Sidebar Segment Tabs Switcher */}
               <div className="panel-tab-headers">
                 <button
                   type="button"
@@ -162,13 +160,14 @@ export default function Domains() {
                 </button>
               </div>
 
-              {/* Dynamic Sub-tab Track View Content */}
+              {/* Tab Display Area */}
               <div className="panel-tab-body-container">
                 {activeTab === 'apps' ? (
                   <div className="domain-panel-section fade-in-engine">
                     <div className="domain-apps-container">
                       {(current.applications || []).map((app) => (
                         <div className="domain-app-item" key={app}>
+                          <span className="app-dot"></span>
                           {app}
                         </div>
                       ))}
@@ -188,7 +187,7 @@ export default function Domains() {
                 )}
               </div>
 
-              {/* Confirm Global Value Trigger CTA */}
+              {/* Action Button */}
               <button 
                 className="btn btn-primary select-domain-btn"
                 onClick={() => navigate(`/projects/new?domain=${current.id}`)}
