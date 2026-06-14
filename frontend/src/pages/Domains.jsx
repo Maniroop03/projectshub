@@ -1,6 +1,9 @@
 import { memo, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DOMAINS } from '../data/domains';
+import './domains.css'; // Direct page-level stylesheet import
 
+// Semantic Filter Track Metadata
 const CATEGORIES = [
   { id: 'all', label: 'All Domains' },
   { id: 'ai-ml', label: 'AI & Machine Learning' },
@@ -16,7 +19,9 @@ const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
       className={`domain-card ${domain.colorClass || ''} ${active ? 'active' : ''}`}
       onClick={onSelect}
     >
-      <div className="domain-card-icon-wrapper">{domain.icon}</div>
+      <div className="domain-card-icon-wrapper">
+        {domain.icon}
+      </div>
       <div className="domain-card-text-wrapper">
         <h2>{domain.name}</h2>
         <p>{domain.shortDescription}</p>
@@ -26,12 +31,14 @@ const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
 });
 
 export default function Domains() {
+  const navigate = useNavigate();
+
   const [selected, setSelected] = useState('ai');
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState('apps'); // Switcher state: 'apps' or 'projects'
+  const [activeTab, setActiveTab] = useState('apps'); // Sub-Panel Switcher: 'apps' or 'projects'
 
-  // Semantic grouping map logic
+  // Map individual domain keys to categories
   const categoryMap = useMemo(() => ({
     'ai-ml': ['ai', 'nlp', 'dl', 'ml', 'cv', 'prompt', 'llm', 'ethics', 'datascience'],
     'security': ['crypto', 'cyber', 'forensics', 'malware', 'ids'],
@@ -39,24 +46,27 @@ export default function Domains() {
     'specialized': ['ip', 'dm', 'cloud', 'hci', 'iot', 'edge', 'quantum', 'arvr', 'rpa', 'assistive', 'fintech', 'egov', 'bioinfo', 'compbio', 'social', 'scientific', 'green']
   }), []);
 
-  // Filter pipeline combining categories & text search matching
+  // Multi-tier search and category calculation stream
   const filteredDomains = useMemo(() => {
     return DOMAINS.filter((domain) => {
       const matchesSearch = domain.name.toLowerCase().includes(search.toLowerCase());
       if (activeCategory === 'all') return matchesSearch;
-      const validIds = categoryMap[activeCategory] || [];
-      return validIds.includes(domain.id) && matchesSearch;
+      const explicitIds = categoryMap[activeCategory] || [];
+      return explicitIds.includes(domain.id) && matchesSearch;
     });
   }, [search, activeCategory, categoryMap]);
 
-  const current = useMemo(
-    () => DOMAINS.find((d) => d.id === selected) || filteredDomains[0] || DOMAINS[0],
-    [selected, filteredDomains]
-  );
+  // Track the active single item preview context fallback
+  const current = useMemo(() => {
+    const found = DOMAINS.find((d) => d.id === selected);
+    if (found && filteredDomains.some(d => d.id === selected)) return found;
+    return filteredDomains[0] || DOMAINS[0];
+  }, [selected, filteredDomains]);
 
   return (
     <div className="page-container domain-explorer">
-      {/* Search Toolbar */}
+      
+      {/* Search Header Core */}
       <div className="domain-toolbar">
         <div className="domain-toolbar-content">
           <div className="domain-search">
@@ -74,112 +84,121 @@ export default function Domains() {
         </div>
       </div>
 
-      {/* Idea 1: Smooth Pill Filter Categories */}
+      {/* Interactive Category Navigation Row */}
       <div className="category-filter-bar">
-        {CATEGORIES.map((cat) => (
+        {CATEGORIES.map((category) => (
           <button
-            key={cat.id}
+            key={category.id}
             type="button"
-            className={`category-pill ${activeCategory === cat.id ? 'active' : ''}`}
+            className={`category-pill ${activeCategory === category.id ? 'active' : ''}`}
             onClick={() => {
-              setActiveCategory(cat.id);
-              // Auto reset selection to first matching domain to prevent ghost panel look
-              const matching = DOMAINS.find(d => cat.id === 'all' || (categoryMap[cat.id] || []).includes(d.id));
-              if (matching) setSelected(matching.id);
+              setActiveCategory(category.id);
+              // Auto-focus selection onto first item in target list to prevent empty layout view state
+              const matches = DOMAINS.find(d => category.id === 'all' || (categoryMap[category.id] || []).includes(d.id));
+              if (matches) setSelected(matches.id);
             }}
           >
-            {cat.label}
+            {category.label}
           </button>
         ))}
       </div>
 
+      {/* Main Structural Framework Layout */}
       <div className="domain-grid-layout">
-        {/* Left Side Grid Track */}
+        
+        {/* Left Side: Domain Card Selection Column */}
         <div className="domain-grid">
           {filteredDomains.map((domain) => (
             <DomainCard
               key={domain.id}
               domain={domain}
-              active={selected === domain.id}
+              active={current?.id === domain.id}
               onSelect={() => setSelected(domain.id)}
             />
           ))}
+          
           {filteredDomains.length === 0 && (
             <div className="domain-empty-state">
-              <span>⚠️</span> No domains found matching your current filter criteria.
+              <span>⚠️</span> No active domains match your search or category filter parameters.
             </div>
           )}
         </div>
 
-        {/* Right Side Adaptive Detail Panel */}
-        <div className={`domain-panel ${current?.colorClass || ''}`}>
-          <div className="domain-panel-body">
-            
-            {/* Header Identity Core */}
-            <div className="domain-panel-header">
-              <div className="domain-panel-icon-box">
-                {current?.icon}
-              </div>
-              <div className="domain-panel-title-area">
-                <h3>{current?.name}</h3>
-                <p>{current?.shortDescription}</p>
-              </div>
-            </div>
-
-            <p className="domain-full-description">
-              {current?.fullDescription}
-            </p>
-
-            {/* Idea 3/4: Dynamic Tab Controls Switcher */}
-            <div className="panel-tab-headers">
-              <button
-                type="button"
-                className={`tab-toggle-btn ${activeTab === 'apps' ? 'active' : ''}`}
-                onClick={() => setActiveTab('apps')}
-              >
-                🔧 Applications
-              </button>
-              <button
-                type="button"
-                className={`tab-toggle-btn ${activeTab === 'projects' ? 'active' : ''}`}
-                onClick={() => setActiveTab('projects')}
-              >
-                💡 Sample Projects
-              </button>
-            </div>
-
-            {/* Dynamic Content Views */}
-            <div className="panel-tab-body-container">
-              {activeTab === 'apps' ? (
-                <div className="domain-panel-section fade-in-engine">
-                  <div className="domain-apps-container">
-                    {(current?.applications || []).map((app) => (
-                      <div className="domain-app-item" key={app}>
-                        {app}
-                      </div>
-                    ))}
-                  </div>
+        {/* Right Side: Preview Detail Sheet Panel */}
+        {current && (
+          <div className={`domain-panel ${current.colorClass || ''}`}>
+            <div className="domain-panel-body">
+              
+              {/* Profile Card Header Component */}
+              <div className="domain-panel-header">
+                <div className="domain-panel-icon-box">
+                  {current.icon}
                 </div>
-              ) : (
-                <div className="domain-panel-section fade-in-engine">
-                  <div className="domain-projects-container">
-                    {(current?.projects || []).map((project) => (
-                      <div className="domain-project-item" key={project}>
-                        <span className="project-bullet">✨</span>
-                        <span className="project-text">{project}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="domain-panel-title-area">
+                  <h3>{current.name}</h3>
+                  <p>{current.shortDescription}</p>
                 </div>
-              )}
-            </div>
+              </div>
 
-            {/* Premium CTA Activation Anchor */}
-            <button className="btn-primary select-domain-btn">
-              Select This Domain ➔
-            </button>
+              <p className="domain-full-description">
+                {current.fullDescription}
+              </p>
+
+              {/* Functional Display Tab Segment Controls */}
+              <div className="panel-tab-headers">
+                <button
+                  type="button"
+                  className={`tab-toggle-btn ${activeTab === 'apps' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('apps')}
+                >
+                  🔧 Applications
+                </button>
+                <button
+                  type="button"
+                  className={`tab-toggle-btn ${activeTab === 'projects' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('projects')}
+                >
+                  💡 Sample Projects
+                </button>
+              </div>
+
+              {/* Dynamic Sub-tab Track View Content */}
+              <div className="panel-tab-body-container">
+                {activeTab === 'apps' ? (
+                  <div className="domain-panel-section fade-in-engine">
+                    <div className="domain-apps-container">
+                      {(current.applications || []).map((app) => (
+                        <div className="domain-app-item" key={app}>
+                          {app}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="domain-panel-section fade-in-engine">
+                    <div className="domain-projects-container">
+                      {(current.projects || []).map((project) => (
+                        <div className="domain-project-item" key={project}>
+                          <span className="project-bullet">✨</span>
+                          <span className="project-text">{project}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Confirm Global Value Trigger CTA */}
+              <button 
+                className="btn btn-primary select-domain-btn"
+                onClick={() => navigate(`/projects/new?domain=${current.id}`)}
+              >
+                Select This Domain ➔
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
       </div>
     </div>
   );
