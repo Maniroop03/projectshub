@@ -75,58 +75,47 @@ export default function Domains() {
 
         <div className="domain-panel">
           <div className="domain-panel-body">
-            <div className="domain-panel-header">
-              <div className="domain-panel-icon">
-                {current.icon}
-              </div>
 
-              <div>
-                <h3>{current.name}</h3>
+  <div className="domain-panel-header">
+    <div className="domain-panel-icon">
+      {selected.icon}
+    </div>
 
-                <p>
-                  {current.shortDescription}
-                </p>
-              </div>
-            </div>
+    <div>
+      <h3>{selected.name}</h3>
+      <p>{selected.shortDescription}</p>
+    </div>
+  </div>
 
-            <p className="domain-full-description">
-              {current.fullDescription}
-            </p>
+  <p className="domain-full-description">
+    {selected.description}
+  </p>
 
-            <div className="domain-panel-section">
-              <h4>🔧 Applications</h4>
+  <div className="domain-panel-section">
+    <h4>🔧 Applications</h4>
 
-              <ul className="domain-list">
-                {current.applications.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+    {selected.applications.map(app => (
+      <div className="domain-app-item">
+        {app}
+      </div>
+    ))}
+  </div>
 
-            <div className="domain-panel-section">
-              <h4>💡 Sample Projects</h4>
+  <div className="domain-panel-section">
+    <h4>💡 Sample Projects</h4>
 
-              <ul className="domain-list">
-                {current.projects.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+    {selected.projects.map(project => (
+      <div className="domain-project-item">
+        💡 {project}
+      </div>
+    ))}
+  </div>
 
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() =>
-                navigate(
-                  `/projects/new?domain=${encodeURIComponent(
-                    current.name
-                  )}`
-                )
-              }
-            >
-              Select This Domain →
-            </button>
-          </div>
+  <button className="btn-primary">
+    Select This Domain →
+  </button>
+
+</div>
         </div>
       </div>
     </div>
