@@ -135,7 +135,7 @@ input, select, textarea { font-family: inherit; }
   justify-content: space-between;
   gap: 20px;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 20px auto 0 auto;
   box-sizing: border-box;
   align-items: flex-start;
@@ -235,9 +235,9 @@ input, select, textarea { font-family: inherit; }
 
 /* ─── INFO PANEL OVERHAUL  ─── */
 .domain-panel {
-  width: 420px;            /* Increased width  */
-  min-width: 420px;
-  max-width: 420px;
+  width: 370px;            /* Increased width  */
+  min-width: 370px;
+  max-width: 370px;
   align-self: stretch;     /* Stretches to perfectly match the grid height */
   
   background: var(--theme-panel-bg, #0c0c1e) !important;
@@ -253,12 +253,14 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel-body {
-  padding: 28px 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 22px;               /* Open, relaxed spacing */
+  gap: 18px;               /* Open, relaxed spacing */
   height: 100%;
   box-sizing: border-box;
+  max-height: calc(100vh - 80px); /* Ensures it never exceeds viewport height minus some margin */
+  overflow-y: auto;
 }
 
 /* Header Config */
@@ -327,7 +329,8 @@ input, select, textarea { font-family: inherit; }
 .domain-app-item {
   background: rgba(255, 255, 255, 0.02);
   border-left: 3px solid var(--theme-accent, #8b5cf6);
-  padding: 10px 14px;
+  padding: 8px 12px;
+  min-height: 40px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.75);
   border-radius: 0 8px 8px 0;
@@ -340,7 +343,7 @@ input, select, textarea { font-family: inherit; }
 .domain-projects-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .domain-project-item {
@@ -349,7 +352,7 @@ input, select, textarea { font-family: inherit; }
   align-items: flex-start;
   gap: 10px;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -361,12 +364,12 @@ input, select, textarea { font-family: inherit; }
 /* Select Button Style */
 .domain-panel .select-domain-btn {
   width: 100%;
-  height: 48px;
-  margin-top: auto;        /* Pushes flawlessly to the bottom boundary */
+  height: 56px;
+  margin-top: 12px;        /* Pushes flawlessly to the bottom boundary */
   background: var(--theme-accent, #8b5cf6) !important;
   color: #04040c !important;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
