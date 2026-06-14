@@ -93,8 +93,8 @@ input, select, textarea { font-family: inherit; }
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 12px 16px;
-  width: 100%;
-  max-width: 500px;
+  width: 620px;
+  max-width: 620px;
   height: 48px;
 }
 
@@ -118,7 +118,7 @@ input, select, textarea { font-family: inherit; }
 
 .domain-grid-layout {
   display: grid;
-  grid-template-columns:minmax(0,1fr) 390px;
+  grid-template-columns: 1fr 430px;
   gap: 28px;
   align-items: start;
 }
@@ -131,7 +131,7 @@ input, select, textarea { font-family: inherit; }
 
 
 .domain-card{
-  height:175px;
+  height: 182px;
   padding:20px;
   border-radius:22px;
 
@@ -185,6 +185,15 @@ input, select, textarea { font-family: inherit; }
   margin-bottom: 10px;
 }
 
+.domain-card h3,
+.domain-card h2 {
+  color: #ffffff !important;
+}
+
+.domain-card p {
+  color: rgba(255,255,255,0.45) !important;
+}
+
 .domain-card p {
   color: var(--text-secondary);
   font-size: 0.75rem;
@@ -196,9 +205,9 @@ input, select, textarea { font-family: inherit; }
   position: sticky;
   top: 20px;
 
-  width: 390px;
+  width: 430px ;
   max-width: none;
-  min-width: 390px;
+  min-width: 430px  ;
 
   border: 1px solid rgba(139, 92, 246, 0.25);
   background: rgba(18, 18, 35, 0.95);
@@ -207,14 +216,13 @@ input, select, textarea { font-family: inherit; }
 
   backdrop-filter: blur(18px);
   overflow: hidden;
-  min-height: 100%;
 }
 
 .domain-panel-body {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding: 32px;
+  padding: 36px;
 }
 
 .domain-panel-header {
@@ -290,7 +298,10 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel .btn-primary {
-  width: 100%;
+  height: 54px;
+  border-radius: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .domain-placeholder {
