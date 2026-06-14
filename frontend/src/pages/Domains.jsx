@@ -29,29 +29,41 @@ export default function Domains() {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('ai');
+  const [search, setSearch] = useState('');
 
   const current = useMemo(
     () => DOMAINS.find((d) => d.id === selected),
     [selected]
   );
+  const filteredDomains = DOMAINS.filter((domain) =>
+    domain.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="page-container domain-explorer">
-      <div className="page-header">
-        <h1 className="page-title">
-          Explore Domains
-        </h1>
 
-        <p className="page-subtitle">
-          Browse all available project domains below.
-          Click a domain to learn more, then select it
-          for your project.
-        </p>
-      </div>
+      <div className="domain-toolbar">
+  <div className="domain-toolbar-content">
+    <div className="domain-search">
+      <span className="domain-search-icon">🔍</span>
 
-      <div className="domain-grid-layout">
+      <input
+        type="text"
+        placeholder="Search domains..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+    </div>
+
+    <span className="domain-count">
+      {filteredDomains.length} domains
+    </span>
+  </div>
+</div>
+
+<div className="domain-grid-layout">
         <div className="domain-grid">
-          {DOMAINS.map((domain) => (
+          {filteredDomains.map((domain) => (
             <DomainCard
               key={domain.id}
               domain={domain}
