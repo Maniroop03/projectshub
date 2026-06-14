@@ -81,7 +81,7 @@ input, select, textarea { font-family: inherit; }
 .domain-toolbar-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 16px;
 }
 
@@ -97,9 +97,9 @@ input, select, textarea { font-family: inherit; }
 
   padding: 0 18px;
 
-  width: 540px;
-  max-width: 540px;
-  height: 44px;
+  width: 520px;
+  max-width: 520px;
+  height: 52px;
 }
 
 .domain-search-icon {
@@ -126,35 +126,37 @@ input, select, textarea { font-family: inherit; }
 
 .domain-grid-layout {
   display: grid;
-  grid-template-columns: 1fr 500px;
-  gap: 30px;
+  grid-template-columns: minmax(900px, 1fr) 470px;
+  gap: 28px;
   align-items: start;
 }
 
 .domain-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 } 
 
 
-.domain-card{
-  height: 162px;
-  padding:18px;
-  border-radius:22px;
+.domain-card {
+  height: 160px;
+  padding: 22px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(18,18,35,.95),
-      rgba(25,25,50,.95)
-    );
+  border-radius: 22px;
 
-  border:1px solid rgba(255,255,255,.08);
+  background: linear-gradient(
+    135deg,
+    rgba(18,18,35,.95),
+    rgba(25,25,50,.95)
+  );
+
+  border: 1px solid rgba(255,255,255,.08);
 }
 
 .domain-card:hover,
@@ -187,10 +189,10 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-card h2 {
-  font-size: 1rem;
-  line-height: 1.25;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: 8px;
+  line-height: 1.25;
+  text-align: left;
   color: #fff;
 }
 
@@ -204,28 +206,23 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-card p {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  line-height: 1.5;
-  max-width: none;
+  text-align: left;
+  color: rgba(255,255,255,.42);
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .domain-panel {
-  position: sticky;
-  top: 24px;
+  width: 470px;
+  min-width: 470px;
 
-  width: 500px;
-  min-width: 500px;
+  border-radius: 24px;
 
   background: #121229;
-  border: 1px solid rgba(139,92,246,.35);
 
-  border-radius: 26px;
+  border: 1px solid rgba(139,92,246,.32);
 
   overflow: hidden;
-  backdrop-filter: blur(18px);
-
-  height: fit-content;
 }
 
 .domain-panel-body {
