@@ -94,21 +94,21 @@ export default function Domains() {
   <div className="domain-panel-section">
     <h4>🔧 Applications</h4>
 
-    {selected.applications.map(app => (
-      <div className="domain-app-item">
-        {app}
-      </div>
-    ))}
+    {(selected.applications || []).map(app => (
+  <div className="domain-app-item" key={app}>
+    {app}
+  </div>
+))}
   </div>
 
   <div className="domain-panel-section">
     <h4>💡 Sample Projects</h4>
 
-    {selected.projects.map(project => (
-      <div className="domain-project-item">
-        💡 {project}
-      </div>
-    ))}
+    {(selected.projects || []).map(project => (
+  <div className="domain-project-item" key={project}>
+    {project}
+  </div>
+))}
   </div>
 
   <button className="btn-primary">
