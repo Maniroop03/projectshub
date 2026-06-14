@@ -1,5 +1,21 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { DOMAINS } from '../data/domains';
+
+const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
+  return (
+    <button
+      type="button"
+      className={`domain-card ${domain.colorClass || ''} ${active ? 'active' : ''}`}
+      onClick={onSelect}
+    >
+      <div className="domain-card-icon">{domain.icon}</div>
+      <div>
+        <h2>{domain.name}</h2>
+        <p>{domain.shortDescription}</p>
+      </div>
+    </button>
+  );
+});
 
 export default function Domains() {
   const [selected, setSelected] = useState('ai');
@@ -27,51 +43,34 @@ export default function Domains() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <span className="domain-count">
-            {filteredDomains.length} domains
-          </span>
+          <span className="domain-count">{filteredDomains.length} domains</span>
         </div>
       </div>
 
       <div className="domain-grid-layout">
         <div className="domain-grid">
-          {filteredDomains.map((domain) => {
-            const isActive = selected === domain.id;
-            return (
-              <button
-                key={domain.id}
-                type="button"
-                className={`domain-card ${domain.colorClass} ${isActive ? 'active' : ''}`}
-                onClick={() => setSelected(domain.id)}
-              >
-                <div className="domain-card-icon-wrapper">
-                  {domain.icon}
-                </div>
-                <div className="domain-card-text-wrapper">
-                  <h2>{domain.name}</h2>
-                  <p>{domain.shortDescription}</p>
-                </div>
-              </button>
-            );
-          })}
+          {filteredDomains.map((domain) => (
+            <DomainCard
+              key={domain.id}
+              domain={domain}
+              active={selected === domain.id}
+              onSelect={() => setSelected(domain.id)}
+            />
+          ))}
         </div>
 
-        {/* This class setup transforms the layout block to shift colors globally */}
-        <div className={`domain-panel ${current?.colorClass}`}>
+        {/* The active colorClass here switches the whole background instantly */}
+        <div className={`domain-panel ${current?.colorClass || ''}`}>
           <div className="domain-panel-body">
             <div className="domain-panel-header">
-              <div className="domain-panel-icon-box">
-                {current?.icon}
-              </div>
-              <div className="domain-panel-title-area">
+              <div className="domain-panel-icon">{current?.icon}</div>
+              <div>
                 <h3>{current?.name}</h3>
                 <p>{current?.shortDescription}</p>
               </div>
             </div>
 
-            <p className="domain-full-description">
-              {current?.fullDescription}
-            </p>
+            <p className="domain-full-description">{current?.fullDescription}</p>
 
             <div className="domain-panel-section">
               <h4>🔧 Applications</h4>
@@ -96,7 +95,7 @@ export default function Domains() {
               </div>
             </div>
 
-            <button className="btn-primary select-domain-btn">
+            <button type="button" className="select-domain-btn">
               Select This Domain ➔
             </button>
           </div>
