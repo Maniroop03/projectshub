@@ -203,63 +203,71 @@ input, select, textarea { font-family: inherit; }
 
 .domain-panel {
   position: sticky;
-  top: 20px;
+  top: 28px;
 
-  width: 430px ;
-  max-width: none;
-  min-width: 430px  ;
+  width: 460px;
+  min-width: 460px;
 
-  border: 1px solid rgba(139, 92, 246, 0.25);
-  background: rgba(18, 18, 35, 0.95);
+  background: #121229;
+  border: 1px solid rgba(139,92,246,.35);
 
-  border-radius: 24px;
+  border-radius: 26px;
 
-  backdrop-filter: blur(18px);
   overflow: hidden;
+  backdrop-filter: blur(18px);
+
+  height: fit-content;
 }
 
 .domain-panel-body {
+  padding: 28px 28px 32px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 36px;
+  gap: 22px;
 }
 
 .domain-panel-header {
   display: flex;
-  gap: 18px;
   align-items: flex-start;
+  gap: 18px;
 }
 
 .domain-panel-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: rgba(245, 166, 35, 0.16);
-  display: inline-flex;
+  width: 78px;
+  height: 78px;
+  min-width: 78px;
+
+  border-radius: 22px;
+
+  background: rgba(139,92,246,.18);
+
+  display: flex;
   align-items: center;
   justify-content: center;
-  color: #facc15;
-  font-size: 1.5rem;
+
+  font-size: 2rem;
 }
 
 .domain-panel-header h3 {
   margin: 0;
-  font-size: 1.2rem;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.25;
   font-weight: 700;
 }
 
 .domain-panel-header p {
-  margin: 8px 0 0;
-  color: var(--text-secondary);
-  line-height: 1.75;
-  max-width: 560px;
+  margin-top: 6px;
+  color: rgba(255,255,255,.35);
+  font-size: .9rem;
+  line-height: 1.5;
 }
 
 .domain-full-description {
+  color: rgba(255,255,255,.82);
+  font-size: 1rem;
+  line-height: 1.75;
   margin: 0;
-  color: var(--text-secondary);
-  line-height: 1.8;
 }
 
 .domain-panel-section {
@@ -268,8 +276,44 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel-section h4 {
-  margin: 0;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.domain-panel-section h4::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,.12);
+}
+
+.domain-app-item {
+  background: rgba(255,255,255,.04);
+
+  border-left: 4px solid #8b5cf6;
+
+  border-radius: 0 8px 8px 0;
+
+  padding: 10px 14px;
+
+  color: rgba(255,255,255,.72);
+
+  font-size: .95rem;
+}
+
+.domain-project-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255,255,255,.72);
+
+  font-size: .95rem;
 }
 
 .domain-list {
@@ -298,10 +342,22 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel .btn-primary {
-  height: 54px;
+  margin-top: 8px;
+
+  height: 62px;
+
+  width: 100%;
+
   border-radius: 14px;
-  font-size: 1.05rem;
+
+  font-size: 1.1rem;
   font-weight: 700;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #a855f7
+  );
 }
 
 .domain-placeholder {
