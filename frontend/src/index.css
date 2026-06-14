@@ -126,15 +126,15 @@ input, select, textarea { font-family: inherit; }
 
 .domain-grid-layout {
   display: grid;
-  grid-template-columns: minmax(900px, 1fr) 470px;
-  gap: 28px;
+  grid-template-columns: minmax(700px, 820px) 560px;
+  gap: 32px;
   align-items: start;
 }
 
 .domain-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(210px, 1fr));
+  gap: 16px;
 } 
 
 
@@ -213,23 +213,25 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel {
-  width: 470px;
-  min-width: 470px;
+  width: 560px;
+  min-width: 560px;
+  max-width: 560px;
 
   border-radius: 24px;
-
   background: #121229;
+  border: 1px solid rgba(139,92,246,.28);
 
-  border: 1px solid rgba(139,92,246,.32);
+  position: sticky;
+  top: 24px;
 
   overflow: hidden;
 }
 
 .domain-panel-body {
-  padding: 24px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .domain-panel-header {
@@ -271,8 +273,8 @@ input, select, textarea { font-family: inherit; }
 
 .domain-full-description {
   color: rgba(255,255,255,.82);
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 0.95rem;
+  line-height: 1.6;
   margin: 0;
 }
 
@@ -305,9 +307,9 @@ input, select, textarea { font-family: inherit; }
 
   border-radius: 0 8px 8px 0;
 
-  padding: 8px 12px;
+  padding: 6px 12px;
 
-  min-height: 38px;
+  min-height: 32px;
 
   color: rgba(255,255,255,.72);
 
@@ -321,8 +323,8 @@ input, select, textarea { font-family: inherit; }
 
   color: rgba(255,255,255,.72);
 
-  font-size: .9rem;
-  line-height: 1.3;
+  font-size: .88rem;
+  line-height: 1.15;
 }
 
 .domain-list {
@@ -351,12 +353,12 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel .btn-primary {
-  margin-top: 8px;
+  margin-top: 4px;
 
   width: 100%;
-  height: 54px;
+  height: 46px;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   font-size: 1rem;
   font-weight: 700;
