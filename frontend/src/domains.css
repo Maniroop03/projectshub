@@ -1,39 +1,43 @@
 /* ==========================================================================
-   DOMAINS EXPLORER PAGE STYLES
+   DOMAINS EXPLORER PAGE STYLES (MODERNIZED WITH PILLS, TABS & ADAPTIVE SHEET Layout)
    ========================================================================== */
 
-/* ─── Search Toolbar & Infrastructure ─── */
+/* ─── Search & Toolbar Track ─── */
 .domain-explorer .domain-toolbar {
-  padding: 18px 24px;
+  padding: 16px 4px;
+  margin-bottom: 8px;
 }
 
 .domain-toolbar-content {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 16px;
 }
 
 .domain-search {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 0 18px;
-  width: 520px;
-  max-width: 520px;
-  height: 52px;
+  border-radius: 12px;
+  padding: 0 16px;
+  width: 420px;
+  max-width: 100%;
+  height: 46px;
+  transition: all 0.2s ease;
+}
+
+.domain-search:focus-within {
+  border-color: var(--accent-purple, #8b5cf6);
+  background: rgba(139, 92, 246, 0.04);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
 .domain-search-icon {
-  color: var(--accent-purple);
-  font-size: 1rem;
-}
-
-.domain-search-icon .domain-search input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.95rem;
 }
 
 .domain-search input {
@@ -41,33 +45,42 @@
   border: none;
   outline: none;
   width: 100%;
-  color: var(--text-primary);
+  color: var(--text-primary, #f1f5f9);
+  font-size: 0.92rem;
+}
+
+.domain-search input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .domain-count {
-  color: var(--text-muted);
-  font-weight: 600;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ─── Category Navigation Pills (Idea 1) ─── */
+/* ─── Idea 1: Smart Horizontal Filter Pills ─── */
 .category-filter-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  max-width: 1600px;
-  margin: 16px auto 8px auto;
-  padding: 0 4px;
+  margin: 8px 0 24px 0;
+  padding: 0 2px;
   box-sizing: border-box;
 }
 
 .category-pill {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.55);
-  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 8px 16px;
   border-radius: 100px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -75,188 +88,182 @@
 
 .category-pill:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
   color: #ffffff;
 }
 
 .category-pill.active {
-  background: rgba(139, 92, 246, 0.12);
-  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--accent-purple, #8b5cf6);
   color: #c084fc;
-  box-shadow: 0 0 16px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
 }
 
-/* ─── Layout Structuring Grid Track ─── */
+/* ─── Layout Master-Detail Split Grid ─── */
 .domain-grid-layout {
-  display: grid;
-  grid-template-columns: 920px 620px; /* Reference page exact distribution specs */
-  gap: 30px;
+  display: flex;
+  gap: 24px;
   align-items: start;
-  margin-top: 10px;
+  width: 100%;
 }
 
 .domain-grid {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
 }
 
-/* ─── Left Column Cards & Interactive Hover Metrics (Idea 3) ─── */
+/* ─── Left Side: Domain Select Cards (Idea 3 Elevate) ─── */
 .domain-card {
-  height: 146px;
-  padding: 24px 22px;
+  background: var(--bg-card, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius, 14px);
+  padding: 20px;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
+  gap: 14px;
   text-align: left;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(18, 18, 35, 0.95), rgba(25, 25, 50, 0.95));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
-              border-color 0.2s ease, 
-              box-shadow 0.2s ease;
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              background 0.2s ease;
 }
 
-.domain-card:hover:not(.active) {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.domain-card.active {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 12px 40px rgba(139, 92, 246, 0.15);
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.05));
-}
-
-.domain-card-icon-wrapper,
-.domain-card-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  display: inline-flex;
+.domain-card-icon-wrapper {
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  font-size: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.domain-card h2,
-.domain-card h3 {
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.35;
-  letter-spacing: -0.2px;
-  margin-bottom: 10px;
-  text-align: left;
-  color: #ffffff !important;
+.domain-card-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.domain-card h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary, #f1f5f9);
+  margin: 0;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .domain-card p {
-  text-align: left;
-  color: rgba(255, 255, 255, 0.42) !important;
-  font-size: 13px;
-  line-height: 1.55;
-  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* ─── Right Column Preview Side-Panel ─── */
+/* Base Card Interaction States */
+.domain-card:hover:not(.active) {
+  transform: translateY(-2px);
+  background: var(--bg-card-hover, rgba(255, 255, 255, 0.07));
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-glass, 0 8px 32px rgba(0, 0, 0, 0.3));
+}
+
+.domain-card.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(99, 102, 241, 0.03));
+  border-color: var(--accent-purple, #8b5cf6);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+}
+
+/* ─── Right Side: Preview Detail Sidebar ─── */
 .domain-panel {
-  width: 620px;
-  min-width: 620px;
-  max-width: 620px;
-  border-radius: 24px;
-  background: #121229;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 440px;
+  min-width: 440px;
+  max-width: 440px;
+  background: var(--bg-secondary, #12122b);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius, 14px);
   position: sticky;
-  top: 24px;
+  top: 90px; /* Aligns comfortably underneath the sticky topbar navigation */
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-glass, 0 8px 32px rgba(0, 0, 0, 0.3));
 }
 
 .domain-panel-body {
-  padding: 34px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 20px;
 }
 
 .domain-panel-header {
   display: flex;
-  align-items: flex-start;
-  gap: 22px;
+  align-items: center;
+  gap: 16px;
 }
 
-.domain-panel-icon,
 .domain-panel-icon-box {
-  width: 84px;
-  height: 84px;
-  min-width: 84px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.04);
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.domain-panel-header h3 {
-  margin: 0;
-  color: #ffffff;
-  font-size: 1.5rem;
-  line-height: 1.3;
+.domain-panel-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.domain-panel-title-area h3 {
+  font-size: 1.25rem;
   font-weight: 700;
+  color: var(--text-primary, #f1f5f9);
+  margin: 0;
+  line-height: 1.2;
 }
 
-.domain-panel-header p,
 .domain-panel-title-area p {
-  margin-top: 4px;
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0;
+  line-height: 1.3;
 }
 
 .domain-full-description {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 15px;
-  line-height: 1.65;
-  margin: 0;
-}
-
-.domain-panel-section {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.domain-panel-section h4 {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   font-size: 0.9rem;
-  font-weight: 700;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: rgba(241, 245, 249, 0.75);
+  line-height: 1.6;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
-.domain-panel-section h4::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, .12);
-}
-
-/* ─── Tab-Switcher Controllers (Idea 3/4) ─── */
+/* ─── Idea 3/4: Segregated Inner Sidebar Interactive View Tabs ─── */
 .panel-tab-headers {
   display: flex;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 4px;
   border-radius: 10px;
@@ -267,12 +274,16 @@
   flex: 1;
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.45);
-  padding: 10px 0;
-  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 9px 0;
+  font-size: 0.85rem;
   font-weight: 600;
   border-radius: 7px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   transition: all 0.15s ease-in-out;
 }
 
@@ -283,15 +294,19 @@
 
 .tab-toggle-btn.active {
   background: var(--theme-accent, #8b5cf6);
-  color: #050510;
+  color: #0d0d1a;
 }
 
 .panel-tab-body-container {
-  min-height: 250px;
+  min-height: 180px;
+}
+
+.domain-panel-section {
+  width: 100%;
 }
 
 .fade-in-engine {
-  animation: tabFadeIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: tabFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes tabFadeIn {
@@ -299,339 +314,187 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Applications Sub-Elements ─── */
+/* Applications Inner Elements Styling */
 .domain-apps-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .domain-app-item {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 4px solid var(--panel-accent-color, #8b5cf6);
-  border-radius: 0 10px 10px 0;
-  padding: 14px 18px;
-  min-height: 48px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--theme-accent, #8b5cf6);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 14.5px;
+  color: var(--text-primary, #f1f5f9);
+  font-size: 0.88rem;
   font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-left: none; /* Fallback override */
 }
 
-/* ─── Projects Sub-Elements ─── */
+/* Projects Inner Elements Styling */
 .domain-projects-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .domain-project-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.01);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .domain-project-item .project-bullet {
-  color: #06b6d4;
-  font-size: 1.1rem;
-  line-height: 1.4;
-  text-shadow: 0 0 8px var(--theme-accent, #06b6d4);
+  color: var(--theme-accent, #8b5cf6);
+  font-size: 0.9rem;
+  line-height: 1.2;
+  text-shadow: 0 0 6px var(--theme-accent, #8b5cf6);
 }
 
 .domain-project-item .project-text {
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 14.5px;
-  line-height: 1.5;
-  font-weight: 400;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-weight: 500;
 }
 
-/* ─── Activation Interaction Button ─── */
-.domain-panel .select-domain-btn,
-.domain-panel .btn-primary {
+/* Bottom Action Sub-Anchor Activation button */
+.select-domain-btn {
   width: 100%;
-  height: 54px;
-  margin-top: 12px;
-  border-radius: 14px;
-  font-size: 1rem;
+  height: 46px;
+  border-radius: 10px;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: #ffffff;
-  background: var(--panel-btn-gradient, linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%));
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.2s;
-}
-
-.domain-panel .select-domain-btn:hover,
-.domain-panel .btn-primary:hover {
-  opacity: 0.9;
-}
-
-/* ─── Fallback Lists ─── */
-.domain-list {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 14px;
-  display: grid;
-  gap: 10px;
-}
-
-.domain-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.8;
-}
-
-.domain-list li::before {
-  content: '•';
-  color: var(--accent-cyan);
-  font-size: 1rem;
-  line-height: 1.2;
   margin-top: 4px;
 }
 
-/* ─── Placeholders & Empty States ─── */
-.domain-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 18px;
-  min-height: 540px;
-  color: var(--text-secondary);
-}
-
-.domain-placeholder-icon {
-  width: 92px;
-  height: 92px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 24px;
-  background: rgba(245, 166, 35, 0.2);
-  color: #facc15;
-  font-size: 2rem;
-}
-
-.domain-placeholder h3 {
-  font-size: 1.05rem;
-  color: var(--text-primary);
-  line-height: 1.6;
-  max-width: 320px;
-  margin: 0;
-}
-
-.domain-placeholder p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.domain-empty-message,
+/* Empty State Filters Look */
 .domain-empty-state {
   grid-column: 1 / -1;
-  padding: 40px;
+  padding: 48px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 14px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius, 14px);
+  color: var(--text-secondary, #94a3b8);
+  font-size: 0.88rem;
 }
-
-/* ==========================================================================
-   DYNAMIC SEMANTIC COLORED THEMES
-   ========================================================================== */
-
-/* 1. AI Theme */
-.domain-card.ai:hover, .domain-card.ai.active {
-  border-color: #8b5cf6;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(99, 102, 241, 0.03));
-}
-.domain-panel.ai {
-  border-color: rgba(139, 92, 246, 0.4);
-  --panel-accent-color: #8b5cf6;
-  --theme-accent: #8b5cf6;
-  --panel-btn-gradient: linear-gradient(90deg, #8b5cf6, #6366f1);
-}
-.domain-card.ai.active .domain-card-icon-wrapper, .domain-panel.ai .domain-panel-icon-box { background: rgba(139, 92, 246, 0.2); }
-
-/* 2. NLP Theme */
-.domain-card.nlp:hover, .domain-card.nlp.active {
-  border-color: #a855f7;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(139, 92, 246, 0.03));
-}
-.domain-panel.nlp {
-  border-color: rgba(168, 85, 247, 0.4);
-  --panel-accent-color: #a855f7;
-  --theme-accent: #a855f7;
-}
-.domain-card.nlp.active .domain-card-icon-wrapper, .domain-panel.nlp .domain-panel-icon-box { background: rgba(168, 85, 247, 0.2); }
-
-/* 3. Deep Learning Theme */
-.domain-card.dl:hover, .domain-card.dl.active {
-  border-color: #ec4899;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(168, 85, 247, 0.03));
-}
-.domain-panel.dl {
-  border-color: rgba(236, 72, 153, 0.4);
-  --panel-accent-color: #ec4899;
-  --theme-accent: #ec4899;
-}
-.domain-card.dl.active .domain-card-icon-wrapper, .domain-panel.dl .domain-panel-icon-box { background: rgba(236, 72, 153, 0.2); }
-
-/* 4. Machine Learning Theme */
-.domain-card.ml:hover, .domain-card.ml.active {
-  border-color: #4f46e5;
-  background: rgba(79, 70, 229, 0.05);
-}
-.domain-panel.ml {
-  border-color: rgba(79, 70, 229, 0.3);
-  --panel-accent-color: #4f46e5;
-  --theme-accent: #4f46e5;
-}
-.domain-card.ml.active .domain-card-icon-wrapper, .domain-panel.ml .domain-panel-icon-box { background: rgba(99, 102, 241, 0.2); }
-
-/* 5. Web Development Theme */
-.domain-card.web:hover, .domain-card.web.active {
-  border-color: #06b6d4;
-  background: rgba(6, 182, 212, 0.05);
-}
-.domain-panel.web {
-  border-color: rgba(6, 182, 212, 0.3);
-  --panel-accent-color: #06b6d4;
-  --theme-accent: #06b6d4;
-  --panel-btn-gradient: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
-}
-.domain-card.web.active .domain-card-icon-wrapper, .domain-panel.web .domain-panel-icon-box {
-  background: rgba(6, 182, 212, 0.2);
-  color: #06b6d4;
-}
-
-/* 6. Computational Biology Theme */
-.domain-card.compbio:hover, .domain-card.compbio.active {
-  border-color: #00e676;
-  background: rgba(0, 230, 118, 0.05);
-}
-.domain-panel.compbio {
-  border-color: rgba(0, 230, 118, 0.3);
-  --panel-accent-color: #00e676;
-  --theme-accent: #00e676;
-}
-.domain-card.compbio.active .domain-card-icon-wrapper, .domain-panel.compbio .domain-panel-icon-box { background: rgba(0, 230, 118, 0.2); }
-
-/* 7. Computer Vision Theme */
-.domain-card.cv:hover, .domain-card.cv.active {
-  border-color: #3b82f6;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(6, 182, 212, 0.03));
-}
-.domain-panel.cv {
-  border-color: rgba(59, 130, 246, 0.4);
-  --panel-accent-color: #3b82f6;
-  --theme-accent: #3b82f6;
-}
-.domain-card.cv.active .domain-card-icon-wrapper, .domain-panel.cv .domain-panel-icon-box { background: rgba(59, 130, 246, 0.2); }
-
-/* 8. Image Processing Theme */
-.domain-card.ip:hover, .domain-card.ip.active {
-  border-color: #10b981;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.03));
-}
-.domain-panel.ip {
-  border-color: rgba(16, 185, 129, 0.4);
-  --panel-accent-color: #10b981;
-  --theme-accent: #10b981;
-}
-.domain-card.ip.active .domain-card-icon-wrapper, .domain-panel.ip .domain-panel-icon-box { background: rgba(16, 185, 129, 0.2); }
-
-/* 9. Data Mining Theme */
-.domain-card.dm:hover, .domain-card.dm.active {
-  border-color: #f59e0b;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(239, 68, 68, 0.03));
-}
-.domain-panel.dm {
-  border-color: rgba(245, 158, 11, 0.4);
-  --panel-accent-color: #f59e0b;
-  --theme-accent: #f59e0b;
-}
-.domain-card.dm.active .domain-card-icon-wrapper, .domain-panel.dm .domain-panel-icon-box { background: rgba(245, 158, 11, 0.2); }
-
-/* 10. Cryptography Security Theme */
-.domain-card.crypto:hover, .domain-card.crypto.active {
-  border-color: #ef4444;
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(245, 158, 11, 0.03));
-}
-.domain-panel.crypto {
-  border-color: rgba(239, 68, 68, 0.4);
-  --panel-accent-color: #ef4444;
-  --theme-accent: #ef4444;
-  --panel-btn-gradient: linear-gradient(90deg, #ef4444, #f59e0b);
-}
-.domain-card.crypto.active .domain-card-icon-wrapper, .domain-panel.crypto .domain-panel-icon-box { background: rgba(239, 68, 68, 0.2); }
 
 
 /* ==========================================================================
-   RESPONSIVE BREAKPOINT INTERFACES (Idea 5)
+   DYNAMIC COLOR CLASSES OVERRIDES (MATCHING DESIGN REFERENCE SPECS)
    ========================================================================== */
 
-@media (max-width: 1200px) {
-  .domain-grid-layout {
-    gap: 16px;
-  }
+/* 1. Artificial Intelligence */
+.domain-card.ai.active { border-color: #8b5cf6; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent); }
+.domain-panel.ai { border-color: rgba(139, 92, 246, 0.25); --theme-accent: #8b5cf6; }
+
+/* 2. Natural Language Processing */
+.domain-card.nlp.active { border-color: #a855f7; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent); }
+.domain-panel.nlp { border-color: rgba(168, 85, 247, 0.25); --theme-accent: #a855f7; }
+
+/* 3. Deep Learning */
+.domain-card.dl.active { border-color: #ec4899; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent); }
+.domain-panel.dl { border-color: rgba(236, 72, 153, 0.25); --theme-accent: #ec4899; }
+
+/* 4. Machine Learning */
+.domain-card.ml.active { border-color: #4f46e5; background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), transparent); }
+.domain-panel.ml { border-color: rgba(79, 70, 229, 0.25); --theme-accent: #4f46e5; }
+
+/* 5. Web Development */
+.domain-card.web.active { border-color: #06b6d4; background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), transparent); }
+.domain-panel.web { border-color: rgba(6, 182, 212, 0.25); --theme-accent: #06b6d4; }
+
+/* 6. Computational Biology */
+.domain-card.compbio.active { border-color: #00e676; background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), transparent); }
+.domain-panel.compbio { border-color: rgba(0, 230, 118, 0.25); --theme-accent: #00e676; }
+
+/* 7. Computer Vision */
+.domain-card.cv.active { border-color: #3b82f6; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent); }
+.domain-panel.cv { border-color: rgba(59, 130, 246, 0.25); --theme-accent: #3b82f6; }
+
+/* 8. Image Processing */
+.domain-card.ip.active { border-color: #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent); }
+.domain-panel.ip { border-color: rgba(16, 185, 129, 0.25); --theme-accent: #10b981; }
+
+/* 9. Data Mining */
+.domain-card.dm.active { border-color: #f59e0b; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), transparent); }
+.domain-panel.dm { border-color: rgba(245, 158, 11, 0.25); --theme-accent: #f59e0b; }
+
+/* 10. Cryptography & Security */
+.domain-card.crypto.active { border-color: #ef4444; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), transparent); }
+.domain-panel.crypto { border-color: rgba(239, 68, 68, 0.25); --theme-accent: #ef4444; }
+
+
+/* ==========================================================================
+   Idea 5: RESPONSIVE MEDIA BREAKPOINTS (COLLAPSIBLE SHEET MECHANICS)
+   ========================================================================== */
+
+@media (max-width: 1280px) {
   .domain-panel {
     width: 360px;
     min-width: 360px;
     max-width: 360px;
   }
-  .domain-grid {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1024px) {
+  /* Side panel slides down to form a cohesive horizontal workflow below the grid selection track */
   .domain-grid-layout {
-    grid-template-columns: 1fr;
     flex-direction: column-reverse;
+    gap: 20px;
   }
+
   .domain-panel {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
     position: relative;
     top: 0;
-    margin-bottom: 12px;
+  }
+
+  .panel-tab-body-container {
+    min-height: auto; /* Drops unnecessary empty space reserves on tablets */
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .domain-toolbar-content {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
-  .domain-grid {
-    grid-template-columns: repeat(2, minmax(240px, 1fr));
-  }
-}
 
-@media (max-width: 580px) {
-  .domain-grid {
-    grid-template-columns: 1fr;
+  .domain-search {
+    width: 100%;
   }
+
+  .domain-count {
+    align-self: flex-start;
+  }
+
   .category-filter-bar {
     gap: 6px;
   }
+
   .category-pill {
     padding: 6px 12px;
     font-size: 12.5px;
   }
+
+  .domain-grid {
+    grid-template-columns: 1fr; /* Stack elements cleanly on smartphone screens */
+  }
+
   .domain-panel-body {
-    padding: 22px 18px;
+    padding: 20px 16px;
   }
 }
