@@ -61,8 +61,8 @@ export default function Domains() {
   <div className="domain-panel-body">
     
     <div className="domain-panel-header">
-      <div className="domain-panel-icon">{current?.icon}</div>
-      <div>
+      <div className="domain-panel-icon-box">{current?.icon}</div>
+      <div className="domain-panel-title-area">
         <h3>{current?.name}</h3>
         <p>{current?.shortDescription}</p>
       </div>
