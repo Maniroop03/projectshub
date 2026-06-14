@@ -125,32 +125,56 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-grid-layout {
-  display: grid;
-  grid-template-columns: 920px 620px; /* Forces reference page exact distribution values */
-  gap: 30px;
-  align-items: start;
-  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 24px auto 0 auto;
+  box-sizing: border-box;
 }
 
 .domain-grid {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px;
+  align-content: start;
 } 
 
 
 .domain-card {
-  height: 146px;
-  padding: 24px 22px;
+  height: 154px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
   text-align: left;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(18,18,35,0.95), rgba(25,25,50,0.95));
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.domain-card-icon-wrapper {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+
+.domain-card-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
 }
 
 .domain-card:hover,
@@ -183,13 +207,11 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-card h2 {
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.35;
-  letter-spacing: -0.2px;
-  margin-bottom: 10px;
-  text-align: left;
+  font-size: 15.5px;
+  font-weight: 600;
   color: #ffffff !important;
+  margin: 0;
+  line-height: 1.3;
 }
 
 .domain-card h3,
@@ -202,28 +224,32 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-card p {
-  text-align: left;
-  color: rgba(255,255,255,0.42) !important;
   font-size: 13px;
-  line-height: 1.55;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.42) !important;
+  margin: 0;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .domain-panel {
-  width: 620px;
-  min-width: 620px;
-  max-width: 620px;
-  border-radius: 24px;
-  background: #121229;
-  border: 1px solid rgba(255,255,255,0.08);
+  width: 440px;
+  min-width: 440px;
+  max-width: 440px;
+  background: #0d0d1f;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  box-sizing: border-box;
   position: sticky;
-  top: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  top: 30px;
+  align-self: start;
 }
 
 .domain-panel-body {
-  padding: 34px;
+  padding: 30px 26px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -231,118 +257,85 @@ input, select, textarea { font-family: inherit; }
 
 .domain-panel-header {
   display: flex;
-  align-items: flex-start;
-  gap: 22px;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
 }
 
-.domain-panel-icon {
-  width: 84px;
-  height: 84px;
-  min-width: 84px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.04);
+.domain-panel-icon-box {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
 }
 
-.domain-panel-header h3 {
-  margin: 0;
-  color: #ffffff;
-  font-size: 1.5rem;
-  line-height: 1.3;
+.domain-panel-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.domain-panel-title-area h3 {
+  font-size: 19px;
   font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
 }
 
-.domain-panel-header p {
-  margin-top: 4px;
-  color: rgba(255,255,255,0.35);
-  font-size: 0.95rem;
-  line-height: 1.6;
+.domain-panel-title-area p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  line-height: 1.4;
 }
 
 .domain-full-description {
-  color: rgba(255,255,255,0.65);
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
 
 .domain-panel-section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .domain-panel-section h4 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  gap: 8px;
 }
 
-.domain-panel-section h4::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,.12);
-}
-
+/* Applications Blocks Blueprint */
 .domain-apps-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.domain-card.ai.active,
-.domain-panel.ai{
-  border-color:#8b5cf6;
-}
-
-.domain-card.nlp.active,
-.domain-panel.nlp{
-  border-color:#a855f7;
-}
-
-.domain-card.web.active,
-.domain-panel.web{
-  border-color:#06b6d4;
-}
-
-.domain-card.cv.active,
-.domain-panel.cv{
-  border-color:#ffffff;
-}
-
-.domain-card.ml.active,
-.domain-panel.ml{
-  border-color:#d4d4d8;
-}
-
-.domain-card.security.active,
-.domain-panel.security{
-  border-color:#f59e0b;
+  gap: 8px;
 }
 
 .domain-app-item {
-  background: rgba(255,255,255,0.03);
-  border-left: 4px solid var(--panel-accent-color, #8b5cf6);
-  border-radius: 0 10px 10px 0;
-  padding: 14px 18px;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  color: rgba(255,255,255,0.55);
-  font-size: 14.5px;
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--theme-accent, #8b5cf6);
+  padding: 11px 14px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 0 8px 8px 0;
+  font-weight: 450;
 }
 
-/* Sample Projects List Structure */
+/* Sample Projects Layout Blueprint */
 .domain-projects-container {
   display: flex;
   flex-direction: column;
@@ -351,163 +344,205 @@ input, select, textarea { font-family: inherit; }
 
 .domain-project-item {
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
 }
 
 .domain-project-item .project-bullet {
-  color: #06b6d4;
-  font-size: 1.1rem;
-  line-height: 1.4;
+  font-size: 12px;
+  margin-top: 2px;
 }
 
 .domain-project-item .project-text {
-  color: rgba(255,255,255,0.52);
-  font-size: 14.5px;
-  line-height: 1.5;
-  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.65);
 }
 
+/* Bottom CTA Interactive Button */
 .domain-panel .select-domain-btn {
   width: 100%;
-  height: 54px;
-  margin-top: 12px;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #ffffff;
-  background: var(--panel-btn-gradient, linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%));
+  height: 50px;
+  margin-top: 6px;
+  background: var(--theme-accent, #8b5cf6);
+  color: #050510;
   border: none;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  transition: opacity 0.2s;
+  transition: opacity 0.15s ease;
 }
 
 .domain-panel .select-domain-btn:hover {
   opacity: 0.9;
 }
 
-.domain-card.ai:hover, .domain-card.ai.active {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 1px rgba(139,92,246,0.3), 0 12px 40px rgba(139,92,246,0.15);
-  background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(99,102,241,0.03));
-}
-.domain-panel.ai { 
-  border-color: rgba(139,92,246,0.4); 
-  --panel-accent-color: #8b5cf6;
-  --panel-btn-gradient: linear-gradient(90deg, #8b5cf6, #6366f1);
-}
-.domain-card.ai.active .domain-card-icon, .domain-panel.ai .domain-panel-icon { background: rgba(139,92,246,0.2); }
+/* ==========================================================================
+   THEALL-DOMAIN COLOR MATRICES (COMPLETE 36 THEMES MAP)
+   ========================================================================== */
 
-/* 2. NLP Theme */
-.domain-card.nlp:hover, .domain-card.nlp.active {
-  border-color: #a855f7;
-  box-shadow: 0 0 0 1px rgba(168,85,247,0.3), 0 12px 40px rgba(168,85,247,0.15);
-  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(139,92,246,0.03));
-}
-.domain-panel.nlp { 
-  border-color: rgba(168,85,247,0.4); 
-  --panel-accent-color: #a855f7;
-}
-.domain-card.nlp.active .domain-card-icon, .domain-panel.nlp .domain-panel-icon { background: rgba(168,85,247,0.2); }
+/* 1. Artificial Intelligence */
+.domain-card.ai.active { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); }
+.domain-panel.ai { border-color: rgba(139, 92, 246, 0.3); --theme-accent: #8b5cf6; }
 
-/* 3. Deep Learning Theme */
-.domain-card.dl:hover, .domain-card.dl.active {
-  border-color: #ec4899;
-  box-shadow: 0 0 0 1px rgba(236,72,153,0.3), 0 12px 40px rgba(236,72,153,0.15);
-  background: linear-gradient(135deg, rgba(236,72,153,0.12), rgba(168,85,247,0.03));
-}
-.domain-panel.dl { 
-  border-color: rgba(236,72,153,0.4); 
-  --panel-accent-color: #ec4899;
-}
-.domain-card.dl.active .domain-card-icon, .domain-panel.dl .domain-panel-icon { background: rgba(236,72,153,0.2); }
+/* 2. Natural Language Processing */
+.domain-card.nlp.active { border-color: #a855f7; background: rgba(168, 85, 247, 0.05); }
+.domain-panel.nlp { border-color: rgba(168, 85, 247, 0.3); --theme-accent: #a855f7; }
 
-/* 4. Machine Learning Theme */
-.domain-card.ml:hover, .domain-card.ml.active {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px rgba(99,102,241,0.3), 0 12px 40px rgba(99,102,241,0.15);
-  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(59,130,246,0.03));
-}
-.domain-panel.ml { 
-  border-color: rgba(99,102,241,0.4); 
-  --panel-accent-color: #6366f1;
-}
-.domain-card.ml.active .domain-card-icon, .domain-panel.ml .domain-panel-icon { background: rgba(99,102,241,0.2); }
+/* 3. Deep Learning */
+.domain-card.dl.active { border-color: #ec4899; background: rgba(236, 72, 153, 0.05); }
+.domain-panel.dl { border-color: rgba(236, 72, 153, 0.3); --theme-accent: #ec4899; }
 
-/* 5. Web Development Theme (Matching Image 1 active look) */
-.domain-card.web:hover, .domain-card.web.active {
-  border-color: #06b6d4;
-  box-shadow: 0 0 0 1px rgba(6,182,212,0.4), 0 12px 40px rgba(6,182,212,0.15);
-  background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.03));
-}
-.domain-panel.web { 
-  border-color: rgba(6,182,212,0.4); 
-  --panel-accent-color: #06b6d4;
-  --panel-btn-gradient: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
-}
-.domain-card.web.active .domain-card-icon, .domain-panel.web .domain-panel-icon { 
-  background: rgba(6,182,212,0.2); 
-  color: #06b6d4;
-}
+/* 4. Computer Vision */
+.domain-card.cv.active { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
+.domain-panel.cv { border-color: rgba(59, 130, 246, 0.3); --theme-accent: #3b82f6; }
 
-/* 6. Computer Vision Theme */
-.domain-card.cv:hover, .domain-card.cv.active {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 1px rgba(59,130,246,0.3), 0 12px 40px rgba(59,130,246,0.15);
-  background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(6,182,212,0.03));
-}
-.domain-panel.cv { 
-  border-color: rgba(59,130,246,0.4); 
-  --panel-accent-color: #3b82f6;
-}
-.domain-card.cv.active .domain-card-icon, .domain-panel.cv .domain-panel-icon { background: rgba(59,130,246,0.2); }
+/* 5. Image Processing */
+.domain-card.ip.active { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
+.domain-panel.ip { border-color: rgba(16, 185, 129, 0.3); --theme-accent: #10b981; }
 
-/* 7. Image Processing Theme */
-.domain-card.ip:hover, .domain-card.ip.active {
-  border-color: #10b981;
-  box-shadow: 0 0 0 1px rgba(16,185,129,0.3), 0 12px 40px rgba(16,185,129,0.15);
-  background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(6,182,212,0.03));
-}
-.domain-panel.ip { 
-  border-color: rgba(16,185,129,0.4); 
-  --panel-accent-color: #10b981;
-}
-.domain-card.ip.active .domain-card-icon, .domain-panel.ip .domain-panel-icon { background: rgba(16,185,129,0.2); }
+/* 6. Data Mining */
+.domain-card.dm.active { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+.domain-panel.dm { border-color: rgba(245, 158, 11, 0.3); --theme-accent: #f59e0b; }
 
-/* 8. Data Mining Theme */
-.domain-card.dm:hover, .domain-card.dm.active {
-  border-color: #f59e0b;
-  box-shadow: 0 0 0 1px rgba(245,158,11,0.3), 0 12px 40px rgba(245,158,11,0.15);
-  background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(239,68,68,0.03));
-}
-.domain-panel.dm { 
-  border-color: rgba(245,158,11,0.4); 
-  --panel-accent-color: #f59e0b;
-}
-.domain-card.dm.active .domain-card-icon, .domain-panel.dm .domain-panel-icon { background: rgba(245,158,11,0.2); }
+/* 7. Cryptography & Network Security */
+.domain-card.crypto.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
+.domain-panel.crypto { border-color: rgba(239, 68, 68, 0.3); --theme-accent: #ef4444; }
 
-/* 9. Cryptography & Network Security Theme */
-.domain-card.crypto:hover, .domain-card.crypto.active {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 1px rgba(239,68,68,0.4), 0 12px 40px rgba(239,68,68,0.15);
-  background: linear-gradient(135deg, rgba(239,68,68,0.12), rgba(245,158,11,0.03));
-}
-.domain-panel.crypto { 
-  border-color: rgba(239,68,68,0.4); 
-  --panel-accent-color: #ef4444;
-  --panel-btn-gradient: linear-gradient(90deg, #ef4444, #f59e0b);
-}
-.domain-card.crypto.active .domain-card-icon, .domain-panel.crypto .domain-panel-icon { background: rgba(239,68,68,0.2); }
+/* 8. Cloud Computing */
+.domain-card.cloud.active { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); }
+.domain-panel.cloud { border-color: rgba(14, 165, 233, 0.3); --theme-accent: #0ea5e9; }
 
-/* Default fallback rules for remaining unspecified IDs */
-.domain-card:hover, .domain-card.active {
-  border-color: var(--accent-purple);
-  box-shadow: 0 0 0 1px rgba(139,92,246,0.3), 0 12px 40px rgba(139,92,246,0.15);
-}
+/* 9. Human-Computer Interaction */
+.domain-card.hci.active { border-color: #14b8a6; background: rgba(20, 184, 166, 0.05); }
+.domain-panel.hci { border-color: rgba(20, 184, 166, 0.3); --theme-accent: #14b8a6; }
+
+/* 10. Cyber Security */
+.domain-card.cyber.active { border-color: #dc2626; background: rgba(220, 38, 38, 0.05); }
+.domain-panel.cyber { border-color: rgba(220, 38, 38, 0.3); --theme-accent: #dc2626; }
+
+/* 11. Data Analytics */
+.domain-card.analytics.active { border-color: #84cc16; background: rgba(132, 204, 22, 0.05); }
+.domain-panel.analytics { border-color: rgba(132, 204, 22, 0.3); --theme-accent: #84cc16; }
+
+/* 12. Internet of Things */
+.domain-card.iot.active { border-color: #d946ef; background: rgba(217, 70, 239, 0.05); }
+.domain-panel.iot { border-color: rgba(217, 70, 239, 0.3); --theme-accent: #d946ef; }
+
+/* 13. Game Development */
+.domain-card.game.active { border-color: #ff007f; background: rgba(255, 0, 127, 0.05); }
+.domain-panel.game { border-color: rgba(255, 0, 127, 0.3); --theme-accent: #ff007f; }
+
+/* 14. Dark Patterns */
+.domain-card.darkpatterns.active { border-color: #4b5563; background: rgba(75, 85, 99, 0.05); }
+.domain-panel.darkpatterns { border-color: rgba(75, 85, 99, 0.3); --theme-accent: #4b5563; }
+
+/* 15. UI/UX Design */
+.domain-card.uiux.active { border-color: #ff5722; background: rgba(255, 87, 34, 0.05); }
+.domain-panel.uiux { border-color: rgba(255, 87, 34, 0.3); --theme-accent: #ff5722; }
+
+/* 16. Data Science */
+.domain-card.datascience.active { border-color: #00bcd4; background: rgba(0, 188, 212, 0.05); }
+.domain-panel.datascience { border-color: rgba(0, 188, 212, 0.3); --theme-accent: #00bcd4; }
+
+/* 17. Digital Forensics */
+.domain-card.forensics.active { border-color: #607d8b; background: rgba(96, 125, 139, 0.05); }
+.domain-panel.forensics { border-color: rgba(96, 125, 139, 0.3); --theme-accent: #607d8b; }
+
+/* 18. Malware Analysis */
+.domain-card.malware.active { border-color: #9c27b0; background: rgba(156, 39, 176, 0.05); }
+.domain-panel.malware { border-color: rgba(156, 39, 176, 0.3); --theme-accent: #9c27b0; }
+
+/* 19. Intrusion Detection Systems */
+.domain-card.ids.active { border-color: #ff9800; background: rgba(255, 152, 0, 0.05); }
+.domain-panel.ids { border-color: rgba(255, 152, 0, 0.3); --theme-accent: #ff9800; }
+
+/* 20. Mobile Application Development */
+.domain-card.mobile.active { border-color: #4caf50; background: rgba(76, 175, 80, 0.05); }
+.domain-panel.mobile { border-color: rgba(76, 175, 80, 0.3); --theme-accent: #4caf50; }
+
+/* 21. DevOps */
+.domain-card.devops.active { border-color: #009688; background: rgba(0, 150, 136, 0.05); }
+.domain-panel.devops { border-color: rgba(0, 150, 136, 0.3); --theme-accent: #009688; }
+
+/* 22. Edge Computing */
+.domain-card.edge.active { border-color: #3f51b5; background: rgba(63, 81, 181, 0.05); }
+.domain-panel.edge { border-color: rgba(63, 81, 181, 0.3); --theme-accent: #3f51b5; }
+
+/* 23. Blockchain Technology */
+.domain-card.blockchain.active { border-color: #ffeb3b; background: rgba(255, 235, 59, 0.05); }
+.domain-panel.blockchain { border-color: rgba(255, 235, 59, 0.3); --theme-accent: #ffeb3b; }
+
+/* 24. Quantum Computing */
+.domain-card.quantum.active { border-color: #e91e63; background: rgba(233, 30, 99, 0.05); }
+.domain-panel.quantum { border-color: rgba(233, 30, 99, 0.3); --theme-accent: #e91e63; }
+
+/* 25. AR/VR */
+.domain-card.arvr.active { border-color: #cc00ff; background: rgba(204, 0, 255, 0.05); }
+.domain-panel.arvr { border-color: rgba(204, 0, 255, 0.3); --theme-accent: #cc00ff; }
+
+/* 26. Robotic Process Automation */
+.domain-card.rpa.active { border-color: #795548; background: rgba(121, 85, 72, 0.05); }
+.domain-panel.rpa { border-color: rgba(121, 85, 72, 0.3); --theme-accent: #795548; }
+
+/* 27. Assistive Technologies */
+.domain-card.assistive.active { border-color: #ab47bc; background: rgba(171, 71, 188, 0.05); }
+.domain-panel.assistive { border-color: rgba(171, 71, 188, 0.3); --theme-accent: #ab47bc; }
+
+/* 28. FinTech & Banking Systems */
+.domain-card.fintech.active { border-color: #26a69a; background: rgba(38, 166, 154, 0.05); }
+.domain-panel.fintech { border-color: rgba(38, 166, 154, 0.3); --theme-accent: #26a69a; }
+
+/* 29. E-Government Systems */
+.domain-card.egov.active { border-color: #5c6bc0; background: rgba(92, 107, 192, 0.05); }
+.domain-panel.egov { border-color: rgba(92, 107, 192, 0.3); --theme-accent: #5c6bc0; }
+
+/* 30. Bioinformatics */
+.domain-card.bioinfo.active { border-color: #26c6da; background: rgba(38, 198, 218, 0.05); }
+.domain-panel.bioinfo { border-color: rgba(38, 198, 218, 0.3); --theme-accent: #26c6da; }
+
+/* 31. Social Network Analysis */
+.domain-card.social.active { border-color: #9ccc65; background: rgba(156, 204, 101, 0.05); }
+.domain-panel.social { border-color: rgba(156, 204, 101, 0.3); --theme-accent: #9ccc65; }
+
+/* 32. Scientific Computing */
+.domain-card.scientific.active { border-color: #ffca28; background: rgba(255, 202, 40, 0.05); }
+.domain-panel.scientific { border-color: rgba(255, 202, 40, 0.3); --theme-accent: #ffca28; }
+
+/* 33. Generative AI Prompt Engineering */
+.domain-card.prompt.active { border-color: #29b6f6; background: rgba(41, 182, 246, 0.05); }
+.domain-panel.prompt { border-color: rgba(41, 182, 246, 0.3); --theme-accent: #29b6f6; }
+
+/* 34. Large Language Models (LLMs) */
+.domain-card.llm.active { border-color: #7e57c2; background: rgba(126, 87, 194, 0.05); }
+.domain-panel.llm { border-color: rgba(126, 87, 194, 0.3); --theme-accent: #7e57c2; }
+
+/* 35. AI Ethics & Responsible AI */
+.domain-card.ethics.active { border-color: #ef5350; background: rgba(239, 83, 80, 0.05); }
+.domain-panel.ethics { border-color: rgba(239, 83, 80, 0.3); --theme-accent: #ef5350; }
+
+/* 36. Green Computing */
+.domain-card.green.active { border-color: #66bb6a; background: rgba(102, 187, 106, 0.05); }
+.domain-panel.green { border-color: rgba(102, 187, 106, 0.3); --theme-accent: #66bb6a; }
+
+/* ─── Newly Appended Colors ─── */
+
+/* Machine Learning Theme - Deep Indigo Blue */
+.domain-card.ml.active { border-color: #4f46e5; background: rgba(79, 70, 229, 0.05); }
+.domain-panel.ml { border-color: rgba(79, 70, 229, 0.3); --theme-accent: #4f46e5; }
+
+/* Web Development Theme - Vivid Cyan */
+.domain-card.web.active { border-color: #06b6d4; background: rgba(6, 182, 212, 0.05); }
+.domain-panel.web { border-color: rgba(6, 182, 212, 0.3); --theme-accent: #06b6d4; }
+
+/* Computational Biology Theme - Bright Bio-Genomic Green */
+.domain-card.compbio.active { border-color: #00e676; background: rgba(0, 230, 118, 0.05); }
+.domain-panel.compbio { border-color: rgba(0, 230, 118, 0.3); --theme-accent: #00e676; }
 
 .domain-list {
   list-style: none;
