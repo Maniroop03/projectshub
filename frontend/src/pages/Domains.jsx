@@ -10,7 +10,7 @@ const DomainCard = memo(function DomainCard({
   return (
     <button
       type="button"
-      className={`domain-card ${active ? 'active' : ''}`}
+      className={`domain-card ${domain.colorClass || ''} ${active ? 'active' : ''}`}
       onClick={onSelect}
     >
       <div className="domain-card-icon">
@@ -73,7 +73,7 @@ export default function Domains() {
           ))}
         </div>
 
-        <div className="domain-panel">
+        <div className={`domain-panel ${current?.colorClass || ''}`}>
           <div className="domain-panel-body">
 
   <div className="domain-panel-header">
