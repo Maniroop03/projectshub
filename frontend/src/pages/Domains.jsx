@@ -1,30 +1,12 @@
-import { memo, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { DOMAINS } from '../data/domains';
 
-const DomainCard = memo(function DomainCard({ domain, active, onSelect }) {
-  return (
-    <button
-      type="button"
-      className={`domain-card ${domain.colorClass || ''} ${active ? 'active' : ''}`}
-      onClick={onSelect}
-    >
-      <div className="domain-card-icon">
-        {domain.icon}
-      </div>
-      <div>
-        <h2>{domain.name}</h2>
-        <p>{domain.shortDescription}</p>
-      </div>
-    </button>
-  );
-});
-
 export default function Domains() {
-  const [selected, setSelected] = useState('web'); // Defaulting to web to match reference look
+  const [selected, setSelected] = useState('ai');
   const [search, setSearch] = useState('');
 
   const current = useMemo(
-    () => DOMAINS.find((d) => d.id === selected),
+    () => DOMAINS.find((d) => d.id === selected) || DOMAINS[0],
     [selected]
   );
   
@@ -53,23 +35,34 @@ export default function Domains() {
 
       <div className="domain-grid-layout">
         <div className="domain-grid">
-          {filteredDomains.map((domain) => (
-            <DomainCard
-              key={domain.id}
-              domain={domain}
-              active={selected === domain.id}
-              onSelect={() => setSelected(domain.id)}
-            />
-          ))}
+          {filteredDomains.map((domain) => {
+            const isActive = selected === domain.id;
+            return (
+              <button
+                key={domain.id}
+                type="button"
+                className={`domain-card ${domain.colorClass} ${isActive ? 'active' : ''}`}
+                onClick={() => setSelected(domain.id)}
+              >
+                <div className="domain-card-icon-wrapper">
+                  {domain.icon}
+                </div>
+                <div className="domain-card-text-wrapper">
+                  <h2>{domain.name}</h2>
+                  <p>{domain.shortDescription}</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        <div className={`domain-panel ${current?.colorClass || ''}`}>
+        <div className={`domain-panel ${current?.colorClass}`}>
           <div className="domain-panel-body">
             <div className="domain-panel-header">
-              <div className="domain-panel-icon">
+              <div className="domain-panel-icon-box">
                 {current?.icon}
               </div>
-              <div>
+              <div className="domain-panel-title-area">
                 <h3>{current?.name}</h3>
                 <p>{current?.shortDescription}</p>
               </div>
@@ -103,7 +96,7 @@ export default function Domains() {
             </div>
 
             <button className="btn-primary select-domain-btn">
-              Select This Domain →
+              Select This Domain ➔
             </button>
           </div>
         </div>
