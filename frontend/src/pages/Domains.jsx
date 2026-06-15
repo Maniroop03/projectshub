@@ -126,10 +126,11 @@ export default function Domains() {
         </div>
       </div>
 
+      <div className="domain-panel-footer">
       <button className="btn-primary select-domain-btn">
         Select This Domain ➔
       </button>
-
+      </div>
     </div>
 
   )}
