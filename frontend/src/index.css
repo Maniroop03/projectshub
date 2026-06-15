@@ -266,8 +266,8 @@ input, select, textarea { font-family: inherit; }
   min-width: 320px;
   max-width: 320px;
 
-  height: calc(100vh - 120px);
-  max-height: calc(100vh - 120px);
+  height: fit-content;
+  max-height: none;
 
   background: var(--theme-panel-bg, #0c0c1e);
   border: 1px solid var(--theme-accent);
@@ -284,18 +284,18 @@ input, select, textarea { font-family: inherit; }
 
 .domain-panel-body {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
 
-  padding: 24px;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   box-sizing: border-box;
 }
 
 .domain-panel-footer {
-  padding: 18px 24px 24px;
+  padding: 12px 20px 16px;
 
   border-top: 1px solid rgba(255,255,255,0.05);
 
@@ -403,14 +403,14 @@ input, select, textarea { font-family: inherit; }
 /* Select Button Style */
 .domain-panel .select-domain-btn {
   width: 100%;
-  height: 56px;
-  margin-top: 12px;        /* Pushes flawlessly to the bottom boundary */
+  height: 42px;
+  margin-top: 6px;        /* Pushes flawlessly to the bottom boundary */
   background: var(--theme-accent, #8b5cf6) !important;
   color: #04040c !important;
   border: none;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 700;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -420,6 +420,10 @@ input, select, textarea { font-family: inherit; }
 
 .domain-panel .select-domain-btn:hover {
   opacity: 0.92;
+}
+
+.select-domain-btn {
+  white-space: nowrap;
 }
 
 /* ─── CENTRAL COLOR VARIABLES ENGINE ─── */
