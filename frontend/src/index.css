@@ -295,7 +295,7 @@ input, select, textarea { font-family: inherit; }
 }
 
 .domain-panel-footer {
-  padding: 12px 20px 16px;
+  padding: 8px 20px 8px;
 
   border-top: 1px solid rgba(255,255,255,0.05);
 
@@ -404,7 +404,7 @@ input, select, textarea { font-family: inherit; }
 .domain-panel .select-domain-btn {
   width: 100%;
   height: 42px;
-  margin-top: 6px;        /* Pushes flawlessly to the bottom boundary */
+  margin-top: 0;        /* Pushes flawlessly to the bottom boundary */
   background: var(--theme-accent, #8b5cf6) !important;
   color: #04040c !important;
   border: none;
