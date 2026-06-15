@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react';
 import { DOMAINS } from '../data/domains';
 
 export default function Domains() {
-  const [selected, setSelected] = useState('ai');
+  const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState('');
 
   const current = useMemo(
-    () => DOMAINS.find((d) => d.id === selected) || DOMAINS[0],
+    () => DOMAINS.find((d) => d.id === selected),
     [selected]
   );
   
@@ -64,50 +64,75 @@ export default function Domains() {
         </div>
 
         {/* This class setup transforms the layout block to shift colors globally */}
-        <div className={`domain-panel ${current?.colorClass}`}>
-          <div className="domain-panel-body">
-            <div className="domain-panel-header">
-              <div className="domain-panel-icon-box">
-                {current?.icon}
-              </div>
-              <div className="domain-panel-title-area">
-                <h3>{current?.name}</h3>
-                <p>{current?.shortDescription}</p>
-              </div>
-            </div>
+        <div className={`domain-panel ${current?.colorClass || ''}`}>
 
-            <p className="domain-full-description">
-              {current?.fullDescription}
-            </p>
+  {!current ? (
 
-            <div className="domain-panel-section">
-              <h4>🔧 Applications</h4>
-              <div className="domain-apps-container">
-                {(current?.applications || []).map((app) => (
-                  <div className="domain-app-item" key={app}>
-                    {app}
-                  </div>
-                ))}
-              </div>
-            </div>
+    <div className="domain-placeholder">
+      <div className="domain-placeholder-icon">👆</div>
 
-            <div className="domain-panel-section">
-              <h4>💡 Sample Projects</h4>
-              <div className="domain-projects-container">
-                {(current?.projects || []).map((project) => (
-                  <div className="domain-project-item" key={project}>
-                    <span className="project-bullet">💡</span>
-                    <span className="project-text">{project}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <h3>
+        Click on any domain card to explore its
+        details, applications, and sample projects.
+      </h3>
 
-            <button className="btn-primary select-domain-btn">
-              Select This Domain ➔
-            </button>
-          </div>
+      <p>
+        Then press <strong>Select This Domain</strong>
+        to choose it.
+      </p>
+    </div>
+
+  ) : (
+
+    <div className="domain-panel-body">
+
+      <div className="domain-panel-header">
+        <div className="domain-panel-icon-box">
+          {current.icon}
         </div>
+
+        <div className="domain-panel-title-area">
+          <h3>{current.name}</h3>
+          <p>{current.shortDescription}</p>
+        </div>
+      </div>
+
+      <p className="domain-full-description">
+        {current.fullDescription}
+      </p>
+
+      <div className="domain-panel-section">
+        <h4>🔧 Applications</h4>
+        <div className="domain-apps-container">
+          {current.applications.map((app) => (
+            <div className="domain-app-item" key={app}>
+              {app}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="domain-panel-section">
+        <h4>💡 Sample Projects</h4>
+        <div className="domain-projects-container">
+          {current.projects.map((project) => (
+            <div className="domain-project-item" key={project}>
+              <span className="project-bullet">💡</span>
+              <span className="project-text">{project}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button className="btn-primary select-domain-btn">
+        Select This Domain ➔
+      </button>
+
+    </div>
+
+  )}
+
+</div>
       </div>
     </div>
   );
