@@ -80,25 +80,27 @@ input, select, textarea { font-family: inherit; }
 
 .domain-toolbar-content {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
 }
 
 .domains-header {
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 
 .domains-header h1 {
-  font-size: 2rem;
+  font-size: 56px;
   font-weight: 800;
   color: #8b5cf6;
-  margin-bottom: 6px;
+  line-height: 1;
+  margin-bottom: 14px;
 }
 
 .domains-header p {
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  max-width: 1000px;
   line-height: 1.5;
 }
 
@@ -128,6 +130,12 @@ input, select, textarea { font-family: inherit; }
 }
 }
 
+.domain-search-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
 .domain-search input {
   background: transparent;
   border: none;
@@ -138,7 +146,8 @@ input, select, textarea { font-family: inherit; }
 
 .domain-count {
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 /* ==========================================================================
