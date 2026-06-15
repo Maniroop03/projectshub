@@ -19,12 +19,13 @@ export default function Domains() {
       <div className="domain-toolbar">
         <div className="domain-toolbar-content">
           <div className="domains-header">
-  <h1>Explore Domains</h1>
+  <h1>📚 Explore Domains</h1>
   <p>
     Browse all available project domains below. Click a domain to learn more,
     then select it for your project.
             </p>
           </div>
+          <div className="domain-search-row">
           <div className="domain-search">
             <span className="domain-search-icon">🔍</span>
             <input
@@ -37,6 +38,7 @@ export default function Domains() {
           <span className="domain-count">
             {filteredDomains.length} domains
           </span>
+        </div>
         </div>
       </div>
 
