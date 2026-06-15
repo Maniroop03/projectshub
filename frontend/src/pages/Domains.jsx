@@ -18,6 +18,13 @@ export default function Domains() {
     <div className="page-container domain-explorer">
       <div className="domain-toolbar">
         <div className="domain-toolbar-content">
+          <div className="domains-header">
+  <h1>Explore Domains</h1>
+  <p>
+    Browse all available project domains below. Click a domain to learn more,
+    then select it for your project.
+            </p>
+          </div>
           <div className="domain-search">
             <span className="domain-search-icon">🔍</span>
             <input
