@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 
-const memberSchema = new mongoose.Schema(
+const groupSchema = new mongoose.Schema(
 {
+    batch: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
     role: {
         type: String,
         enum: ['Lead', 'Member'],
@@ -17,28 +23,8 @@ const memberSchema = new mongoose.Schema(
     rollNo: {
         type: String,
         required: true,
-        trim: true
-    },
-
-    email: {
-        type: String,
-        trim: true
-    },
-
-    phone: {
-        type: String,
-        trim: true
-    }
-},
-{ _id: false }
-);
-
-const groupSchema = new mongoose.Schema(
-{
-    batch: {
-        type: String,
-        required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
 
     year: {
@@ -57,14 +43,19 @@ const groupSchema = new mongoose.Schema(
         trim: true
     },
 
-    domain: {
+    email: {
         type: String,
         trim: true
     },
 
-    members: {
-        type: [memberSchema],
-        required: true
+    phone: {
+        type: String,
+        trim: true
+    },
+
+    domain: {
+        type: String,
+        trim: true
     }
 },
 { timestamps: true }
