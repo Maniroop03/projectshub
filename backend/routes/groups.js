@@ -15,9 +15,34 @@ router.get('/', async (req, res) => {
 // GET single group
 router.get('/:id', async (req, res) => {
     try {
-        const group = await Group.findById(req.params.id);
-        if (!group) return res.status(404).json({ error: 'Group not found' });
-        res.json(group);
+        const student = await Group.findById(req.params.id);
+        if (!student) return res.status(404).json({ error: 'Group not found' });
+
+        // Find all members in the same batch
+        let members = [];
+        if (student.batch) {
+            members = await Group.find({ batch: student.batch });
+        } else {
+            members = [student];
+        }
+
+        // Return a response formatted like the frontend expects
+        res.json({
+            _id: student._id,
+            batch: student.batch,
+            section: student.section || '',
+            domain: student.domain || '',
+            year: student.year || 'III',
+            department: student.department || '',
+            members: members.map(m => ({
+                _id: m._id,
+                role: m.role || 'Member',
+                name: m.name || '',
+                rollNo: m.rollNo || '',
+                email: m.email || '',
+                phone: m.phone || ''
+            }))
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -26,9 +51,32 @@ router.get('/:id', async (req, res) => {
 // POST create group
 router.post('/', async (req, res) => {
     try {
-        const group = new Group(req.body);
-        await group.save();
-        res.status(201).json(group);
+        const { batch, section, domain, year, department, members } = req.body;
+
+        if (!members || !Array.isArray(members) || members.length === 0) {
+            return res.status(400).json({ error: 'Members array is required' });
+        }
+
+        const createdStudents = [];
+        for (const m of members) {
+            const student = new Group({
+                batch,
+                section,
+                domain,
+                year: year || 'III',
+                department: department || '',
+                role: m.role || 'Member',
+                name: m.name,
+                rollNo: m.rollNo,
+                email: m.email || '',
+                phone: m.phone || ''
+            });
+            await student.save();
+            createdStudents.push(student);
+        }
+
+        // Return the first created student to satisfy return type
+        res.status(201).json(createdStudents[0]);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -37,9 +85,68 @@ router.post('/', async (req, res) => {
 // PUT update group
 router.put('/:id', async (req, res) => {
     try {
-        const group = await Group.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!group) return res.status(404).json({ error: 'Group not found' });
-        res.json(group);
+        const studentToUpdate = await Group.findById(req.params.id);
+        if (!studentToUpdate) return res.status(404).json({ error: 'Group member not found' });
+
+        const originalBatch = studentToUpdate.batch;
+        const { batch, section, domain, year, department, members } = req.body;
+
+        if (!members || !Array.isArray(members) || members.length === 0) {
+            return res.status(400).json({ error: 'Members array is required' });
+        }
+
+        // Find existing students in the original batch
+        const existingStudents = await Group.find({ batch: originalBatch });
+        const updatedIds = members.filter(m => m._id).map(m => m._id.toString());
+
+        // Delete members that were removed
+        const idsToDelete = existingStudents
+            .filter(s => !updatedIds.includes(s._id.toString()))
+            .map(s => s._id);
+
+        if (idsToDelete.length > 0) {
+            await Group.deleteMany({ _id: { $in: idsToDelete } });
+        }
+
+        // Update existing members and create new ones
+        for (const m of members) {
+            if (m._id) {
+                await Group.findByIdAndUpdate(m._id, {
+                    batch,
+                    section,
+                    domain,
+                    year: year || 'III',
+                    department: department || '',
+                    role: m.role || 'Member',
+                    name: m.name,
+                    rollNo: m.rollNo,
+                    email: m.email || '',
+                    phone: m.phone || ''
+                }, { runValidators: true });
+            } else {
+                const newStudent = new Group({
+                    batch,
+                    section,
+                    domain,
+                    year: year || 'III',
+                    department: department || '',
+                    role: m.role || 'Member',
+                    name: m.name,
+                    rollNo: m.rollNo,
+                    email: m.email || '',
+                    phone: m.phone || ''
+                });
+                await newStudent.save();
+            }
+        }
+
+        // Find and return the updated/current document for the requested ID
+        let responseDoc = await Group.findById(req.params.id);
+        if (!responseDoc) {
+            // If the clicked student was deleted/changed, return any member of this batch
+            responseDoc = await Group.findOne({ batch });
+        }
+        res.json(responseDoc);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
