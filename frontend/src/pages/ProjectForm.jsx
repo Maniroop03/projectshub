@@ -53,7 +53,7 @@ export default function ProjectForm() {
             }).catch(console.error);
         }
     }, [id, isEdit, location.search]);
-    
+
     useEffect(() => {
         if (groups.length > 0) {
             setForm(f => {
@@ -185,8 +185,8 @@ export default function ProjectForm() {
                         <div className="section-title">Guide Assignment</div>
                         <div className="form-grid form-grid-2">
                             <div className="form-group">
-                                <label className="form-label">Guide <span>*</span></label>
-                                <select className="form-select" value={form.guide} onChange={(e) => setForm({ ...form, guide: e.target.value })} required>
+                                <label className="form-label">Guide <span></span></label>
+                                <select className="form-select" value={form.guide} onChange={(e) => setForm({ ...form, guide: e.target.value })}>
                                     <option value="">Select guide</option>
                                     {guides.map((g) => <option key={g._id} value={g._id}>{g.name} — {g.department || g.email}</option>)}
                                 </select>
