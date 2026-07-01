@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Group = require('../models/Group');
+const adminAuth = require('../middleware/adminAuth');
 const bcrypt = require('bcryptjs');
 
 // GET all groups
@@ -70,7 +71,7 @@ router.post('/login', async (req, res) => {
 });
 
 // POST create group
-router.post('/', async (req, res) => {
+router.post('/', adminAuth, async (req, res) => {
     try {
         const { batch, section, domain, year, department, members } = req.body;
 
@@ -109,7 +110,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT update group
-router.put('/:id', async (req, res) => {
+router.put('/:id', adminAuth, async (req, res) => {
     try {
         const studentToUpdate = await Group.findById(req.params.id);
         if (!studentToUpdate) return res.status(404).json({ error: 'Group member not found' });
@@ -185,7 +186,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE all groups
-router.delete('/all/clear', async (req, res) => {
+router.delete('/all/clear', adminAuth, async (req, res) => {
     try {
         const result = await Group.deleteMany({});
         res.json({ message: `All groups deleted`, count: result.deletedCount });
@@ -195,7 +196,7 @@ router.delete('/all/clear', async (req, res) => {
 });
 
 // DELETE group by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminAuth, async (req, res) => {
     try {
         const group = await Group.findByIdAndDelete(req.params.id);
         if (!group) return res.status(404).json({ error: 'Group not found' });
@@ -206,7 +207,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // POST bulk add groups
-router.post('/bulk', async (req, res) => {
+router.post('/bulk', adminAuth, async (req, res) => {
     try {
         const groups = req.body;
         if (!Array.isArray(groups)) {

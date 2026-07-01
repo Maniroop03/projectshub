@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Project = require('../models/Project');
+const adminAuth = require('../middleware/adminAuth');
 
 // Setup multer for file upload
 const uploadDir = process.env.VERCEL
@@ -80,7 +81,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create project (with optional file upload)
-router.post('/', upload.single('pptFile'), async (req, res) => {
+router.post('/', adminAuth, upload.single('pptFile'), async (req, res) => {
     try {
         const data = { ...req.body };
         if (data.coGuide === '') {
@@ -112,7 +113,7 @@ if (data.guide === '') {
 });
 
 // PUT update project (with optional file upload)
-router.put('/:id', upload.single('pptFile'), async (req, res) => {
+router.put('/:id', adminAuth, upload.single('pptFile'), async (req, res) => {
     try {
         const data = { ...req.body };
         if (data.coGuide === '') {
@@ -142,7 +143,7 @@ if (data.guide === '') {
 });
 
 // DELETE project
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminAuth, async (req, res) => {
     try {
         const project = await Project.findByIdAndDelete(req.params.id);
         if (!project) return res.status(404).json({ error: 'Project not found' });

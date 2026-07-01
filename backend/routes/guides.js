@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Guide = require('../models/Guide');
+const adminAuth = require('../middleware/adminAuth');
 
 // GET all guides
 router.get('/', async (req, res) => {
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create guide
-router.post('/', async (req, res) => {
+router.post('/', adminAuth, async (req, res) => {
     try {
         const guide = new Guide(req.body);
         await guide.save();
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT update guide
-router.put('/:id', async (req, res) => {
+router.put('/:id', adminAuth, async (req, res) => {
     try {
         const guide = await Guide.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!guide) return res.status(404).json({ error: 'Guide not found' });
@@ -46,7 +47,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE guide
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminAuth, async (req, res) => {
     try {
         const guide = await Guide.findByIdAndDelete(req.params.id);
         if (!guide) return res.status(404).json({ error: 'Guide not found' });
@@ -57,7 +58,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // POST bulk add guides
-router.post('/bulk', async (req, res) => {
+router.post('/bulk', adminAuth, async (req, res) => {
     try {
         const guides = req.body;
         if (!Array.isArray(guides)) {

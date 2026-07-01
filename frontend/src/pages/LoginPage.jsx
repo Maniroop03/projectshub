@@ -21,6 +21,9 @@ export default function LoginPage() {
         // Admin shortcut (keeps previous behavior)
         if (form.username === ADMIN_USER && form.password === ADMIN_PASS) {
             localStorage.setItem('admin_auth', 'true');
+            // Store admin secret for API requests (set via VITE_ADMIN_SECRET in production)
+            const adminSecret = import.meta.env.VITE_ADMIN_SECRET || 'admin123';
+            try { localStorage.setItem('admin_secret', adminSecret); } catch {}
             navigate('/dashboard');
             return;
         }

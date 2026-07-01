@@ -50,6 +50,21 @@ export const formatApiError = (err, fallback = 'Request failed.') => {
 
 const API = axios.create({ baseURL, timeout: 15000 });
 
+// Attach admin secret header if available (from env or stored by login)
+const adminSecret = () => {
+    try {
+        return localStorage.getItem('admin_secret') || import.meta.env.VITE_ADMIN_SECRET || '';
+    } catch {
+        return import.meta.env.VITE_ADMIN_SECRET || '';
+    }
+};
+
+API.interceptors.request.use((config) => {
+    const secret = adminSecret();
+    if (secret) config.headers['x-admin-secret'] = secret;
+    return config;
+});
+
 API.interceptors.response.use((response) => {
     const contentType = response.headers?.['content-type'] || '';
     const isHtmlResponse =
