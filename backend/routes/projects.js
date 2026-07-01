@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Project = require('../models/Project');
+const Group = require('../models/Group');
 const adminAuth = require('../middleware/adminAuth');
 
 // Setup multer for file upload
@@ -34,17 +35,25 @@ const upload = multer({
 // GET all projects (with populated guide and students)
 router.get('/', async (req, res) => {
     try {
-        const { type, status, guide } = req.query;
+        const { type, status, guide, batch } = req.query;
         const filter = {};
         if (type) filter.projectType = type;
         if (status) filter.status = status;
         if (guide) filter.guide = guide;
 
-        const projects = await Project.find(filter)
-            .populate('guide', 'name phone email department')
-            .populate('coGuide', 'name phone email')
+        if (batch) {
+            const groups = await Group.find({ batch }).select('_id');
+            const groupIds = groups.map((g) => g._id);
+            filter.students = { $in: groupIds };
+        }
+
+        const query = Project.find(filter)
+            .select('projectType title domain abstract status submissionDate guide students createdAt')
+            .populate('guide', 'name')
             .populate('students', 'name rollNo year section department')
             .sort({ createdAt: -1 });
+
+        const projects = await query;
         res.json(projects);
     } catch (err) {
         res.status(500).json({ error: err.message });

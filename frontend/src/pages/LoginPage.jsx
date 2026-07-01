@@ -33,7 +33,16 @@ export default function LoginPage() {
             const res = await groupLogin({ rollNo: form.username, password: form.password });
             const match = res.data;
             if (match && match._id) {
-                localStorage.setItem('group_auth', JSON.stringify({ id: match._id, rollNo: match.rollNo, batch: match.batch }));
+                localStorage.setItem('group_auth', JSON.stringify({
+                    id: match._id,
+                    rollNo: match.rollNo,
+                    batch: match.batch,
+                    section: match.section || '',
+                    domain: match.domain || '',
+                    year: match.year || '',
+                    department: match.department || '',
+                    members: Array.isArray(match.members) ? match.members : []
+                }));
                 navigate('/projects');
                 return;
             }

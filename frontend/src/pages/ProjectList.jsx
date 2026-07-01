@@ -18,7 +18,6 @@ export default function ProjectList() {
     const [typeFilter, setTypeFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [search, setSearch] = useState('');
-    const navigate = useNavigate();
     const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
     const getGroupAuth = () => {
         try {
@@ -28,27 +27,28 @@ export default function ProjectList() {
             return null;
         }
     };
+    const groupAuth = getGroupAuth();
+    const isGroupUser = !isAdmin() && !!groupAuth;
 
     const load = () => {
         setLoading(true);
         setError('');
         const params = {};
-        if (typeFilter) params.type = typeFilter;
-        if (statusFilter) params.status = statusFilter;
-        
-        // For group users, only show projects where members include the group
-        const groupAuth = getGroupAuth();
+        if (!isGroupUser) {
+            if (typeFilter) params.type = typeFilter;
+            if (statusFilter) params.status = statusFilter;
+        }
         if (groupAuth) {
             params.batch = groupAuth.batch;
         }
-        
+
         getProjects(params)
             .then((r) => setProjects(Array.isArray(r.data) ? r.data : []))
             .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load projects.')); })
             .finally(() => setLoading(false));
     };
 
-    useEffect(() => { load(); }, [typeFilter, statusFilter]);
+    useEffect(() => { load(); }, [typeFilter, statusFilter, isGroupUser, groupAuth?.batch]);
 
     const handleDelete = async (id, title) => {
         if (!window.confirm(`Delete project "${title}"?`)) return;
@@ -63,12 +63,77 @@ export default function ProjectList() {
         (p.guide?.name || '').toLowerCase().includes(search.toLowerCase())
     );
 
+    if (isGroupUser) {
+        return (
+            <div className="page-container">
+                {error && <div className="alert alert-error">{error}</div>}
+                <div className="page-header flex items-center justify-between">
+                    <div>
+                        <h1 className="page-title">My Group</h1>
+                        <p className="page-subtitle">Only your group members and project details are shown.</p>
+                    </div>
+                </div>
+
+                {loading ? (
+                    <div className="loading-center"><div className="loading-spinner" /></div>
+                ) : (
+                    <div style={{ display: 'grid', gap: 16 }}>
+                        <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+                            <div style={{ background: 'white', borderRadius: 12, padding: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                                <h3 style={{ marginTop: 0 }}>Group Details</h3>
+                                <p><strong>Batch:</strong> {groupAuth?.batch || '—'}</p>
+                                <p><strong>Section:</strong> {groupAuth?.section || '—'}</p>
+                                <p><strong>Domain:</strong> {groupAuth?.domain || '—'}</p>
+                                <p><strong>Department:</strong> {groupAuth?.department || '—'}</p>
+                                <p><strong>Lead Roll No:</strong> {groupAuth?.rollNo || '—'}</p>
+                            </div>
+                            <div style={{ background: 'white', borderRadius: 12, padding: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                                <h3 style={{ marginTop: 0 }}>Group Members</h3>
+                                {groupAuth?.members?.length ? (
+                                    <ul style={{ paddingLeft: 18, margin: 0 }}>
+                                        {groupAuth.members.map((m) => (
+                                            <li key={m._id || m.rollNo} style={{ marginBottom: 6 }}>
+                                                <strong>{m.name || 'Member'}</strong> — {m.rollNo || '—'}
+                                                {m.role ? ` (${m.role})` : ''}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No members available.</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div style={{ background: 'white', borderRadius: 12, padding: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                            <h3 style={{ marginTop: 0 }}>Project Details</h3>
+                            {filtered.length ? (
+                                filtered.map((p) => (
+                                    <div key={p._id} style={{ borderTop: '1px solid #eee', paddingTop: 12, marginTop: 12 }}>
+                                        <p style={{ margin: '4px 0' }}><strong>Title:</strong> {p.title}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Type:</strong> {p.projectType || '—'}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Domain:</strong> {p.domain || '—'}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Status:</strong> {p.status || '—'}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Guide:</strong> {p.guide?.name || '—'}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Submitted:</strong> {p.submissionDate ? new Date(p.submissionDate).toLocaleDateString('en-IN') : '—'}</p>
+                                        <p style={{ margin: '4px 0' }}><strong>Abstract:</strong> {p.abstract || '—'}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No project details found for this group.</p>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="page-container">
             {error && <div className="alert alert-error">{error}</div>}
             <div className="page-header flex items-center justify-between">
                 <div>
-                    <h1 className="page-title">{isAdmin() ? 'All Projects' : 'My Group Projects'}</h1>
+                    <h1 className="page-title">All Projects</h1>
                     <p className="page-subtitle">{projects.length} project(s) total</p>
                 </div>
                     {isAdmin() && <Link to="/projects/new" className="btn btn-primary"><MdAdd /> Add Project</Link>}
