@@ -5,27 +5,27 @@ import {
     MdCategory,
 } from 'react-icons/md';
 
-const navItems = [
+const adminNavItems = [
     { section: 'Overview', items: [{ to: '/dashboard', icon: <MdDashboard />, label: 'Dashboard' }] },
     {
         section: 'Projects',
         items: [
             { to: '/projects', icon: <MdFolderOpen />, label: 'All Projects' },
-            { to: '/projects/new', icon: <MdAddCircleOutline />, label: 'Add Project', adminOnly: true },
+            { to: '/projects/new', icon: <MdAddCircleOutline />, label: 'Add Project' },
         ],
     },
     {
         section: 'Groups',
         items: [
             { to: '/groups', icon: <MdPeople />, label: 'All Groups' },
-            { to: '/groups/new', icon: <MdPersonAdd />, label: 'Add Group', adminOnly: true },
+            { to: '/groups/new', icon: <MdPersonAdd />, label: 'Add Group' },
         ],
     },
     {
         section: 'Guides',
         items: [
             { to: '/guides', icon: <MdSupervisorAccount />, label: 'All Guides' },
-            { to: '/guides/new', icon: <MdPersonAddAlt1 />, label: 'Add Guide', adminOnly: true },
+            { to: '/guides/new', icon: <MdPersonAddAlt1 />, label: 'Add Guide' },
         ],
     },
     {
@@ -36,33 +36,36 @@ const navItems = [
     },
 ];
 
+const groupNavItems = [
+    { section: 'Overview', items: [{ to: '/projects', icon: <MdFolderOpen />, label: 'My Projects' }] },
+];
+
 export default function Sidebar() {
     const navigate = useNavigate();
     const handleLogout = () => { localStorage.removeItem('admin_auth'); localStorage.removeItem('group_auth'); navigate('/'); };
     const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
+    const navItems = isAdmin() ? adminNavItems : groupNavItems;
 
     return (
         <aside className="sidebar">
             <div className="sidebar-logo">
                 <h1>📚 Project Hub</h1>
-                <span>Student Project System</span>
+                <span>{isAdmin() ? 'Admin Panel' : 'Group Dashboard'}</span>
             </div>
             <nav className="sidebar-nav">
                 {navItems.map((section) => (
                     <div key={section.section}>
                         <div className="nav-section-label">{section.section}</div>
-                        {section.items
-                            .filter(item => !item.adminOnly || isAdmin())
-                            .map((item) => (
-                                <NavLink
-                                    key={item.to}
-                                    to={item.to}
-                                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
-                                >
-                                    {item.icon}
-                                    {item.label}
-                                </NavLink>
-                            ))}
+                        {section.items.map((item) => (
+                            <NavLink
+                                key={item.to}
+                                to={item.to}
+                                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                            >
+                                {item.icon}
+                                {item.label}
+                            </NavLink>
+                        ))}
                     </div>
                 ))}
             </nav>

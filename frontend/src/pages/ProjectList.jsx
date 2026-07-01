@@ -20,6 +20,14 @@ export default function ProjectList() {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
+    const getGroupAuth = () => {
+        try {
+            const g = localStorage.getItem('group_auth');
+            return g ? JSON.parse(g) : null;
+        } catch {
+            return null;
+        }
+    };
 
     const load = () => {
         setLoading(true);
@@ -27,6 +35,13 @@ export default function ProjectList() {
         const params = {};
         if (typeFilter) params.type = typeFilter;
         if (statusFilter) params.status = statusFilter;
+        
+        // For group users, only show projects where members include the group
+        const groupAuth = getGroupAuth();
+        if (groupAuth) {
+            params.batch = groupAuth.batch;
+        }
+        
         getProjects(params)
             .then((r) => setProjects(Array.isArray(r.data) ? r.data : []))
             .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load projects.')); })
@@ -53,7 +68,7 @@ export default function ProjectList() {
             {error && <div className="alert alert-error">{error}</div>}
             <div className="page-header flex items-center justify-between">
                 <div>
-                    <h1 className="page-title">All Projects</h1>
+                    <h1 className="page-title">{isAdmin() ? 'All Projects' : 'My Group Projects'}</h1>
                     <p className="page-subtitle">{projects.length} project(s) total</p>
                 </div>
                     {isAdmin() && <Link to="/projects/new" className="btn btn-primary"><MdAdd /> Add Project</Link>}
@@ -76,7 +91,7 @@ export default function ProjectList() {
                 <div className="empty-state">
                     <div className="empty-state-icon">📂</div>
                     <p>No projects found.</p>
-                    <Link to="/projects/new" className="btn btn-primary mt-4"><MdAdd /> Add First Project</Link>
+                    {isAdmin() && <Link to="/projects/new" className="btn btn-primary mt-4"><MdAdd /> Add First Project</Link>}
                 </div>
             ) : (
                 <div className="table-wrapper">

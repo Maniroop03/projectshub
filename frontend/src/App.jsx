@@ -13,9 +13,12 @@ import GuideList from './pages/GuideList';
 import GuideForm from './pages/GuideForm';
 
 const isAuth = () => localStorage.getItem('admin_auth') === 'true' || !!localStorage.getItem('group_auth');
+const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
+const isGroupAuth = () => !!localStorage.getItem('group_auth');
 
-function ProtectedLayout({ children }) {
+function ProtectedLayout({ children, requireAdmin = false }) {
   if (!isAuth()) return <Navigate to="/" replace />;
+  if (requireAdmin && !isAdmin()) return <Navigate to="/projects" replace />;
   return (
     <div className="layout">
       <Sidebar />
@@ -34,23 +37,23 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/dashboard" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
+        <Route path="/dashboard" element={<ProtectedLayout requireAdmin><Dashboard /></ProtectedLayout>} />
 
         <Route path="/projects" element={<ProtectedLayout><ProjectList /></ProtectedLayout>} />
-        <Route path="/projects/new" element={<ProtectedLayout><ProjectForm /></ProtectedLayout>} />
+        <Route path="/projects/new" element={<ProtectedLayout requireAdmin><ProjectForm /></ProtectedLayout>} />
         <Route path="/projects/:id" element={<ProtectedLayout><ProjectDetail /></ProtectedLayout>} />
-        <Route path="/projects/:id/edit" element={<ProtectedLayout><ProjectForm /></ProtectedLayout>} />
+        <Route path="/projects/:id/edit" element={<ProtectedLayout requireAdmin><ProjectForm /></ProtectedLayout>} />
 
-        <Route path="/groups" element={<ProtectedLayout><GroupList /></ProtectedLayout>} />
-        <Route path="/groups/new" element={<ProtectedLayout><GroupForm /></ProtectedLayout>} />
-        <Route path="/groups/:id/edit" element={<ProtectedLayout><GroupForm /></ProtectedLayout>} />
+        <Route path="/groups" element={<ProtectedLayout requireAdmin><GroupList /></ProtectedLayout>} />
+        <Route path="/groups/new" element={<ProtectedLayout requireAdmin><GroupForm /></ProtectedLayout>} />
+        <Route path="/groups/:id/edit" element={<ProtectedLayout requireAdmin><GroupForm /></ProtectedLayout>} />
 
-        <Route path="/guides" element={<ProtectedLayout><GuideList /></ProtectedLayout>} />
-        <Route path="/guides/new" element={<ProtectedLayout><GuideForm /></ProtectedLayout>} />
-        <Route path="/guides/:id/edit" element={<ProtectedLayout><GuideForm /></ProtectedLayout>} />
+        <Route path="/guides" element={<ProtectedLayout requireAdmin><GuideList /></ProtectedLayout>} />
+        <Route path="/guides/new" element={<ProtectedLayout requireAdmin><GuideForm /></ProtectedLayout>} />
+        <Route path="/guides/:id/edit" element={<ProtectedLayout requireAdmin><GuideForm /></ProtectedLayout>} />
 
-        <Route path="/domains" element={<ProtectedLayout><Domains /></ProtectedLayout>} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/domains" element={<ProtectedLayout requireAdmin><Domains /></ProtectedLayout>} />
+        <Route path="*" element={<Navigate to="/projects" replace />} />
       </Routes>
     </BrowserRouter>
   );
