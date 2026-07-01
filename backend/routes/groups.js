@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Group = require('../models/Group');
 const adminAuth = require('../middleware/adminAuth');
@@ -21,9 +22,17 @@ router.get('/', async (req, res) => {
 });
 
 // GET single group
+router.get('/login', (req, res) => {
+    return res.status(404).json({ error: 'Not found' });
+});
+
 router.get('/:id', async (req, res) => {
     try {
-        const student = await Group.findById(req.params.id);
+        const { id } = req.params;
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(404).json({ error: 'Group not found' });
+        }
+        const student = await Group.findById(id);
         if (!student) return res.status(404).json({ error: 'Group not found' });
 
         // Find all members in the same batch
