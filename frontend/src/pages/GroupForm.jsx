@@ -158,6 +158,9 @@ if (!form.domain.trim()) {
 <h3 style={{ marginTop: 30 }}>
   Group Members
 </h3>
+<div className="text-muted" style={{ fontSize: '0.88rem', marginTop: 8 }}>
+  The batch lead's roll number is used as the group login username and password for the whole batch.
+</div>
 
 {form.members.map((member, index) => (
   <div

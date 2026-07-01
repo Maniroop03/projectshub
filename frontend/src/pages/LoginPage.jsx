@@ -92,7 +92,10 @@ export default function LoginPage() {
                 </form>
 
                 <div className="mt-4 text-muted text-center" style={{ fontSize: '0.78rem', marginTop: 24 }}>
-                    Default: <code style={{ color: 'var(--accent-purple)' }}>admin</code> / <code style={{ color: 'var(--accent-purple)' }}>admin123</code>
+                    Default admin login: <code style={{ color: 'var(--accent-purple)' }}>admin</code> / <code style={{ color: 'var(--accent-purple)' }}>admin123</code>
+                </div>
+                <div className="mt-2 text-muted text-center" style={{ fontSize: '0.78rem' }}>
+                    Group login uses the batch lead's roll number as both username and password.
                 </div>
                 <div className="footer-bar" style={{ marginTop: 32, borderTop: '1px solid var(--border)', paddingTop: 16, background: 'none' }}>
                     Developed and Maintained by<br />

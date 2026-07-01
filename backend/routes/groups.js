@@ -4,6 +4,12 @@ const Group = require('../models/Group');
 const adminAuth = require('../middleware/adminAuth');
 const bcrypt = require('bcryptjs');
 
+const getLeadRollNo = (members) => {
+    if (!Array.isArray(members) || members.length === 0) return '';
+    const lead = members.find((m) => m.role === 'Lead') || members[0];
+    return (lead?.rollNo || '').trim();
+};
+
 // GET all groups
 router.get('/', async (req, res) => {
     try {
@@ -56,15 +62,39 @@ router.post('/login', async (req, res) => {
         const { rollNo, password } = req.body;
         if (!rollNo || !password) return res.status(400).json({ error: 'rollNo and password are required' });
 
-        const student = await Group.findOne({ rollNo }).select('+password');
-        if (!student) return res.status(401).json({ error: 'Invalid credentials' });
+        const lead = await Group.findOne({ role: 'Lead', rollNo }).select('+password');
+        if (!lead) return res.status(401).json({ error: 'Invalid credentials' });
 
-        const match = await bcrypt.compare(password, student.password || '');
-        if (!match) return res.status(401).json({ error: 'Invalid credentials' });
+        const validPassword = lead.password
+            ? await bcrypt.compare(password, lead.password)
+            : password === lead.rollNo;
 
-        // Return public-facing fields (do not include password)
-        const publicStudent = await Group.findById(student._id);
-        res.json(publicStudent);
+        if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
+
+        if (!lead.password) {
+            lead.password = await bcrypt.hash(lead.rollNo, 10);
+            await lead.save();
+        }
+
+        // Fetch all members in the same batch
+        const members = await Group.find({ batch: lead.batch });
+        res.json({
+            _id: lead._id,
+            rollNo: lead.rollNo,
+            batch: lead.batch,
+            section: lead.section || '',
+            domain: lead.domain || '',
+            year: lead.year || 'III',
+            department: lead.department || '',
+            members: members.map((m) => ({
+                _id: m._id,
+                role: m.role || 'Member',
+                name: m.name || '',
+                rollNo: m.rollNo || '',
+                email: m.email,
+                phone: m.phone || ''
+            }))
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -80,6 +110,10 @@ router.post('/', adminAuth, async (req, res) => {
         }
 
         const createdStudents = [];
+        const leadRollNo = getLeadRollNo(members);
+        if (!leadRollNo) {
+            return res.status(400).json({ error: 'Lead roll number is required for group login credentials' });
+        }
         for (const m of members) {
             const toSave = {
                 batch,
@@ -91,12 +125,9 @@ router.post('/', adminAuth, async (req, res) => {
                 name: m.name,
                 rollNo: m.rollNo,
                 email: m.email,
-                phone: m.phone || ''
+                phone: m.phone || '',
+                password: await bcrypt.hash(leadRollNo, 10)
             };
-            if (m.password) {
-                // hash provided password
-                toSave.password = await bcrypt.hash(m.password, 10);
-            }
             const student = new Group(toSave);
             await student.save();
             createdStudents.push(student);
@@ -135,6 +166,13 @@ router.put('/:id', adminAuth, async (req, res) => {
             await Group.deleteMany({ _id: { $in: idsToDelete } });
         }
 
+        const leadRollNo = getLeadRollNo(members);
+        if (!leadRollNo) {
+            return res.status(400).json({ error: 'Lead roll number is required for group login credentials' });
+        }
+
+        const hashedLeadPassword = await bcrypt.hash(leadRollNo, 10);
+
         // Update existing members and create new ones
         for (const m of members) {
             if (m._id) {
@@ -148,11 +186,9 @@ router.put('/:id', adminAuth, async (req, res) => {
                     name: m.name,
                     rollNo: m.rollNo,
                     email: m.email,
-                    phone: m.phone || ''
+                    phone: m.phone || '',
+                    password: hashedLeadPassword
                 };
-                if (m.password) {
-                    updateObj.password = await bcrypt.hash(m.password, 10);
-                }
                 await Group.findByIdAndUpdate(m._id, updateObj, { runValidators: true });
             } else {
                 const newStudentObj = {
@@ -165,13 +201,16 @@ router.put('/:id', adminAuth, async (req, res) => {
                     name: m.name,
                     rollNo: m.rollNo,
                     email: m.email,
-                    phone: m.phone || ''
+                    phone: m.phone || '',
+                    password: hashedLeadPassword
                 };
-                if (m.password) newStudentObj.password = await bcrypt.hash(m.password, 10);
                 const newStudent = new Group(newStudentObj);
                 await newStudent.save();
             }
         }
+
+        // Ensure any remaining batch members keep the same lead credential
+        await Group.updateMany({ batch }, { password: hashedLeadPassword });
 
         // Find and return the updated/current document for the requested ID
         let responseDoc = await Group.findById(req.params.id);
@@ -213,10 +252,18 @@ router.post('/bulk', adminAuth, async (req, res) => {
         if (!Array.isArray(groups)) {
             return res.status(400).json({ error: 'Input must be an array of groups' });
         }
-        // Hash passwords if provided before bulk insert
+
+        const leadRollByBatch = {};
+        groups.forEach((g) => {
+            if (g.role === 'Lead' && g.batch) {
+                leadRollByBatch[g.batch] = leadRollByBatch[g.batch] || g.rollNo;
+            }
+        });
+
         const toInsert = await Promise.all(groups.map(async (g) => {
             const copy = { ...g };
-            if (copy.password) copy.password = await bcrypt.hash(copy.password, 10);
+            const leadRollNo = leadRollByBatch[g.batch] || copy.rollNo;
+            if (leadRollNo) copy.password = await bcrypt.hash(leadRollNo, 10);
             return copy;
         }));
         const result = await Group.insertMany(toInsert, { ordered: false });
