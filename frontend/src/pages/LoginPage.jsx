@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdLock, MdPerson, MdSchool } from 'react-icons/md';
-import { groupLogin } from '../api';
+import { groupLogin, formatApiError } from '../api';
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'admin123';
@@ -40,8 +40,8 @@ export default function LoginPage() {
 
             setError('Invalid username or password.');
         } catch (err) {
-            console.error(err);
-            setError('Failed to reach backend for group login.');
+            console.error('Group login error:', err);
+            setError(formatApiError(err, 'Group login failed.'));
         } finally {
             setLoading(false);
         }

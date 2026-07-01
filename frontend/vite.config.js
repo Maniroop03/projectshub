@@ -9,6 +9,11 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
+        onError: (err, req, res) => {
+          console.error('Proxy error:', err);
+          res.writeHead(502, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Bad Gateway: ' + err.message }));
+        }
       },
     },
   },

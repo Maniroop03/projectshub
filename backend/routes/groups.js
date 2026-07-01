@@ -68,10 +68,13 @@ router.get('/:id', async (req, res) => {
 // POST group login
 router.post('/login', async (req, res) => {
     try {
+        console.log('POST /login received, body:', req.body);
         const { rollNo, password } = req.body;
         if (!rollNo || !password) return res.status(400).json({ error: 'rollNo and password are required' });
 
+        console.log('Searching for lead with rollNo:', rollNo);
         const lead = await Group.findOne({ role: 'Lead', rollNo }).select('+password');
+        console.log('Lead found:', lead ? `${lead.name} (${lead.rollNo})` : 'Not found');
         if (!lead) return res.status(401).json({ error: 'Invalid credentials' });
 
         const validPassword = lead.password
@@ -105,7 +108,8 @@ router.post('/login', async (req, res) => {
             }))
         });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('❌ Login error:', err);
+        res.status(500).json({ error: 'Login failed: ' + err.message });
     }
 });
 

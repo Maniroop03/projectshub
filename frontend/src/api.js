@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const LOCAL_API_URL = 'http://localhost:5000/api';
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
-const fallbackApiUrl = import.meta.env.DEV ? LOCAL_API_URL : '/api';
+const fallbackApiUrl = import.meta.env.DEV ? '/api' : '/api';
 const baseURL = (configuredApiUrl || fallbackApiUrl).replace(/\/$/, '');
 const missingApiMessage = 'Backend API is not connected. Set VITE_API_URL to the deployed backend URL and redeploy the frontend.';
 
