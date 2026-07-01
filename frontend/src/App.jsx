@@ -12,7 +12,7 @@ import GroupForm from './pages/GroupForm';
 import GuideList from './pages/GuideList';
 import GuideForm from './pages/GuideForm';
 
-const isAuth = () => localStorage.getItem('admin_auth') === 'true';
+const isAuth = () => localStorage.getItem('admin_auth') === 'true' || !!localStorage.getItem('group_auth');
 
 function ProtectedLayout({ children }) {
   if (!isAuth()) return <Navigate to="/" replace />;

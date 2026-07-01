@@ -82,6 +82,7 @@ export const updateGroup = (id, data) => API.put(`/groups/${id}`, data);
 export const deleteGroup = (id) => API.delete(`/groups/${id}`);
 export const bulkCreateGroups = (data) => API.post('/groups/bulk', data);
 export const clearAllGroups = () => API.delete('/groups/all/clear');
+export const groupLogin = (data) => API.post('/groups/login', data);
 
 export const getProjects = (params) => API.get('/projects', { params });
 export const getProjectStats = () => API.get('/projects/stats');

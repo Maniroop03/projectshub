@@ -19,6 +19,7 @@ export default function ProjectList() {
     const [statusFilter, setStatusFilter] = useState('');
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
+    const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     const load = () => {
         setLoading(true);
@@ -55,7 +56,7 @@ export default function ProjectList() {
                     <h1 className="page-title">All Projects</h1>
                     <p className="page-subtitle">{projects.length} project(s) total</p>
                 </div>
-                <Link to="/projects/new" className="btn btn-primary"><MdAdd /> Add Project</Link>
+                    {isAdmin() && <Link to="/projects/new" className="btn btn-primary"><MdAdd /> Add Project</Link>}
             </div>
 
             <div className="filter-bar">
@@ -107,8 +108,8 @@ export default function ProjectList() {
                                     <td>
                                         <div className="flex gap-2">
                                             <Link to={`/projects/${p._id}`} className="btn btn-outline btn-sm" title="View"><MdVisibility /></Link>
-                                            <Link to={`/projects/${p._id}/edit`} className="btn btn-outline btn-sm" title="Edit"><MdEdit /></Link>
-                                            <button className="btn btn-danger btn-sm" title="Delete" onClick={() => handleDelete(p._id, p.title)}><MdDelete /></button>
+                                            {isAdmin() && <Link to={`/projects/${p._id}/edit`} className="btn btn-outline btn-sm" title="Edit"><MdEdit /></Link>}
+                                            {isAdmin() && <button className="btn btn-danger btn-sm" title="Delete" onClick={() => handleDelete(p._id, p.title)}><MdDelete /></button>}
                                         </div>
                                     </td>
                                 </tr>

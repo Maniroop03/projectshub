@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Group = require('../models/Group');
+const bcrypt = require('bcryptjs');
 
 // GET all groups
 router.get('/', async (req, res) => {
@@ -48,6 +49,26 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// POST group login
+router.post('/login', async (req, res) => {
+    try {
+        const { rollNo, password } = req.body;
+        if (!rollNo || !password) return res.status(400).json({ error: 'rollNo and password are required' });
+
+        const student = await Group.findOne({ rollNo }).select('+password');
+        if (!student) return res.status(401).json({ error: 'Invalid credentials' });
+
+        const match = await bcrypt.compare(password, student.password || '');
+        if (!match) return res.status(401).json({ error: 'Invalid credentials' });
+
+        // Return public-facing fields (do not include password)
+        const publicStudent = await Group.findById(student._id);
+        res.json(publicStudent);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // POST create group
 router.post('/', async (req, res) => {
     try {
@@ -59,7 +80,7 @@ router.post('/', async (req, res) => {
 
         const createdStudents = [];
         for (const m of members) {
-            const student = new Group({
+            const toSave = {
                 batch,
                 section,
                 domain,
@@ -68,9 +89,14 @@ router.post('/', async (req, res) => {
                 role: m.role || 'Member',
                 name: m.name,
                 rollNo: m.rollNo,
-                email: m.email || '',
+                email: m.email,
                 phone: m.phone || ''
-            });
+            };
+            if (m.password) {
+                // hash provided password
+                toSave.password = await bcrypt.hash(m.password, 10);
+            }
+            const student = new Group(toSave);
             await student.save();
             createdStudents.push(student);
         }
@@ -111,7 +137,7 @@ router.put('/:id', async (req, res) => {
         // Update existing members and create new ones
         for (const m of members) {
             if (m._id) {
-                await Group.findByIdAndUpdate(m._id, {
+                const updateObj = {
                     batch,
                     section,
                     domain,
@@ -120,11 +146,15 @@ router.put('/:id', async (req, res) => {
                     role: m.role || 'Member',
                     name: m.name,
                     rollNo: m.rollNo,
-                    email: m.email || '',
+                    email: m.email,
                     phone: m.phone || ''
-                }, { runValidators: true });
+                };
+                if (m.password) {
+                    updateObj.password = await bcrypt.hash(m.password, 10);
+                }
+                await Group.findByIdAndUpdate(m._id, updateObj, { runValidators: true });
             } else {
-                const newStudent = new Group({
+                const newStudentObj = {
                     batch,
                     section,
                     domain,
@@ -133,9 +163,11 @@ router.put('/:id', async (req, res) => {
                     role: m.role || 'Member',
                     name: m.name,
                     rollNo: m.rollNo,
-                    email: m.email || '',
+                    email: m.email,
                     phone: m.phone || ''
-                });
+                };
+                if (m.password) newStudentObj.password = await bcrypt.hash(m.password, 10);
+                const newStudent = new Group(newStudentObj);
                 await newStudent.save();
             }
         }
@@ -180,7 +212,13 @@ router.post('/bulk', async (req, res) => {
         if (!Array.isArray(groups)) {
             return res.status(400).json({ error: 'Input must be an array of groups' });
         }
-        const result = await Group.insertMany(groups, { ordered: false });
+        // Hash passwords if provided before bulk insert
+        const toInsert = await Promise.all(groups.map(async (g) => {
+            const copy = { ...g };
+            if (copy.password) copy.password = await bcrypt.hash(copy.password, 10);
+            return copy;
+        }));
+        const result = await Group.insertMany(toInsert, { ordered: false });
         res.status(201).json({ message: `${result.length} groups added successfully`, count: result.length });
     } catch (err) {
         if (err.writeErrors) {

@@ -1,29 +1,47 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdLock, MdPerson, MdSchool } from 'react-icons/md';
+import { groupLogin } from '../api';
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'admin123';
 
+// Group login behavior: username = rollNo, password = rollNo (default)
 export default function LoginPage() {
     const [form, setForm] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        setTimeout(() => {
-            if (form.username === ADMIN_USER && form.password === ADMIN_PASS) {
-                localStorage.setItem('admin_auth', 'true');
-                navigate('/dashboard');
-            } else {
-                setError('Invalid username or password.');
-                setLoading(false);
+
+        // Admin shortcut (keeps previous behavior)
+        if (form.username === ADMIN_USER && form.password === ADMIN_PASS) {
+            localStorage.setItem('admin_auth', 'true');
+            navigate('/dashboard');
+            return;
+        }
+
+        try {
+            // Try group login via API
+            const res = await groupLogin({ rollNo: form.username, password: form.password });
+            const match = res.data;
+            if (match && match._id) {
+                localStorage.setItem('group_auth', JSON.stringify({ id: match._id, rollNo: match.rollNo, batch: match.batch }));
+                navigate('/projects');
+                return;
             }
-        }, 600);
+
+            setError('Invalid username or password.');
+        } catch (err) {
+            console.error(err);
+            setError('Failed to reach backend for group login.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

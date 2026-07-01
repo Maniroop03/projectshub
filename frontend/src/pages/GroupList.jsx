@@ -21,6 +21,7 @@ export default function GroupList() {
             .finally(() => setLoading(false));
     };
     useEffect(load, []);
+    const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     const handleDelete = async (id, name) => {
         if (!window.confirm(`Delete group member "${name}"?`)) return;
@@ -76,7 +77,7 @@ export default function GroupList() {
                 </div>
                 <div className="flex gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     <div className="flex" style={{ gap: 8 }}>
-                        {!loading && totalBatches > 0 && (
+                        {isAdmin() && !loading && totalBatches > 0 && (
                             <button
                                 className="btn btn-danger"
                                 onClick={handleDeleteAll}
@@ -86,19 +87,23 @@ export default function GroupList() {
                             </button>
                         )}
 
-                        <button
-                            className="btn btn-outline"
-                            onClick={() => setIsBulkModalOpen(true)}
-                            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
-                        >
-                            <MdFileUpload /> Bulk Add
-                        </button>
+                        {isAdmin() && (
+                            <button
+                                className="btn btn-outline"
+                                onClick={() => setIsBulkModalOpen(true)}
+                                style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                            >
+                                <MdFileUpload /> Bulk Add
+                            </button>
+                        )}
                     </div>
 
                     <div>
-                        <Link to="/groups/new" className="btn btn-primary btn-header" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <MdAdd /> Add Group
-                        </Link>
+                        {isAdmin() && (
+                            <Link to="/groups/new" className="btn btn-primary btn-header" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                <MdAdd /> Add Group
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
@@ -289,20 +294,24 @@ Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics`}
                                                                 </td>
                                                                 <td>
                                                                     <div className="flex gap-2">
-                                                                        <Link
-                                                                            to={`/groups/${m._id}/edit`}
-                                                                            className="btn btn-outline btn-sm"
-                                                                            title="Edit"
-                                                                        >
-                                                                            <MdEdit />
-                                                                        </Link>
-                                                                        <button
-                                                                            className="btn btn-danger btn-sm"
-                                                                            title="Delete"
-                                                                            onClick={() => handleDelete(m._id, m.name)}
-                                                                        >
-                                                                            <MdDelete />
-                                                                        </button>
+                                                                        {isAdmin() && (
+                                                                            <>
+                                                                                <Link
+                                                                                    to={`/groups/${m._id}/edit`}
+                                                                                    className="btn btn-outline btn-sm"
+                                                                                    title="Edit"
+                                                                                >
+                                                                                    <MdEdit />
+                                                                                </Link>
+                                                                                <button
+                                                                                    className="btn btn-danger btn-sm"
+                                                                                    title="Delete"
+                                                                                    onClick={() => handleDelete(m._id, m.name)}
+                                                                                >
+                                                                                    <MdDelete />
+                                                                                </button>
+                                                                            </>
+                                                                        )}
                                                                     </div>
                                                                 </td>
                                                             </tr>

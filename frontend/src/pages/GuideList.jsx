@@ -20,6 +20,7 @@ export default function GuideList() {
             .finally(() => setLoading(false));
     };
     useEffect(load, []);
+    const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     const handleDelete = async (id, name) => {
         if (!window.confirm(`Delete guide "${name}"?`)) return;
@@ -44,8 +45,8 @@ export default function GuideList() {
                     <p className="page-subtitle">{guides.length} guide(s) registered</p>
                 </div>
                 <div className="flex gap-2">
-                    <button className="btn btn-outline" onClick={() => setIsBulkModalOpen(true)}><MdFileUpload /> Bulk Add</button>
-                    <Link to="/guides/new" className="btn btn-primary"><MdAdd /> Add Guide</Link>
+                    {isAdmin() && <button className="btn btn-outline" onClick={() => setIsBulkModalOpen(true)}><MdFileUpload /> Bulk Add</button>}
+                    {isAdmin() && <Link to="/guides/new" className="btn btn-primary"><MdAdd /> Add Guide</Link>}
                 </div>
             </div>
 
@@ -61,7 +62,7 @@ export default function GuideList() {
                 <input className="form-input" style={{ maxWidth: 300 }} placeholder="🔍 Search name or department..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             {loading ? <div className="loading-center"><div className="loading-spinner" /></div> : filtered.length === 0 ? (
-                <div className="empty-state"><div className="empty-state-icon">👨‍🏫</div><p>No guides found.</p><Link to="/guides/new" className="btn btn-primary mt-4"><MdAdd /> Add Guide</Link></div>
+                <div className="empty-state"><div className="empty-state-icon">👨‍🏫</div><p>No guides found.</p>{isAdmin() && <Link to="/guides/new" className="btn btn-primary mt-4"><MdAdd /> Add Guide</Link>}</div>
             ) : (
                 <div className="table-wrapper">
                     <table>
@@ -90,8 +91,8 @@ export default function GuideList() {
                                     <td><span className="badge badge-mini">{g.domain || '—'}</span></td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <Link to={`/guides/${g._id}/edit`} className="btn btn-outline btn-sm"><MdEdit /></Link>
-                                            <button className="btn btn-danger btn-sm" onClick={() => handleDelete(g._id, g.name)}><MdDelete /></button>
+                                            {isAdmin() && <Link to={`/guides/${g._id}/edit`} className="btn btn-outline btn-sm"><MdEdit /></Link>}
+                                            {isAdmin() && <button className="btn btn-danger btn-sm" onClick={() => handleDelete(g._id, g.name)}><MdDelete /></button>}
                                         </div>
                                     </td>
                                 </tr>

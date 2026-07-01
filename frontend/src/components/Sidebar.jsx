@@ -11,21 +11,21 @@ const navItems = [
         section: 'Projects',
         items: [
             { to: '/projects', icon: <MdFolderOpen />, label: 'All Projects' },
-            { to: '/projects/new', icon: <MdAddCircleOutline />, label: 'Add Project' },
+            { to: '/projects/new', icon: <MdAddCircleOutline />, label: 'Add Project', adminOnly: true },
         ],
     },
     {
         section: 'Groups',
         items: [
             { to: '/groups', icon: <MdPeople />, label: 'All Groups' },
-            { to: '/groups/new', icon: <MdPersonAdd />, label: 'Add Group' },
+            { to: '/groups/new', icon: <MdPersonAdd />, label: 'Add Group', adminOnly: true },
         ],
     },
     {
         section: 'Guides',
         items: [
             { to: '/guides', icon: <MdSupervisorAccount />, label: 'All Guides' },
-            { to: '/guides/new', icon: <MdPersonAddAlt1 />, label: 'Add Guide' },
+            { to: '/guides/new', icon: <MdPersonAddAlt1 />, label: 'Add Guide', adminOnly: true },
         ],
     },
     {
@@ -38,7 +38,8 @@ const navItems = [
 
 export default function Sidebar() {
     const navigate = useNavigate();
-    const handleLogout = () => { localStorage.removeItem('admin_auth'); navigate('/'); };
+    const handleLogout = () => { localStorage.removeItem('admin_auth'); localStorage.removeItem('group_auth'); navigate('/'); };
+    const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     return (
         <aside className="sidebar">
@@ -50,16 +51,18 @@ export default function Sidebar() {
                 {navItems.map((section) => (
                     <div key={section.section}>
                         <div className="nav-section-label">{section.section}</div>
-                        {section.items.map((item) => (
-                            <NavLink
-                                key={item.to}
-                                to={item.to}
-                                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
-                            >
-                                {item.icon}
-                                {item.label}
-                            </NavLink>
-                        ))}
+                        {section.items
+                            .filter(item => !item.adminOnly || isAdmin())
+                            .map((item) => (
+                                <NavLink
+                                    key={item.to}
+                                    to={item.to}
+                                    className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                                >
+                                    {item.icon}
+                                    {item.label}
+                                </NavLink>
+                            ))}
                     </div>
                 ))}
             </nav>

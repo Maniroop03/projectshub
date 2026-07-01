@@ -53,6 +53,12 @@ const groupSchema = new mongoose.Schema(
         trim: true
     },
 
+    // Optional hashed password for group login (not returned by default)
+    password: {
+        type: String,
+        select: false
+    },
+
     domain: {
         type: String,
         trim: true
