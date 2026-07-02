@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdLock, MdPerson, MdSchool } from 'react-icons/md';
 import { groupLogin, formatApiError } from '../api';
@@ -12,6 +12,12 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // Clear any stale errors on component mount
+    useEffect(() => {
+        setError('');
+        setForm({ username: '', password: '' });
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +57,10 @@ export default function LoginPage() {
         } catch (err) {
             console.error('Group login error:', err);
             const errorMsg = formatApiError(err, 'Group login failed.');
-            setError(typeof errorMsg === 'string' ? errorMsg : 'An error occurred. Please try again.');
+            console.log('Formatted error message:', errorMsg, 'Type:', typeof errorMsg);
+            // Ensure error is always a string
+            const finalError = String(errorMsg || 'An error occurred. Please try again.');
+            setError(finalError);
         } finally {
             setLoading(false);
         }
@@ -64,7 +73,19 @@ export default function LoginPage() {
                 <h1>Project Hub</h1>
                 <p>Group Project Management System<br />Enter your credentials to continue</p>
 
-                {error && <div className="alert alert-error" style={{ marginBottom: 20 }}><MdLock /> {String(error)}</div>}
+                {error && (
+                    <div className="alert alert-error" style={{ marginBottom: 20 }}>
+                        <MdLock /> 
+                        {(() => {
+                            try {
+                                const errorText = String(error).trim() || 'An error occurred. Please try again.';
+                                return errorText;
+                            } catch {
+                                return 'An error occurred. Please try again.';
+                            }
+                        })()}
+                    </div>
+                )}
 
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group" style={{ marginBottom: 16 }}>

@@ -23,20 +23,27 @@ export const getAssetUrl = (path) => {
 
 export const formatApiError = (err, fallback = 'Request failed.') => {
     try {
-        if (err?.isApiConfigError) return String(err.message);
+        // Handle null/undefined
+        if (!err) return fallback;
 
-        const data = err?.response?.data;
+        // If it's already a string, return it
+        if (typeof err === 'string') return err;
 
-        if (data?.details?.length) {
-            return `${data.error || fallback}: ${data.details.join('; ')}`;
+        // Handle custom errors
+        if (err?.isApiConfigError) return String(err.message) || fallback;
+
+        // Handle axios response errors
+        if (err?.response?.data) {
+            const data = err.response.data;
+            
+            if (typeof data === 'string') return data;
+            if (data?.error && typeof data.error === 'string') return data.error;
+            if (data?.details?.length) {
+                return `${data.error || fallback}: ${data.details.join('; ')}`;
+            }
         }
 
-        if (data?.error) return String(data.error);
-
-        if (!configuredApiUrl && import.meta.env.PROD && err?.response?.status === 404) {
-            return missingApiMessage;
-        }
-
+        // Handle network errors
         if (!err?.response && err?.message === 'Network Error') {
             return `Cannot reach the backend API at ${baseURL}. Start the backend server, or set VITE_API_URL to the deployed backend URL.`;
         }
@@ -45,8 +52,15 @@ export const formatApiError = (err, fallback = 'Request failed.') => {
             return 'The request timed out. Please check the backend server and try again.';
         }
 
-        return String(err?.message || fallback);
-    } catch {
+        // Handle regular error messages
+        if (err?.message && typeof err.message === 'string') {
+            return err.message;
+        }
+
+        // If all else fails, use fallback
+        return fallback;
+    } catch (e) {
+        console.error('Error in formatApiError:', e);
         return fallback;
     }
 };
