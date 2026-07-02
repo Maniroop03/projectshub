@@ -23,6 +23,9 @@ app.use('/api/uploads', express.static(uploadDir));
 // MongoDB Connection Helper (with caching for serverless)
 let cachedDbConnection = null;
 const connectDB = async () => {
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI environment variable is not set. Please configure it in Vercel project settings.');
+  }
   if (cachedDbConnection && mongoose.connection.readyState === 1) {
     return cachedDbConnection;
   }
@@ -40,7 +43,7 @@ app.use(async (req, res, next) => {
     next();
   } catch (err) {
     console.error('❌ MongoDB connection error:', err.message);
-    res.status(500).json({ error: 'Database connection error: ' + err.message });
+    res.status(503).json({ error: 'Service unavailable: ' + err.message });
   }
 });
 

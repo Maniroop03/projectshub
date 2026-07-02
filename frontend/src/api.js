@@ -22,29 +22,33 @@ export const getAssetUrl = (path) => {
 };
 
 export const formatApiError = (err, fallback = 'Request failed.') => {
-    if (err?.isApiConfigError) return err.message;
+    try {
+        if (err?.isApiConfigError) return String(err.message);
 
-    const data = err?.response?.data;
+        const data = err?.response?.data;
 
-    if (data?.details?.length) {
-        return `${data.error || fallback}: ${data.details.join('; ')}`;
+        if (data?.details?.length) {
+            return `${data.error || fallback}: ${data.details.join('; ')}`;
+        }
+
+        if (data?.error) return String(data.error);
+
+        if (!configuredApiUrl && import.meta.env.PROD && err?.response?.status === 404) {
+            return missingApiMessage;
+        }
+
+        if (!err?.response && err?.message === 'Network Error') {
+            return `Cannot reach the backend API at ${baseURL}. Start the backend server, or set VITE_API_URL to the deployed backend URL.`;
+        }
+
+        if (err?.code === 'ECONNABORTED') {
+            return 'The request timed out. Please check the backend server and try again.';
+        }
+
+        return String(err?.message || fallback);
+    } catch {
+        return fallback;
     }
-
-    if (data?.error) return data.error;
-
-    if (!configuredApiUrl && import.meta.env.PROD && err?.response?.status === 404) {
-        return missingApiMessage;
-    }
-
-    if (!err?.response && err?.message === 'Network Error') {
-        return `Cannot reach the backend API at ${baseURL}. Start the backend server, or set VITE_API_URL to the deployed backend URL.`;
-    }
-
-    if (err?.code === 'ECONNABORTED') {
-        return 'The request timed out. Please check the backend server and try again.';
-    }
-
-    return err?.message || fallback;
 };
 
 const API = axios.create({ baseURL, timeout: 15000 });

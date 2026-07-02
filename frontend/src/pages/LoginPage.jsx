@@ -50,7 +50,8 @@ export default function LoginPage() {
             setError('Invalid username or password.');
         } catch (err) {
             console.error('Group login error:', err);
-            setError(formatApiError(err, 'Group login failed.'));
+            const errorMsg = formatApiError(err, 'Group login failed.');
+            setError(typeof errorMsg === 'string' ? errorMsg : 'An error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -63,7 +64,7 @@ export default function LoginPage() {
                 <h1>Project Hub</h1>
                 <p>Group Project Management System<br />Enter your credentials to continue</p>
 
-                {error && <div className="alert alert-error" style={{ marginBottom: 20 }}><MdLock /> {error}</div>}
+                {error && <div className="alert alert-error" style={{ marginBottom: 20 }}><MdLock /> {String(error)}</div>}
 
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group" style={{ marginBottom: 16 }}>
