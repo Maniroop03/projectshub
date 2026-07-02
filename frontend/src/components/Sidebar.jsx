@@ -37,7 +37,7 @@ const adminNavItems = [
 ];
 
 const groupNavItems = [
-    { section: 'Overview', items: [{ to: '/projects', icon: <MdFolderOpen />, label: 'My Projects' }] },
+    { section: 'Overview', items: [{ to: '/my-projects', icon: <MdFolderOpen />, label: 'My Projects' }] },
 ];
 
 export default function Sidebar() {

@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import ProjectList from './pages/ProjectList';
+import StudentDashboard from './pages/StudentDashboard';
 import ProjectForm from './pages/ProjectForm';
 import ProjectDetail from './pages/ProjectDetail';
 import Domains from './pages/Domains';
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedLayout requireAdmin><Dashboard /></ProtectedLayout>} />
 
         <Route path="/projects" element={<ProtectedLayout><ProjectList /></ProtectedLayout>} />
+        <Route path="/my-projects" element={<ProtectedLayout><StudentDashboard /></ProtectedLayout>} />
         <Route path="/projects/new" element={<ProtectedLayout requireAdmin><ProjectForm /></ProtectedLayout>} />
         <Route path="/projects/:id" element={<ProtectedLayout><ProjectDetail /></ProtectedLayout>} />
         <Route path="/projects/:id/edit" element={<ProtectedLayout requireAdmin><ProjectForm /></ProtectedLayout>} />
@@ -53,7 +55,7 @@ export default function App() {
         <Route path="/guides/:id/edit" element={<ProtectedLayout requireAdmin><GuideForm /></ProtectedLayout>} />
 
         <Route path="/domains" element={<ProtectedLayout requireAdmin><Domains /></ProtectedLayout>} />
-        <Route path="*" element={<Navigate to="/projects" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
