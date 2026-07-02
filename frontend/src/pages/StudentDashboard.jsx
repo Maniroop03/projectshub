@@ -68,27 +68,73 @@ const FileDownloadButton = ({ fileUrl, fileName, label = 'Download' }) => {
     );
 };
 
+const AddFileButton = ({ label = 'Add File', onAdd }) => {
+    const handleClick = () => {
+        if (onAdd) onAdd();
+        else alert(`Add ${label} functionality coming soon!`);
+    };
+
+    return (
+        <button
+            onClick={handleClick}
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '8px 12px',
+                background: 'rgba(139, 92, 246, 0.15)',
+                color: 'var(--accent-purple)',
+                border: '1px solid var(--accent-purple)',
+                borderRadius: 6,
+                cursor: 'pointer',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(139, 92, 246, 0.25)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(139, 92, 246, 0.15)';
+                e.currentTarget.style.boxShadow = 'none';
+            }}
+        >
+            + ADD
+        </button>
+    );
+};
+
 const ProjectCard = ({ project, groupAuth }) => {
     return (
         <div style={{
-            background: 'white',
+            background: 'rgba(255, 255, 255, 0.04)',
             borderRadius: 12,
             padding: 24,
-            boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
             marginBottom: 24,
-            border: '1px solid #eee',
-            transition: 'box-shadow 0.3s'
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+            transition: 'all 0.3s',
+            backdropFilter: 'blur(10px)'
         }}
-        onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 24px rgba(139,92,246,0.1)'}
-        onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+        onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(139,92,246,0.15)';
+            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+        }}
+        onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+            e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.2)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+        }}
         >
             {/* Header with Title and Status */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
                 <div style={{ flex: 1 }}>
-                    <h2 style={{ margin: '0 0 8px 0', fontSize: '1.4rem', color: 'var(--text-primary)' }}>
+                    <h2 style={{ margin: '0 0 8px 0', fontSize: '1.4rem', color: 'var(--text-primary)', fontWeight: 700 }}>
                         {project.title}
                     </h2>
-                    <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                         {project.projectType} Project • {project.domain || 'General'}
                     </p>
                 </div>
@@ -100,33 +146,33 @@ const ProjectCard = ({ project, groupAuth }) => {
             {/* Info Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 24 }}>
                 {/* Guide Info */}
-                <div style={{ background: '#f8f7ff', padding: 16, borderRadius: 8, border: '1px solid #e9e7f0' }}>
+                <div style={{ background: 'rgba(139, 92, 246, 0.08)', padding: 16, borderRadius: 8, border: '1px solid rgba(139, 92, 246, 0.2)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                         <MdPerson style={{ color: 'var(--accent-purple)', fontSize: '1.2rem' }} />
-                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>Guide</span>
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Guide</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500 }}>
+                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>
                         {project.guide?.name || 'Not assigned'}
                     </p>
                 </div>
 
                 {/* Group Info */}
-                <div style={{ background: '#f0f8ff', padding: 16, borderRadius: 8, border: '1px solid #e0f0ff' }}>
+                <div style={{ background: 'rgba(99, 102, 241, 0.08)', padding: 16, borderRadius: 8, border: '1px solid rgba(99, 102, 241, 0.2)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                        <MdGroup style={{ color: '#0066cc', fontSize: '1.2rem' }} />
-                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>Group</span>
+                        <MdGroup style={{ color: 'var(--accent-indigo)', fontSize: '1.2rem' }} />
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Group</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500 }}>
+                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>
                         {groupAuth?.batch || 'N/A'} - {groupAuth?.section || 'N/A'}
                     </p>
                 </div>
 
                 {/* Submission Date */}
-                <div style={{ background: '#f0fff4', padding: 16, borderRadius: 8, border: '1px solid #e0f7e0' }}>
+                <div style={{ background: 'rgba(16, 185, 129, 0.08)', padding: 16, borderRadius: 8, border: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>📅 Submitted</span>
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>📅 Submitted</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500 }}>
+                    <p style={{ margin: 0, fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>
                         {project.submissionDate ? new Date(project.submissionDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Not submitted'}
                     </p>
                 </div>
@@ -141,16 +187,26 @@ const ProjectCard = ({ project, groupAuth }) => {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
                         {groupAuth.members.map((member) => (
                             <div key={member._id || member.rollNo} style={{
-                                background: '#fafafa',
+                                background: 'rgba(255, 255, 255, 0.04)',
                                 padding: 12,
                                 borderRadius: 8,
-                                border: '1px solid #e0e0e0',
-                                fontSize: '0.9rem'
-                            }}>
-                                <p style={{ margin: '0 0 4px 0', fontWeight: 600 }}>
+                                border: '1px solid rgba(255, 255, 255, 0.06)',
+                                fontSize: '0.9rem',
+                                transition: 'all 0.2s'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
+                                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                            }}
+                            >
+                                <p style={{ margin: '0 0 4px 0', fontWeight: 600, color: 'var(--text-primary)' }}>
                                     {member.name || 'Member'}
                                 </p>
-                                <p style={{ margin: '0 0 4px 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                                <p style={{ margin: '0 0 4px 0', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
                                     {member.rollNo || 'N/A'}
                                 </p>
                                 {member.role && (
@@ -171,10 +227,10 @@ const ProjectCard = ({ project, groupAuth }) => {
                         📋 Abstract
                     </h3>
                     <div style={{
-                        background: '#f9f9f9',
+                        background: 'rgba(255, 255, 255, 0.02)',
                         padding: 16,
                         borderRadius: 8,
-                        border: '1px solid #e8e8e8',
+                        border: '1px solid rgba(255, 255, 255, 0.06)',
                         fontSize: '0.9rem',
                         lineHeight: '1.6',
                         color: 'var(--text-secondary)',
@@ -189,9 +245,12 @@ const ProjectCard = ({ project, groupAuth }) => {
             {/* File Downloads */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
                 <div>
-                    <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                        📄 Abstract (PDF)
-                    </label>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <label style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                            📄 Abstract (PDF)
+                        </label>
+                        <AddFileButton label="Abstract PDF" />
+                    </div>
                     <FileDownloadButton
                         fileUrl={project.abstractFile}
                         fileName={`${project.title}-abstract.pdf`}
@@ -200,9 +259,12 @@ const ProjectCard = ({ project, groupAuth }) => {
                 </div>
 
                 <div>
-                    <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                        📑 Project Report (PDF)
-                    </label>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <label style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                            📑 Project Report (PDF)
+                        </label>
+                        <AddFileButton label="Project Report PDF" />
+                    </div>
                     <FileDownloadButton
                         fileUrl={project.reportFile}
                         fileName={`${project.title}-report.pdf`}
@@ -211,9 +273,12 @@ const ProjectCard = ({ project, groupAuth }) => {
                 </div>
 
                 <div>
-                    <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                        💾 Source Code (ZIP)
-                    </label>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <label style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                            💾 Source Code (ZIP)
+                        </label>
+                        <AddFileButton label="Source Code ZIP" />
+                    </div>
                     <FileDownloadButton
                         fileUrl={project.sourceCodeFile}
                         fileName={`${project.title}-source.zip`}
@@ -274,10 +339,10 @@ export default function StudentDashboard() {
         <div className="page-container">
             {/* Header */}
             <div style={{ marginBottom: 32 }}>
-                <h1 style={{ margin: '0 0 8px 0', fontSize: '2rem', fontWeight: 700 }}>
+                <h1 style={{ margin: '0 0 8px 0', fontSize: '2rem', fontWeight: 700, background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                     📚 My Projects
                 </h1>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '1rem' }}>
+                <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '1rem' }}>
                     View and manage your group's mini and major projects
                 </p>
             </div>
@@ -300,7 +365,7 @@ export default function StudentDashboard() {
                 display: 'flex',
                 gap: 16,
                 marginBottom: 32,
-                borderBottom: '2px solid #e8e8e8'
+                borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
                 <button
                     onClick={() => setActiveTab('mini')}
@@ -309,7 +374,7 @@ export default function StudentDashboard() {
                         background: 'transparent',
                         border: 'none',
                         borderBottom: activeTab === 'mini' ? '3px solid var(--accent-purple)' : 'none',
-                        color: activeTab === 'mini' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                        color: activeTab === 'mini' ? 'var(--accent-purple)' : 'var(--text-secondary)',
                         fontWeight: activeTab === 'mini' ? 600 : 500,
                         fontSize: '1rem',
                         cursor: 'pointer',
@@ -325,7 +390,7 @@ export default function StudentDashboard() {
                         background: 'transparent',
                         border: 'none',
                         borderBottom: activeTab === 'major' ? '3px solid var(--accent-purple)' : 'none',
-                        color: activeTab === 'major' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                        color: activeTab === 'major' ? 'var(--accent-purple)' : 'var(--text-secondary)',
                         fontWeight: activeTab === 'major' ? 600 : 500,
                         fontSize: '1rem',
                         cursor: 'pointer',
@@ -349,17 +414,17 @@ export default function StudentDashboard() {
                 <div style={{
                     textAlign: 'center',
                     padding: '60px 20px',
-                    background: '#f9f9f9',
+                    background: 'rgba(255, 255, 255, 0.02)',
                     borderRadius: 12,
-                    border: '1px solid #e8e8e8'
+                    border: '1px solid rgba(255, 255, 255, 0.06)'
                 }}>
                     <div style={{ fontSize: '3rem', marginBottom: 16 }}>
                         {activeTab === 'mini' ? '🎯' : '🏆'}
                     </div>
-                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.1rem', fontWeight: 600 }}>
+                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                         No {activeTab === 'mini' ? 'Mini' : 'Major'} Projects
                     </h3>
-                    <p style={{ margin: 0, color: 'var(--text-muted)' }}>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>
                         Your group hasn't submitted any {activeTab === 'mini' ? 'mini' : 'major'} projects yet.
                     </p>
                 </div>
@@ -378,11 +443,12 @@ export default function StudentDashboard() {
             <div style={{
                 marginTop: 48,
                 padding: '24px',
-                background: '#f9f9f9',
+                background: 'rgba(255, 255, 255, 0.02)',
                 borderRadius: 8,
                 textAlign: 'center',
-                color: 'var(--text-muted)',
-                fontSize: '0.9rem'
+                color: 'var(--text-secondary)',
+                fontSize: '0.9rem',
+                border: '1px solid rgba(255, 255, 255, 0.06)'
             }}>
                 Developed & Maintained by <strong>Mrs. Priyanka Pandarinath</strong>, Assistant Professor
             </div>
