@@ -68,7 +68,17 @@ export default function GroupList() {
 
     return (
         <div className="page-container">
-            {error && <div className="alert alert-error">{error}</div>}
+            {error && (
+                <div className="alert alert-error">
+                    {(() => {
+                        try {
+                            return String(error).trim() || 'An error occurred. Please try again.';
+                        } catch {
+                            return 'An error occurred. Please try again.';
+                        }
+                    })()}
+                </div>
+            )}
             {/* Page Header */}
             <div className="page-header flex items-center justify-between" style={{ flexWrap: 'wrap', gap: 12 }}>
                 <div>

@@ -66,7 +66,17 @@ export default function ProjectList() {
     if (isGroupUser) {
         return (
             <div className="page-container">
-                {error && <div className="alert alert-error">{error}</div>}
+                {error && (
+                    <div className="alert alert-error">
+                        {(() => {
+                            try {
+                                return String(error).trim() || 'An error occurred. Please try again.';
+                            } catch {
+                                return 'An error occurred. Please try again.';
+                            }
+                        })()}
+                    </div>
+                )}
                 <div className="page-header flex items-center justify-between">
                     <div>
                         <h1 className="page-title">My Group</h1>
@@ -130,7 +140,17 @@ export default function ProjectList() {
 
     return (
         <div className="page-container">
-            {error && <div className="alert alert-error">{error}</div>}
+            {error && (
+                <div className="alert alert-error">
+                    {(() => {
+                        try {
+                            return String(error).trim() || 'An error occurred. Please try again.';
+                        } catch {
+                            return 'An error occurred. Please try again.';
+                        }
+                    })()}
+                </div>
+            )}
             <div className="page-header flex items-center justify-between">
                 <div>
                     <h1 className="page-title">All Projects</h1>

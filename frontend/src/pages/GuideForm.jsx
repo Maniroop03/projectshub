@@ -40,7 +40,17 @@ export default function GuideForm() {
                     <p className="page-subtitle">Guide / Faculty details</p>
                 </div>
             </div>
-            {error && <div className="alert alert-error">{error}</div>}
+            {error && (
+                <div className="alert alert-error">
+                    {(() => {
+                        try {
+                            return String(error).trim() || 'An error occurred. Please try again.';
+                        } catch {
+                            return 'An error occurred. Please try again.';
+                        }
+                    })()}
+                </div>
+            )}
             <div className="card">
                 <div className="card-body">
                     <div className="alert alert-info" style={{ marginBottom: 20 }}>

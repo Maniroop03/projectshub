@@ -39,7 +39,17 @@ export default function Dashboard() {
                 <Link to="/projects/new" className="btn btn-primary"><MdAddCircleOutline /> New Project</Link>
             </div>
 
-            {error && <div className="alert alert-error">{error}</div>}
+            {error && (
+                <div className="alert alert-error">
+                    {(() => {
+                        try {
+                            return String(error).trim() || 'An error occurred. Please try again.';
+                        } catch {
+                            return 'An error occurred. Please try again.';
+                        }
+                    })()}
+                </div>
+            )}
 
             <div className="stat-grid">
                 {[
