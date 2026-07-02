@@ -17,12 +17,6 @@ export default function LoginPage() {
         e.preventDefault();
         setLoading(true);
         setError('');
-        // Production guard: if VITE_API_URL is not configured, show helpful message
-        if (import.meta.env.PROD && !(import.meta.env.VITE_API_URL || '').trim()) {
-            setError('Site is not configured: missing VITE_API_URL. Set your backend URL in Vercel environment variables.');
-            setLoading(false);
-            return;
-        }
 
         // Admin shortcut (keeps previous behavior)
         if (form.username === ADMIN_USER && form.password === ADMIN_PASS) {
