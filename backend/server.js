@@ -52,6 +52,7 @@ app.use('/api/groups', require('./routes/groups'));
 app.use('/api/guides', require('./routes/guides'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/whatsapp', require('./routes/whatsapp'));
+app.use('/api/email', require('./routes/email'));
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'Student Project API is running.' }));

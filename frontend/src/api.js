@@ -128,4 +128,8 @@ export const deleteProject = (id) => API.delete(`/projects/${id}`);
 export const notifyGuide = (projectId) => API.post(`/whatsapp/notify/${projectId}`);
 export const sendCustomWhatsApp = (data) => API.post('/whatsapp/custom', data);
 
+// Email (Gmail SMTP via nodemailer)
+export const notifyGuideEmail = (projectId) => API.post(`/email/notify/${projectId}`);
+export const sendCustomEmail = (data) => API.post('/email/custom', data);
+
 export default API;

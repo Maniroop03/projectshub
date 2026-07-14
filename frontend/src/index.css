@@ -791,6 +791,11 @@ tbody tr:hover { background: var(--bg-card-hover); }
   color: white;
 }
 .btn-whatsapp:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+.btn-email {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+}
+.btn-email:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(79,70,229,0.4); }
 .btn-sm { padding: 6px 14px; font-size: 0.82rem; }
 .btn-lg { padding: 14px 32px; font-size: 1rem; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }

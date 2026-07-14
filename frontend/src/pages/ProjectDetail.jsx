@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getProject, deleteProject, notifyGuide, getAssetUrl } from '../api';
+import { getProject, deleteProject, notifyGuide, notifyGuideEmail, getAssetUrl } from '../api';
 import {
-    MdArrowBack, MdEdit, MdDelete, MdWhatsapp,
+    MdArrowBack, MdEdit, MdDelete, MdWhatsapp, MdEmail,
     MdInsertDriveFile, MdPerson, MdGroup, MdCalendarToday,
 } from 'react-icons/md';
 
@@ -17,6 +17,7 @@ export default function ProjectDetail() {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [waLoading, setWaLoading] = useState(false);
+    const [emailLoading, setEmailLoading] = useState(false);
     const [msg, setMsg] = useState({ text: '', type: '' });
 
     useEffect(() => {
@@ -37,6 +38,16 @@ export default function ProjectDetail() {
         } catch (err) {
             setMsg({ text: err.response?.data?.error || 'Failed to send WhatsApp message.', type: 'error' });
         } finally { setWaLoading(false); }
+    };
+
+    const handleEmail = async () => {
+        setEmailLoading(true); setMsg({ text: '', type: '' });
+        try {
+            const r = await notifyGuideEmail(id);
+            setMsg({ text: r.data.message, type: 'success' });
+        } catch (err) {
+            setMsg({ text: err.response?.data?.error || 'Failed to send email.', type: 'error' });
+        } finally { setEmailLoading(false); }
     };
 
     if (loading) return <div className="loading-center"><div className="loading-spinner" /></div>;
@@ -66,7 +77,17 @@ export default function ProjectDetail() {
                     >
                         {waLoading
                             ? <><span className="loading-spinner" style={{ width: 16, height: 16, borderWidth: 2 }} /> Sending...</>
-                            : <><MdWhatsapp style={{ fontSize: '1.2rem' }} /> Notify Guide via WhatsApp</>}
+                            : <><MdWhatsapp style={{ fontSize: '1.2rem' }} /> Notify via WhatsApp</>}
+                    </button>
+                    <button
+                        className="btn btn-email"
+                        onClick={handleEmail}
+                        disabled={emailLoading}
+                        title="Send project details to guide via Email"
+                    >
+                        {emailLoading
+                            ? <><span className="loading-spinner" style={{ width: 16, height: 16, borderWidth: 2 }} /> Sending...</>
+                            : <><MdEmail style={{ fontSize: '1.2rem' }} /> Notify via Email</>}
                     </button>
                     <Link to={`/projects/${p._id}/edit`} className="btn btn-outline"><MdEdit /> Edit</Link>
                     <button className="btn btn-danger" onClick={handleDelete}><MdDelete /> Delete</button>
