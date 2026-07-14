@@ -291,12 +291,6 @@ const ProjectCard = ({ project, groupAuth }) => {
 };
 
 export default function StudentDashboard() {
-    const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [activeTab, setActiveTab] = useState('mini');
-    const [groupAuth, setGroupAuth] = useState(null);
-
     const getGroupAuth = () => {
         try {
             const g = localStorage.getItem('group_auth');
@@ -306,20 +300,18 @@ export default function StudentDashboard() {
         }
     };
 
+    const initialAuth = getGroupAuth();
+
+    const [groupAuth] = useState(initialAuth);
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(!!initialAuth);
+    const [error, setError] = useState(initialAuth ? '' : 'Not logged in as a group member.');
+    const [activeTab, setActiveTab] = useState('mini');
+
     useEffect(() => {
-        const auth = getGroupAuth();
-        setGroupAuth(auth);
+        if (!groupAuth) return;
 
-        if (!auth) {
-            setError('Not logged in as a group member.');
-            setLoading(false);
-            return;
-        }
-
-        setLoading(true);
-        setError('');
-
-        getProjects({ batch: auth.batch })
+        getProjects({ batch: groupAuth.batch })
             .then((r) => {
                 const projectsList = Array.isArray(r.data) ? r.data : [];
                 setProjects(projectsList);
@@ -329,7 +321,7 @@ export default function StudentDashboard() {
                 setError(formatApiError(err, 'Failed to load projects.'));
             })
             .finally(() => setLoading(false));
-    }, []);
+    }, [groupAuth]);
 
     const miniProjects = projects.filter(p => p.projectType === 'Mini');
     const majorProjects = projects.filter(p => p.projectType === 'Major');

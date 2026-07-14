@@ -19,7 +19,13 @@ export default function GuideList() {
             .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load guides.')); })
             .finally(() => setLoading(false));
     };
-    useEffect(load, []);
+    useEffect(() => {
+        let active = true;
+        Promise.resolve().then(() => {
+            if (active) load();
+        });
+        return () => { active = false; };
+    }, []);
     const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     const handleDelete = async (id, name) => {

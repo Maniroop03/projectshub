@@ -29,7 +29,7 @@ export default function LoginPage() {
             localStorage.setItem('admin_auth', 'true');
             // Store admin secret for API requests (set via VITE_ADMIN_SECRET in production)
             const adminSecret = import.meta.env.VITE_ADMIN_SECRET || 'admin123';
-            try { localStorage.setItem('admin_secret', adminSecret); } catch {}
+            try { localStorage.setItem('admin_secret', adminSecret); } catch (err) { console.warn('Could not write admin secret to localStorage', err); }
             navigate('/dashboard');
             return;
         }

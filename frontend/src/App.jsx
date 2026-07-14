@@ -15,7 +15,6 @@ import GuideForm from './pages/GuideForm';
 
 const isAuth = () => localStorage.getItem('admin_auth') === 'true' || !!localStorage.getItem('group_auth');
 const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
-const isGroupAuth = () => !!localStorage.getItem('group_auth');
 
 function ProtectedLayout({ children, requireAdmin = false }) {
   if (!isAuth()) return <Navigate to="/" replace />;

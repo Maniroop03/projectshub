@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { getProjects, deleteProject, formatApiError } from '../api';
 import { MdAdd, MdEdit, MdDelete, MdVisibility } from 'react-icons/md';
 
@@ -30,7 +30,7 @@ export default function ProjectList() {
     const groupAuth = getGroupAuth();
     const isGroupUser = !isAdmin() && !!groupAuth;
 
-    const load = () => {
+    const load = useCallback(() => {
         setLoading(true);
         setError('');
         const params = {};
@@ -46,9 +46,15 @@ export default function ProjectList() {
             .then((r) => setProjects(Array.isArray(r.data) ? r.data : []))
             .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load projects.')); })
             .finally(() => setLoading(false));
-    };
+    }, [typeFilter, statusFilter, isGroupUser, groupAuth]);
 
-    useEffect(() => { load(); }, [typeFilter, statusFilter, isGroupUser, groupAuth?.batch]);
+    useEffect(() => {
+        let active = true;
+        Promise.resolve().then(() => {
+            if (active) load();
+        });
+        return () => { active = false; };
+    }, [load]);
 
     const handleDelete = async (id, title) => {
         if (!window.confirm(`Delete project "${title}"?`)) return;

@@ -85,8 +85,6 @@ if (!form.domain.trim()) {
         } finally { setLoading(false); }
     };
 
-    const f = (field) => ({ value: form[field], onChange: (e) => setForm({ ...form, [field]: e.target.value }) });
-
     return (
         <div className="page-container">
             <div className="page-header flex items-center gap-3">

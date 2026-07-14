@@ -20,7 +20,13 @@ export default function GroupList() {
             .catch((err) => { console.error(err); setError(formatApiError(err, 'Failed to load groups.')); })
             .finally(() => setLoading(false));
     };
-    useEffect(load, []);
+    useEffect(() => {
+        let active = true;
+        Promise.resolve().then(() => {
+            if (active) load();
+        });
+        return () => { active = false; };
+    }, []);
     const isAdmin = () => localStorage.getItem('admin_auth') === 'true';
 
     const handleDelete = async (id, name) => {
@@ -270,8 +276,8 @@ Batch 1, Member, KOLIPAKA RADHIKA, 237Z1A6759, A, AI and Robotics`}
                                                 </thead>
                                                 <tbody>
                                                     {members
-                                                        .sort((a, b) => (a.role === 'Lead' ? -1 : 1))
-                                                        .map((m, idx) => (
+                                                         .sort((a, b) => (a.role === 'Lead' ? -1 : b.role === 'Lead' ? 1 : 0))
+                                                         .map((m, idx) => (
                                                             <tr key={m._id}>
                                                                 <td>{idx + 1}</td>
                                                                 <td>
